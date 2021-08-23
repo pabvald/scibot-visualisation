@@ -1,0 +1,23 @@
+version: "3.6"
+services:
+ backend:
+   build:
+    context: ./server
+    dockerfile: ./Dockerfile 
+   image: backend
+   ports:
+    - "5002:5002"
+   volumes:
+    - "angular-dist:/opt/ScibotVisualization/client/dist"
+   depends_on:
+    - frontend
+ frontend:
+  build:
+   context: ./client
+   dockerfile: ./Dockerfile
+  image: frontend
+  volumes:
+   - "angular-dist:/opt/ScibotVisualization/client/dist"
+volumes:
+ angular-dist:
+
