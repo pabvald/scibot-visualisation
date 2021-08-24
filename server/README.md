@@ -1,3 +1,5 @@
+# Server
+
 To start the development server, run:
 
 ```
