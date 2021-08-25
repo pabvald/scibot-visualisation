@@ -1,0 +1,3 @@
+<div *ngIf="paragraph">
+    <app-label *ngFor="let lbl of paragraph.labels" [label]="lbl" [isTitle]="paragraph.id === -1"></app-label>
+</div>

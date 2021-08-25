@@ -1,0 +1,11 @@
+<main>
+    <div *ngIf="article">
+        <h2>{{article.name}}</h2>
+        <br>
+        <div class="paragraph-container" *ngFor="let par of article.paragraphs" >
+            <app-paragraph [paragraph]="par"></app-paragraph>
+            <br>
+        </div>        
+    </div>
+</main>
+

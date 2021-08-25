@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
-import { HelloWorldService } from 'src/app/services/hello-world/hello-world.service';
-import { Greeting } from 'src/app/models/greeting';
+import { Participant } from 'src/app/models/participant';
+import { Article } from 'src/app/models/article';
+import { DataService } from 'src/app/services/data/data.service';
+
 
 @Component({
   selector: 'app-root',
@@ -8,22 +10,25 @@ import { Greeting } from 'src/app/models/greeting';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
-  greetings: Greeting[] = [];
 
-  constructor(private helloWorldService: HelloWorldService) {
+  participant: Participant | undefined;
+  article: Article | undefined;
+
+  constructor(private dataService: DataService) {
 
   }
 
   ngOnInit() {
-    this.update();
+
   }
 
-  update() {
-    this.helloWorldService.getGreetings().subscribe((data) => this.updateGreetings(data));
-  }
-
-  updateGreetings(greetings: Greeting[]) {
-    console.log(greetings);
-    this.greetings = greetings as Greeting[];
+  /** Loads the data */
+  loadData(params: any) {
+    let participant = params.participant;
+    let group = params.group;
+    let stimulus = params.stimulus;
+    this.dataService.getArticle(group, stimulus).subscribe(
+      (article: Article) => { this.article = article;},
+      (error: any) => { /* handle error */});
   }
 }

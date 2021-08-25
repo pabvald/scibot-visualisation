@@ -1,0 +1,10 @@
+<div *ngIf="label">
+    <div *ngIf="isTitle; else notTitle">
+        <b>{{label.text}}</b>
+    </div>
+      
+    <ng-template #notTitle>
+        {{label.text}}
+    </ng-template>
+</div>
+

@@ -1,17 +1,26 @@
-from flask import Flask, request
-from flask_restful import Resource, Api
+from flask import Flask, request, jsonify
 from flask_cors import CORS, cross_origin
+from data_loading import MappingLoader
+from models import ArticleSchema
 
 
 app = Flask(__name__)
-CORS(app)
-api = Api(app)
+CORS(app)  # allow CORS
 
-class HelloWorld(Resource):
-    def get(self):
-        return [{'id': 1, 'text': 'Hello'}, {'id': 2, 'text': 'Hi'}]
 
-api.add_resource(HelloWorld, '/hello-world') # Route_1
+@app.route('/article/<corpus>/<name>', methods=['GET'])
+def article(corpus: str, name: str):
+    """
+    Get a certain article.
+
+    Args:
+        corpus: g-REL or Google_NQ
+        name: filename
+    """
+    loaded_article = MappingLoader(corpus, name).article
+    serialized_article = ArticleSchema().dump(loaded_article)
+    return jsonify(serialized_article)
+
 
 if __name__ == '__main__':
      app.run(port=5002, debug=True)

@@ -26,7 +26,13 @@ python app.py
 #### Installation 
 First, download and install Node.js, version **14.17.5**, from [node.org](https://nodejs.org/en/download/). Make sure that node has been correctly installed by running in a terminal window the command  `node -v`.
 
-Second, install the Angular CLI using the **npm package manager**. To check that you have the npm client installed, run `npm -v` in a terminal window. To install the Angular CLI run
+Second, install the required packages: 
+```
+cd client
+npm install
+```
+
+Finally, install the Angular CLI using the **npm package manager**. To check that you have the npm client installed, run `npm -v` in a terminal window. To install the Angular CLI run
 ```
 npm install -g @angular/cli@12.2.2
 ```
