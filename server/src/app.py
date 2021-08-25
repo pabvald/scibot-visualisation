@@ -1,6 +1,6 @@
 from flask import Flask, request, jsonify
 from flask_cors import CORS, cross_origin
-from data_loading import MappingLoader
+from data_loading import ArticleLoader
 from models import ArticleSchema
 
 
@@ -17,7 +17,7 @@ def article(corpus: str, name: str):
         corpus: g-REL or Google_NQ
         name: filename
     """
-    loaded_article = MappingLoader(corpus, name).article
+    loaded_article = ArticleLoader(corpus, name).article
     serialized_article = ArticleSchema().dump(loaded_article)
     return jsonify(serialized_article)
 

@@ -5,7 +5,7 @@ from typing import List
 
 class Article(object):
     """
-    Represents an article.
+    Representation of an article.
     """
     def __init__(self, corpus: str, name: str, paragraphs: List[Paragraph]):
         """
@@ -16,6 +16,7 @@ class Article(object):
         self.corpus = corpus
         self.name = name
         self.paragraphs = paragraphs
+        self.title = ""
 
 
 class ArticleSchema(Schema):

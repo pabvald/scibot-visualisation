@@ -1,1 +1,1 @@
-from .mapping_loader import MappingLoader
+from .article_loader import ArticleLoader
