@@ -1,10 +1,10 @@
-<div *ngIf="label">
+<div id="content" *ngIf="label">
     <div *ngIf="isTitle; else notTitle">
         <b>{{label.text}}</b>
     </div>
       
     <ng-template #notTitle>
         {{label.text}}
-    </ng-template>
+    </ng-template>  
 </div>
-
+<br *ngIf="isEndOfLine">

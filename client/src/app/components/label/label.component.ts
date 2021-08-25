@@ -10,6 +10,7 @@ export class LabelComponent implements OnInit {
   
   @Input() label: Label | undefined; 
   @Input() isTitle: boolean = false;
+  @Input() isEndOfLine: boolean = false;
 
   constructor() { }
 
