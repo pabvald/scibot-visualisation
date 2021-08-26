@@ -1,39 +1,91 @@
+import codecs
 import pandas as pd
-
-from config import MAPPING_DIR
-from models import Article, Paragraph, Label
+from html.parser import HTMLParser
+from config import MAPPING_DIR, ARTICLES_DIR
+from models import Article, Paragraph
 from os.path import join as pjoin
 
 
-class ArticleLoader:
+class ArticleLoader(HTMLParser):
 
-    def __init__(self, corpus: str, name: str):
+    def error(self, message):
+        pass
+
+    def __init__(self):
+        super().__init__()
         self.article = None
-        self.corpus = corpus
-        self.name = name
-        self.pars_path = pjoin(MAPPING_DIR, corpus, 'main', name + '.html_paragraphs.csv')
-        self.labels_path = pjoin(MAPPING_DIR, corpus, 'main', name + '.html_labels.csv')
+        self.query = False
+        self.title = False
+        self.title_tag = ""
+        self.paragraph = False
+        self.rating = True
+        self.answer = False
+        self.article_path = ""
+        self.pars_mapping_path = ""
+        self.labels_mapping_path = ""
+        self.pars_mapping = None
+        self.labels_mapping = None
 
-        self._load_article()
+    def _load_mapping(self):
+        self.pars_mapping = pd.read_csv(self.pars_mapping_path, delimiter="|", encoding='utf-8',
+                                        float_precision='round_trip', na_values="None")
+        self.labels_mapping = pd.read_csv(self.labels_mapping_path, delimiter="|", encoding='utf-8',
+                                          float_precision='round_trip', na_values="None")
 
-    def _load_article(self):
-        # Load paragraphs' mapping
-        par_mapping = pd.read_csv(self.pars_path, delimiter="|", encoding='utf-8', float_precision='round_trip',
-                                 na_values="None")
+    def load_article(self, corpus: str, article_id: str):
+        self.query = False
+        self.title = False
+        self.title_tag = ""
+        self.paragraph = False
+        self.rating = True
+        self.answer = False
+        self.article_path = pjoin(ARTICLES_DIR, corpus, 'main', article_id + '.html')
+        self.pars_mapping_path = pjoin(MAPPING_DIR, corpus, 'main', article_id + '_paragraphs.csv')
+        self.labels_mapping_path = pjoin(MAPPING_DIR, corpus, 'main', article_id + '_labels.csv')
 
-        # Load labels' mapping
-        labels_mapping = pd.read_csv(self.labels_path, delimiter="|", encoding='utf-8', float_precision='round_trip',
-                             na_values="None")
+        self._load_mapping()
+        with codecs.open(self.article_path, "r", "utf-8") as file:
+            page = file.read()
+            self.article = Article(article_id, corpus)
+            self.feed(page)
 
-        # Generate paragraphs
-        paragraphs = []
-        for i, par_mapping in par_mapping.iterrows():
-            par_labels = [] 
-            par_id, par_x1, par_y1, par_x2, par_y2 = par_mapping
-            labels_selection = labels_mapping.loc[labels_mapping['paragraph_id'] == par_id]
-            paragraphs.append(Paragraph.from_mapping(par_mapping, labels_selection))
+        return self.article
 
-        # Generate article
-        self.article = Article(self.corpus, self.name, paragraphs)
+    def handle_starttag(self, tag, attrs):
+        if tag == "h1":
+            if attrs:
+                self.query = True
+            else:
+                self.title = True
+        elif tag == "p":
+            self.paragraph = True
+            if attrs:
+                a, b = attrs[0]
+                if a == 'rating' and b == 'false':
+                    self.rating = False
+                if a == "answer" and b == "true":
+                    self.answer = True
+        elif tag == "h2" or tag == "h3":
+            self.title = True
+            self.title_tag = tag
 
+    def handle_endtag(self, tag):
+        pass
 
+    def handle_data(self, data):
+        if not data.strip():
+            return
+        if self.query:
+            self.article.query = data
+            self.query = False
+        elif self.title:
+            self.article.add_title(title_text=data, title_tag=self.title_tag,
+                                   pars_mapping=self.pars_mapping, labels_mapping=self.labels_mapping)
+            self.title_tag = ""
+            self.title = False
+        elif self.paragraph:
+            self.article.add_paragraph(text=data, rating=self.rating, answer=self.answer,
+                                       pars_mapping=self.pars_mapping, labels_mapping=self.labels_mapping)
+            self.rating = True
+            self.paragraph = True
+            self.answer = False

@@ -1,6 +1,6 @@
 <div *ngIf="paragraph && paragraph.labels">
     <app-label *ngFor="let lbl of paragraph.labels; index as i" 
     [label]="lbl" 
-    [isTitle]="paragraph.id === -1"
+    [isTitle]="isTitle"
     [isEndOfLine]="(i < paragraph.labels.length - 1) && (paragraph.labels[i].y1 !== paragraph.labels[i+1].y1)"></app-label>
 </div>

@@ -20,7 +20,8 @@ class Paragraph(object):
         self.y1 = y1
         self.x2 = x2
         self.y2 = y2
-        self.labels = labels 
+        self.answer = False
+        self.labels = labels
 
     @classmethod
     def from_mapping(cls, par_mapping, labels_mapping):
@@ -41,4 +42,5 @@ class ParagraphSchema(Schema):
     y1 = fields.Float()
     x2 = fields.Float()
     y2 = fields.Float()
+    answer = fields.Boolean()
     labels = fields.List(fields.Nested(LabelSchema))

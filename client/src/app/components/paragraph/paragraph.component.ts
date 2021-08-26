@@ -15,4 +15,11 @@ export class ParagraphComponent implements OnInit {
   ngOnInit(): void {
   }
 
+  get isTitle(): boolean {
+    let is = false;
+    if (this.paragraph && (this.paragraph.id == -1)) {
+      is = true;
+    } 
+    return is;    
+  }
 }

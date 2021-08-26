@@ -4,22 +4,29 @@ from typing import List
 
 
 class Article(object):
-    """
-    Representation of an article.
-    """
-    def __init__(self, corpus: str, name: str, paragraphs: List[Paragraph]):
-        """
-        Args:
-            name: name of the article, without the file extension
-            corpus: `g-REL` or `Google_NQ`
-        """
-        self.corpus = corpus
-        self.name = name
-        self.paragraphs = paragraphs
-        self.title = ""
+    """Article Representation"""
+
+    def __init__(self, article_id: str, corpus: str):
+        self.id = article_id
+        self.query = ""
+        self.paragraphs = []
+        self._para_count = -1
+
+    def add_paragraph(self, text, rating, answer, pars_mapping, labels_mapping):
+        par_mapping = pars_mapping.loc[pars_mapping['paragraph_id'] == self._para_count].to_numpy()[0]
+        labels_selection = labels_mapping.loc[labels_mapping['paragraph_id'] == self._para_count]
+        paragraph = Paragraph.from_mapping(par_mapping, labels_selection)
+        if answer:
+            paragraph.answer = True
+
+        self.paragraphs.append(paragraph)
+        self._para_count += 1
+
+    def add_title(self, title_text, title_tag, pars_mapping, labels_mapping):
+        pass
 
 
 class ArticleSchema(Schema):
-    name = fields.Str()
+    id = fields.Str()
     corpus = fields.Str()
     paragraphs = fields.List(fields.Nested(ParagraphSchema))

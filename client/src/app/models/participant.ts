@@ -1,31 +1,31 @@
 export interface Participant {
-    name: string
+    id: string
 }
 
 export const participants = [
-    {name: 'A01'},
-    {name: 'A03'},
-    {name: 'A04'},
-    {name: 'A06'},
-    {name: 'A07'},
-    {name: 'A08'},
-    {name: 'A09'},
-    {name: 'A10'},    
-    {name: 'A11'},
-    {name: 'A12'},
-    {name: 'A13'},
-    {name: 'B01'},
-    {name: 'B02'},
-    {name: 'B03'},
-    {name: 'B04'},
-    {name: 'B05'},    
-    {name: 'B06'},
-    {name: 'B07'},
-    {name: 'B08'},
-    {name: 'B09'},
-    {name: 'B10'},
-    {name: 'B11'},
-    {name: 'B12'},
-    {name: 'B13'}
+    {id: 'A01'},
+    {id: 'A03'},
+    {id: 'A04'},
+    {id: 'A06'},
+    {id: 'A07'},
+    {id: 'A08'},
+    {id: 'A09'},
+    {id: 'A10'},    
+    {id: 'A11'},
+    {id: 'A12'},
+    {id: 'A13'},
+    {id: 'B01'},
+    {id: 'B02'},
+    {id: 'B03'},
+    {id: 'B04'},
+    {id: 'B05'},    
+    {id: 'B06'},
+    {id: 'B07'},
+    {id: 'B08'},
+    {id: 'B09'},
+    {id: 'B10'},
+    {id: 'B11'},
+    {id: 'B12'},
+    {id: 'B13'}
 ]
 

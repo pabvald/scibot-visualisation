@@ -27,8 +27,8 @@ export class DataTabComponent implements OnInit {
   /** Group of the selected article  */
   get selGroup(): string | undefined {
     let group = undefined;
-    let foundGroup0 = articleGroups[0].articles.find((art)=> art.name === this.selArticle);
-    let foundGroup1 = articleGroups[1].articles.find((art)=> art.name === this.selArticle);
+    let foundGroup0 = articleGroups[0].articles.find((art)=> art.id === this.selArticle);
+    let foundGroup1 = articleGroups[1].articles.find((art)=> art.id === this.selArticle);
   
     if (foundGroup0) {
       group = articleGroups[0].name;

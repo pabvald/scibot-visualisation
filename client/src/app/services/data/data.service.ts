@@ -15,11 +15,12 @@ export class DataService {
   /**
    * Gets a certain article.
    * @param group 'g-REL' or 'Google_NQ'
-   * @param name filename
+   * @param id article id
    * @returns article 
    */
-  getArticle(group: string, name: string): Observable<Article> {
-    let req = this.http.get<Article>(`${BASE_URL}/article/${group}/${name}`);
+  getArticle(group: string, id: string): Observable<Article> {
+
+    let req = this.http.get<Article>(`${BASE_URL}/article/${group}/${id}`);
     return req;
   }
 

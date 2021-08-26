@@ -8,16 +8,16 @@ app = Flask(__name__)
 CORS(app)  # allow CORS
 
 
-@app.route('/article/<corpus>/<name>', methods=['GET'])
-def article(corpus: str, name: str):
+@app.route('/article/<corpus>/<article_id>', methods=['GET'])
+def article(corpus: str, article_id: str):
     """
     Get a certain article.
 
     Args:
         corpus: g-REL or Google_NQ
-        name: filename
+        article_id: id of the article
     """
-    loaded_article = ArticleLoader(corpus, name).article
+    loaded_article = ArticleLoader().load_article(corpus, article_id)
     serialized_article = ArticleSchema().dump(loaded_article)
     return jsonify(serialized_article)
 

@@ -6,8 +6,8 @@
     <mat-form-field appearance="fill">
         <mat-label>Participant</mat-label>
         <mat-select [(value)]="selParticipant">
-        <mat-option *ngFor="let p of participants" [value]="p.name">
-            {{p.name}}
+        <mat-option *ngFor="let p of participants" [value]="p.id">
+            {{p.id}}
         </mat-option>
         </mat-select>
     </mat-form-field>
@@ -17,8 +17,8 @@
         <mat-label>Stimulus</mat-label>
         <mat-select [(value)]="selArticle">
         <mat-optgroup *ngFor="let group of articleGroups" [label]="group.name">
-            <mat-option *ngFor="let article of group.articles" [value]="article.name">
-            {{article.name}}
+            <mat-option *ngFor="let article of group.articles" [value]="article.id">
+            {{article.id}}
             </mat-option>
         </mat-optgroup>
         </mat-select>
