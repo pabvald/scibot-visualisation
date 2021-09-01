@@ -3,7 +3,7 @@ from marshmallow import Schema, fields
 
 class Label(object):
     """
-    Representation of a label.
+    Representation of  a label.
     """
 
     def __init__(self, par_id: int, label_id: int, x1: float, y1: float,

@@ -1,8 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Participant, participants } from 'src/app/models/participant';
-import { ArticleOption, ArticleOptionGroup, articleGroups } from 'src/app/models/article';
-import { Output, EventEmitter } from '@angular/core';
-import { MatSelectChange } from '@angular/material/select';
+import { DataFacade } from 'src/app/facade/data.facade';
 
 @Component({
   selector: 'app-data-tab',
@@ -10,37 +7,23 @@ import { MatSelectChange } from '@angular/material/select';
   styleUrls: ['./data-tab.component.scss']
 })
 export class DataTabComponent implements OnInit {
-  
-  selParticipant: string | undefined; // selected participant
-  selArticle: string | undefined; // selected article
 
-  participants: Participant[] = participants; // all participants
-  articleGroups: ArticleOptionGroup[] = articleGroups; // all articles
-  @Output() notifyLoadData = new EventEmitter();
 
-  constructor() { }
+  userIds: string[] = [];
+  documentIds: string[] = [];
+  isUpdating: boolean = false;
+  selUserId: string | undefined; // selected participant
+  selDocumentId: string | undefined; // selected article
 
-  /**
-   * Computed properties
-   */
-
-  /** Group of the selected article  */
-  get selGroup(): string | undefined {
-    let group = undefined;
-    let foundGroup0 = articleGroups[0].articles.find((art)=> art.id === this.selArticle);
-    let foundGroup1 = articleGroups[1].articles.find((art)=> art.id === this.selArticle);
-  
-    if (foundGroup0) {
-      group = articleGroups[0].name;
-    } else if (foundGroup1) {
-      group = articleGroups[1].name;
-    }
-    return group;
+  constructor(private dataFacade: DataFacade) { 
+    this.dataFacade.isUpdating$().subscribe((value) => {this.isUpdating = value});
+    this.dataFacade.getUserIds$().subscribe((data) => {this.userIds = data});
+    this.dataFacade.getDocumentIds$().subscribe((data) => {this.documentIds = data});
   }
 
   /** Load button is disabled */
   get loadDisabled(): boolean {
-    return (this.selParticipant === undefined) || (this.selArticle === undefined);
+    return (this.selUserId === undefined) || (this.selDocumentId === undefined);
   }
 
   /**
@@ -49,10 +32,11 @@ export class DataTabComponent implements OnInit {
   
   ngOnInit() {}
 
-  /** Notify parent component to load data */
+  /** Load document */
   loadData(): void {
-    this.notifyLoadData.emit({participant: this.selParticipant, 
-                              group: this.selGroup, 
-                              stimulus: this.selArticle})
+    if (this.selUserId && this.selDocumentId) {
+      this.dataFacade.loadDocument(this.selUserId, this.selDocumentId);
+    }   
   }
+
 }

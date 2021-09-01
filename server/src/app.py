@@ -1,26 +1,17 @@
-from flask import Flask, request, jsonify
+from flask import Flask
 from flask_cors import CORS, cross_origin
-from data_loading import ArticleLoader
-from models import ArticleSchema
-
+from flask_restful import Api
+from resources.user import UserList
+from resources.document import Document, DocumentList
 
 app = Flask(__name__)
+api = Api(app)
 CORS(app)  # allow CORS
 
-
-@app.route('/article/<corpus>/<article_id>', methods=['GET'])
-def article(corpus: str, article_id: str):
-    """
-    Get a certain article.
-
-    Args:
-        corpus: g-REL or Google_NQ
-        article_id: id of the article
-    """
-    loaded_article = ArticleLoader().load_article(corpus, article_id)
-    serialized_article = ArticleSchema().dump(loaded_article)
-    return jsonify(serialized_article)
-
+# --- API calls ---
+api.add_resource(UserList, '/api/user/ids')
+api.add_resource(DocumentList, '/api/document/ids')
+api.add_resource(Document, '/api/document/<string:user_id>/<string:doc_id>')
 
 if __name__ == '__main__':
-     app.run(port=5002, debug=True)
+    app.run(port=5002, debug=True)

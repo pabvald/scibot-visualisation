@@ -1,5 +1,5 @@
-import { Component, OnInit, Input } from '@angular/core';
-import { Paragraph } from 'src/app/models/paragraph';
+import { Component, Input, OnInit } from '@angular/core';
+import { IParagraph } from 'src/app/models/paragraph.model';
 
 @Component({
   selector: 'app-paragraph',
@@ -8,18 +8,11 @@ import { Paragraph } from 'src/app/models/paragraph';
 })
 export class ParagraphComponent implements OnInit {
 
-  @Input() paragraph: Paragraph | undefined;
+  @Input() paragraph: IParagraph | undefined;
 
   constructor() { }
 
   ngOnInit(): void {
   }
 
-  get isTitle(): boolean {
-    let is = false;
-    if (this.paragraph && (this.paragraph.id == -1)) {
-      is = true;
-    } 
-    return is;    
-  }
 }

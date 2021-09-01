@@ -3,7 +3,7 @@ from marshmallow import Schema, fields
 from typing import List
 
 
-class Article(object):
+class Document(object):
     """Article Representation"""
 
     def __init__(self, article_id: str, corpus: str):
@@ -26,7 +26,7 @@ class Article(object):
         pass
 
 
-class ArticleSchema(Schema):
+class DocumentSchema(Schema):
     id = fields.Str()
     corpus = fields.Str()
     paragraphs = fields.List(fields.Nested(ParagraphSchema))

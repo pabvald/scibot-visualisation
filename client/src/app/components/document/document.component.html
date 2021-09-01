@@ -1,0 +1,5 @@
+<div id="content" *ngIf="document">
+    <app-paragraph *ngFor="let par of document.paragraphs"
+                    [paragraph]="par">
+    </app-paragraph>
+</div>

@@ -1,5 +1,5 @@
-import { Component, OnInit, Input } from '@angular/core';
-import { Label } from 'src/app/models/label';
+import { Component, Input, OnInit } from '@angular/core';
+import { ILabel } from 'src/app/models/label.model';
 
 @Component({
   selector: 'app-label',
@@ -7,14 +7,29 @@ import { Label } from 'src/app/models/label';
   styleUrls: ['./label.component.scss']
 })
 export class LabelComponent implements OnInit {
-  
-  @Input() label: Label | undefined; 
-  @Input() isTitle: boolean = false;
-  @Input() isEndOfLine: boolean = false;
+
+  @Input() label: ILabel | undefined; 
+  @Input() isTitle: boolean = false; 
 
   constructor() { }
 
   ngOnInit(): void {
+
+  }
+
+  displaySize() {
+    let width = 0;
+    let height = 0;
+    if (this.label) {
+      width = (this.label.x2 - this.label.x1);
+      height = (this.label.y2 - this.label.y1);      
+    }      
+    let sizeStyle = {
+      'width': width  + '%',
+      'height': height + '%',
+      'display': 'inline-block'
+    };
+    return sizeStyle;
   }
 
 }

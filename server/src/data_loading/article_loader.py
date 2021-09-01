@@ -2,7 +2,7 @@ import codecs
 import pandas as pd
 from html.parser import HTMLParser
 from config import MAPPING_DIR, ARTICLES_DIR
-from models import Article, Paragraph
+from models import Document, Paragraph
 from os.path import join as pjoin
 
 
@@ -46,7 +46,7 @@ class ArticleLoader(HTMLParser):
         self._load_mapping()
         with codecs.open(self.article_path, "r", "utf-8") as file:
             page = file.read()
-            self.article = Article(article_id, corpus)
+            self.article = Document(article_id, corpus)
             self.feed(page)
 
         return self.article

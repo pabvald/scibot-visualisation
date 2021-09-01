@@ -1,30 +1,39 @@
-<!-- Check https://material.angular.io/components/select/overview -->
-
-<main>
-    <!-- Participant selection -->
-
+ <!-- Check https://material.angular.io/components/select/overview -->
+ <div>
+    <!-- User selection -->
     <mat-form-field appearance="fill">
-        <mat-label>Participant</mat-label>
-        <mat-select [(value)]="selParticipant">
-        <mat-option *ngFor="let p of participants" [value]="p.id">
-            {{p.id}}
-        </mat-option>
+        <mat-label>User</mat-label>
+        <mat-select [(value)]="selUserId">
+            <mat-option *ngFor="let uid of userIds" [value]="uid">
+                {{uid}}
+            </mat-option>
         </mat-select>
     </mat-form-field>
 
-    <!-- Stimulus selection -->
+    <!-- Document selection -->
     <mat-form-field appearance="fill">
-        <mat-label>Stimulus</mat-label>
-        <mat-select [(value)]="selArticle">
-        <mat-optgroup *ngFor="let group of articleGroups" [label]="group.name">
-            <mat-option *ngFor="let article of group.articles" [value]="article.id">
-            {{article.id}}
+        <mat-label>Document</mat-label>
+        <mat-select [(value)]="selDocumentId">
+            <mat-option *ngFor="let docid of documentIds" [value]="docid">
+                {{docid}}
             </mat-option>
-        </mat-optgroup>
         </mat-select>
     </mat-form-field>
 
     <!-- Load button -->
-    <button mat-button color="primary" (click)="loadData()" [disabled]="loadDisabled">Load</button>
+    <button mat-button  *ngIf="isUpdating; else notUpdating" 
+            color="primary" 
+            [disabled]="true">
+        Loading...
+    </button>
+      
+    <ng-template #notUpdating>
+        <button mat-button color="primary" 
+                (click)="loadData()" 
+                [disabled]="loadDisabled">
+            Load
+        </button>
+    </ng-template> 
 
-</main>
+
+</div>

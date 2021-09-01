@@ -7,20 +7,24 @@ import {MatButtonModule} from '@angular/material/button';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './components/app/app.component';
-import { ArticleComponent } from './components/article/article.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { MenuBarComponent } from './components/menu-bar/menu-bar.component';
 import { DataTabComponent } from './components/data-tab/data-tab.component';
-import { LabelComponent } from './components/label/label.component';
+import { MainPanelComponent } from './components/main-panel/main-panel.component';
+import { DocumentComponent } from './components/document/document.component';
 import { ParagraphComponent } from './components/paragraph/paragraph.component';
+import { LabelComponent } from './components/label/label.component';
 
 
 @NgModule({
   declarations: [
     AppComponent,
+    MenuBarComponent,
     DataTabComponent,
-    LabelComponent,
-    ArticleComponent,
-    ParagraphComponent
+    MainPanelComponent,
+    DocumentComponent,
+    ParagraphComponent,
+    LabelComponent
   ],
   imports: [
     BrowserModule,
