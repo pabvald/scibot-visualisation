@@ -1,3 +1,3 @@
-from .document import Document, DocumentSchema
-from .paragraph import Paragraph, ParagraphSchema
-from .label import Label, LabelSchema
+from .document import DocumentModel, DocumentSchema
+from .paragraph import ParagraphModel, ParagraphSchema
+from .label import LabelModel, LabelSchema

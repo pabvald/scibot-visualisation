@@ -1,8 +1,14 @@
 from flask import jsonify
-from flask_restful import Resource
+
+from data_loading import data_loader
 from .user import USER_IDS
-from data_loading import ArticleLoader
-from models import Document, DocumentSchema
+from os.path import join as pjoin
+from flask_restful import Resource
+from models import DocumentModel, DocumentSchema
+from data_loading.data_loader import SciBot_DataLoader 
+from data_loading.mapping_loader import ScibotMappingLoader
+from config import ARTICLES_DIR, GAZEDATA_VERSION, GAZE_DIR, MAPPING_DIR
+
 
 DOC_IDS = ["g-rel_q075-1_i",
            "g-rel_q076-1_r",
@@ -52,10 +58,23 @@ class Document(Resource):
             return {'message': "The id '{}' does not correspond to any document".format(
                 doc_id)}, 404
 
-        corpus = 'g-REL' if doc_id.startswith('g-rel') else 'Google_NQ'
-        loaded_article = ArticleLoader().load_article(corpus, doc_id)
-        serialized_article = DocumentSchema().dump(loaded_article)
-        return jsonify(serialized_article)
+        corpus = "g-REL" if doc_id.startswith("g-rel") else "GoogleNQ"
+        dl = SciBot_DataLoader(pjoin(GAZE_DIR, GAZEDATA_VERSION), gaze_data=True, googleNQ=(corpus == "GoogleNQ"),
+                               gREL=(corpus == "g-REL"), include_users=[user_id], article_dir=ARTICLES_DIR)
+        ml = ScibotMappingLoader(MAPPING_DIR, corpus, doc_id)
+
+        if corpus == "g-REL":
+            article = dl.grel_articles[doc_id]
+            gaze = dl.grel_reading[user_id][doc_id[:-2]]['dataframe']
+        else:
+            article = dl.google_nq_articles[doc_id]
+            gaze = dl.google_nq_reading[user_id][doc_id]['dataframe']
+
+        print("Mapping  paragraphs = \n", ml.paragraphs)
+        print("Article {} has {} paragraphs".format(article.file_name, len(article.paragraphs)))
+        document = DocumentModel.from_data(user_id, article, gaze, ml.paragraphs, ml.labels)
+        serialized_document = DocumentSchema().dump(document)
+        return jsonify(serialized_document)
 
 
 class DocumentList(Resource):

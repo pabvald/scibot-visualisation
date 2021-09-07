@@ -8,5 +8,6 @@ GAZEDATA_VERSION = 'v05'
 # Paths
 DIR = os.path.dirname(__file__)
 DATA_DIR = pjoin(DIR, 'data')
+GAZE_DIR = pjoin(DATA_DIR, 'gaze')
 ARTICLES_DIR = pjoin(DATA_DIR, 'articles')
 MAPPING_DIR = pjoin(DATA_DIR, 'mapping')
