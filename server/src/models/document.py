@@ -94,7 +94,7 @@ class DocumentSchema(Schema):
     """
 
     """
-    user_id = fields.Str()
+    user_id = fields.Str(data_key="userId")
     id = fields.Str()
     corpus = fields.Str()
     query = fields.Str()

@@ -5,6 +5,7 @@ export interface ILabel {
     x2: number;
     y2: number;
     text: string;
+    fixationDuration: number;
 }
 
 export class Label implements ILabel {
@@ -15,14 +16,15 @@ export class Label implements ILabel {
     public x2: number;
     public y2: number;
     public text: string;
+    public fixationDuration: number;
 
-    constructor(id: number, x1: number, y1: number, x2: number,
-                y2: number, text: string) {
-        this.id = id;
-        this.x1 = x1; 
-        this.y1 = y1; 
-        this.x2 = x2; 
-        this.y2 = y2; 
-        this.text = text;
+    constructor(labelObject: any) {
+        this.id = labelObject.id;
+        this.x1 = labelObject.x1; 
+        this.y1 = labelObject.y1; 
+        this.x2 = labelObject.x2; 
+        this.y2 = labelObject.y2; 
+        this.text = labelObject.text;
+        this.fixationDuration = labelObject.fixationDuration;
     }
 }

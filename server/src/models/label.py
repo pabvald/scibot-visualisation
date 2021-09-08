@@ -111,10 +111,10 @@ class LabelModel(object):
 
 class LabelSchema(Schema):
     id = fields.Integer()
-    par_id = fields.Integer()
+    par_id = fields.Integer(data_key="parId")
     x1 = fields.Float()
     y1 = fields.Float()
     x2 = fields.Float()
     y2 = fields.Float()
     text = fields.Str()
-    fixation_duration = fields.Float()
+    fixation_duration = fields.Float(data_key="fixationDuration")
