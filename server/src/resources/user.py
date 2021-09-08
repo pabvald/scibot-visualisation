@@ -27,7 +27,7 @@ USER_IDS = ['A01',
             'B13']
 
 
-class UserList(Resource):
+class UserListResource(Resource):
     """ List of user ids """
 
     def get(self):
