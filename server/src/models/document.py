@@ -1,9 +1,10 @@
 import os
 
 from enum import Enum
-from pandas.core.frame import DataFrame
-from marshmallow import Schema, fields
 from typing import Any, List, Dict
+from marshmallow import Schema, fields
+from pandas.core.frame import DataFrame
+
 from data_loading.article_parser import Article
 from features import FixationEvent, SaccadeEvent
 from models.paragraph import ParagraphModel, ParagraphSchema

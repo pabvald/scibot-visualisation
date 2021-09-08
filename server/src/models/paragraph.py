@@ -1,7 +1,9 @@
-from pandas.core.frame import DataFrame
-from .label import LabelModel, LabelSchema
-from marshmallow import Schema, fields
 from typing import List, Dict
+from marshmallow import Schema, fields
+from pandas.core.frame import DataFrame
+
+
+from .label import LabelModel, LabelSchema
 from config import STUDY_WIDTH, STUDY_HEIGHT
 from features import FixationEvent, SaccadeEvent
 

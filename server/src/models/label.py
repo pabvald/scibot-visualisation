@@ -1,4 +1,5 @@
 from marshmallow import Schema, fields
+
 from features import FixationEvent
 from config import STUDY_WIDTH, STUDY_HEIGHT
 

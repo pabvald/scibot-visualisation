@@ -1,7 +1,8 @@
 import abc
 
-from .fixation_event import FixationEvent
 from typing import List
+
+from .fixation_event import FixationEvent
 
 
 class FixationArea(metaclass=abc.ABCMeta):

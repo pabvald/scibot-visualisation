@@ -1,8 +1,6 @@
-import base64
-import codecs
 import os
+import codecs
 from html.parser import HTMLParser
-from os import walk
 
 
 class ArticlePaser(HTMLParser):

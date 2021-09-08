@@ -2,7 +2,6 @@ import numpy as np
 import logging
 import math
 
-from typing import List
 from scipy.spatial import ConvexHull
 
 from .fixation_event import FixationEvent

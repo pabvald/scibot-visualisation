@@ -1,11 +1,10 @@
 from flask import jsonify
-
-from data_loading import data_loader
-from .user import USER_IDS
 from os.path import join as pjoin
 from flask_restful import Resource, reqparse
-from models import DocumentModel, DocumentSchema
+
+from .user import USER_IDS
 from services import FixationService
+from models import DocumentModel, DocumentSchema
 from data_loading.data_loader import SciBot_DataLoader 
 from data_loading.mapping_loader import ScibotMappingLoader
 from config import ARTICLES_DIR, GAZEDATA_VERSION, GAZE_DIR, MAPPING_DIR
