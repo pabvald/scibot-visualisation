@@ -1,10 +1,10 @@
 import os
 import logging
 import pandas as pd
-from data_loading.article_parser import ArticlePaser
+from data_loading.article_parser import ArticleParser
 
 
-class SciBot_DataLoader:
+class SciBotDataLoader:
     _EXCLUDE_USER_LIST = []  # ["A02", "A05"]  # exclude A02 for g-REL only
     _INCLUDE_USER_LIST = []  # if emtpy every user besides excluded will be analysed, "A01", "B01"
     _INCLUDE_DATA_SOURCE = []  # "g_rel", "GoogleNQ"
@@ -228,7 +228,7 @@ class SciBot_DataLoader:
                         self.google_nq_reading[user_data.name]["_".join([corpus, par_size, answ_par, name])] = obj
 
     def _load_articles(self):
-        article_parser = ArticlePaser()
+        article_parser = ArticleParser()
         for data_source in self._INCLUDE_DATA_SOURCE:
             for study_type in self._STUDY_TYPE:
                 folder_dir = os.path.join(self.article_dir, data_source, study_type)

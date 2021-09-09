@@ -2,9 +2,8 @@ from typing import List, Dict
 from marshmallow import Schema, fields
 from pandas.core.frame import DataFrame
 
-
+from flask import current_app
 from .label import LabelModel, LabelSchema
-from config import STUDY_WIDTH, STUDY_HEIGHT
 from features import FixationEvent, SaccadeEvent
 
 
@@ -72,28 +71,28 @@ class ParagraphModel(object):
     def x1(self) -> float:
         result = self._x1
         if not self._normalized_coord:
-            result *= STUDY_WIDTH
+            result *= current_app.config['STUDY_WIDTH']
         return result
 
     @property
     def y1(self) -> float:
         result = self._y1
         if not self._normalized_coord:
-            result *= STUDY_HEIGHT
+            result *= current_app.config['STUDY_HEIGHT']
         return result
 
     @property
     def x2(self) -> float:
         result = self._x2
         if not self._normalized_coord:
-            result *= STUDY_WIDTH
+            result *= current_app.config['STUDY_WIDTH']
         return result
 
     @property
     def y2(self) -> float:
         result = self._y2
         if not self._normalized_coord:
-            result *= STUDY_HEIGHT
+            result *= current_app.config['STUDY_HEIGHT']
         return result
 
     @property

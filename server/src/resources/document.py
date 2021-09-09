@@ -3,11 +3,9 @@ from os.path import join as pjoin
 from flask_restful import Resource, reqparse
 
 from .user import USER_IDS
+from flask import current_app as app
 from services import FixationService
 from models import DocumentModel, DocumentSchema
-from data_loading.data_loader import SciBot_DataLoader 
-from data_loading.mapping_loader import ScibotMappingLoader
-from config import ARTICLES_DIR, GAZEDATA_VERSION, GAZE_DIR, MAPPING_DIR
 
 
 DOC_IDS = ["g-rel_q075-1_i",
@@ -72,19 +70,22 @@ class DocumentResource(Resource):
             return {'message': "The hit right margin cannot be negative"}, 400
 
         corpus = "g-REL" if doc_id.startswith("g-rel") else "GoogleNQ"
-        dl = SciBot_DataLoader(pjoin(GAZE_DIR, GAZEDATA_VERSION), gaze_data=True, googleNQ=(corpus == "GoogleNQ"),
-                               gREL=(corpus == "g-REL"), include_users=[user_id], article_dir=ARTICLES_DIR)
-        ml = ScibotMappingLoader(MAPPING_DIR, corpus, doc_id)
 
         if corpus == "g-REL":
-            article = dl.grel_articles[doc_id]
-            gaze = dl.grel_reading[user_id][doc_id[:-2]]['dataframe']
+            article = app.dataloader.grel_articles[doc_id]
+            gaze = app.dataloader.grel_reading[user_id][doc_id[:-2]]['dataframe']
+            pars_mapping = app.mappingloader.grel_paragraphs[doc_id[:-2]]
+            labels_mapping = app.mappingloader.grel_labels[doc_id[:-2]]
         else:
-            article = dl.google_nq_articles[doc_id]
-            gaze = dl.google_nq_reading[user_id][doc_id]['dataframe']
+            article = app.dataloader.google_nq_articles[doc_id]
+            gaze = app.dataloader.google_nq_reading[user_id][doc_id]['dataframe']
+            pars_mapping = app.mappingloader.google_nq_paragraphs[doc_id[:-2]]
+            labels_mapping = app.mappingloader.google_nq_labels[doc_id[:-2]]
 
-        document = DocumentModel.from_data(user_id, article, gaze, ml.paragraphs, ml.labels)
-        self._fixation_service.compute_horizontal_hits(document, hit_left_margin, hit_right_margin)
+        document = DocumentModel.from_data(user_id, article, gaze, pars_mapping, labels_mapping)
+
+        #self._fixation_service.compute_horizontal_hits(document, hit_left_margin, hit_right_margin)
+
         serialized_document = DocumentSchema().dump(document)
         return jsonify(serialized_document)
 

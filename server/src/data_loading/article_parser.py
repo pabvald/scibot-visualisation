@@ -3,7 +3,7 @@ import codecs
 from html.parser import HTMLParser
 
 
-class ArticlePaser(HTMLParser):
+class ArticleParser(HTMLParser):
 
     def error(self, message):
         pass
@@ -134,7 +134,7 @@ class Article(object):
 
 
 if __name__ == '__main__':
-    article_parser = ArticlePaser()
+    article_parser = ArticleParser()
     articles = []
     path = "/Users/ombh/DFKI_Projects/scibot-study-analysis/articles/GoogleNQ/main/"
     for file in os.listdir(path):
