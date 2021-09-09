@@ -1,4 +1,4 @@
-from flask import current_app
+from flask import current_app as app
 from features import FixationEvent
 from marshmallow import Schema, fields
 
@@ -59,28 +59,28 @@ class LabelModel(object):
     def x1(self) -> float:
         result = self._x1
         if not self._normalized_coord:
-            result *= current_app.config['STUDY_WIDTH']
+            result *= app.config['SCREEN_WIDTH']
         return result
 
     @property
     def y1(self) -> float:
         result = self._y1
         if not self._normalized_coord:
-            result *= current_app.config['STUDY_HEIGHT']
+            result *= app.config['SCREEN_HEIGHT']
         return result
 
     @property
     def x2(self) -> float:
         result = self._x2
         if not self._normalized_coord:
-            result *= current_app.config['STUDY_WIDTH']
+            result *= app.config['SCREEN_WIDTH']
         return result
 
     @property
     def y2(self) -> float:
         result = self._y2
         if not self._normalized_coord:
-            result *= current_app.config['STUDY_HEIGHT']
+            result *= app.config['SCREEN_HEIGHT']
         return result
 
     @property

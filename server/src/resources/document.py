@@ -41,9 +41,8 @@ parser.add_argument('hit_right_margin', type=int, default=14)
 
 
 class DocumentResource(Resource):
-    """
-    Document resource.
-    """
+    """ Document resource """
+
     _fixation_service = FixationService()
 
     def get(self, user_id, doc_id):
@@ -71,6 +70,7 @@ class DocumentResource(Resource):
 
         corpus = "g-REL" if doc_id.startswith("g-rel") else "GoogleNQ"
 
+        # load data
         if corpus == "g-REL":
             article = app.dataloader.grel_articles[doc_id]
             gaze = app.dataloader.grel_reading[user_id][doc_id[:-2]]['dataframe']
@@ -82,10 +82,11 @@ class DocumentResource(Resource):
             pars_mapping = app.mappingloader.google_nq_paragraphs[doc_id[:-2]]
             labels_mapping = app.mappingloader.google_nq_labels[doc_id[:-2]]
 
+        # create document representation
         document = DocumentModel.from_data(user_id, article, gaze, pars_mapping, labels_mapping)
-
-        #self._fixation_service.compute_horizontal_hits(document, hit_left_margin, hit_right_margin)
-
+        # compute fixations on the document's labels
+        self._fixation_service.compute_horizontal_hits(document, hit_left_margin, hit_right_margin)
+        # serialize document
         serialized_document = DocumentSchema().dump(document)
         return jsonify(serialized_document)
 
