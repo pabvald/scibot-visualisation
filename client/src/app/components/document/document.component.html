@@ -1,5 +1,11 @@
-<div id="content" *ngIf="document">
+<div id="content" *ngIf="document; else notDocument">
     <app-paragraph *ngFor="let par of document.paragraphs"
                     [paragraph]="par">
     </app-paragraph>
 </div>
+
+<ng-template #notDocument>
+    <div id="placeholder">
+        Select a document to load
+    </div>
+</ng-template>

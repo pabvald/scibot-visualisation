@@ -1,0 +1,8 @@
+:host {
+    flex-grow: 1;
+    overflow: hidden;
+    min-height: 2em;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
+}
