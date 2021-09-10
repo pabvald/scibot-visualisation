@@ -25,17 +25,18 @@ class FixationService(object):
                                                        right_margin=right_margin)
 
                 # check which labels of are hit
+                i = 0
                 line_hit = False
-                no_more_hits = False
-                for label in paragraph.labels:
+                possible_hits = True
+
+                while i < len(paragraph.labels) and possible_hits:
+                    label = paragraph.labels[i]
                     label.normalized_coord = False
                     if fixation_area.hits(*label.coordinates):
                         label.add_fixation(fixation)
                         line_hit = True
-                    elif line_hit:
-                        no_more_hits = True
+                    elif line_hit:  # no more hits are possible in the next lines
+                        possible_hits = False
                     label.normalized_coord = True
-
-                    if no_more_hits:
-                        break
+                    i += 1
 

@@ -2,7 +2,7 @@ import abc
 
 from typing import List
 
-from .fixation_event import FixationEvent
+from features import FixationEvent
 
 
 class FixationArea(metaclass=abc.ABCMeta):
@@ -18,7 +18,6 @@ class FixationArea(metaclass=abc.ABCMeta):
 
 
 class HorizontalFixationArea(FixationArea):
-
     _PIXELS_PER_LETTER = 20  # pixels of that a letter occupies in the screen of the study
 
     def __init__(self, fixation: FixationEvent, left_margin: int = 8, right_margin: int = 14, mode: str = "covers"):
@@ -40,10 +39,10 @@ class HorizontalFixationArea(FixationArea):
         self._mode = mode
 
     @staticmethod
-    def from_fixations(self, fixations: List[FixationEvent]):
+    def from_fixations(self, fixations: List[FixationEvent], **kwargs):
         fixation_areas = []
         for fix in fixations:
-            fixation_areas.append(HorizontalFixationArea(fixation=fix))
+            fixation_areas.append(HorizontalFixationArea(fixation=fix, **kwargs))
 
         return fixation_areas
 
@@ -82,32 +81,17 @@ class HorizontalFixationArea(FixationArea):
             x2: second x coordinate
             y2: second y coordinate
         """
-        if self._mode == "covers":
-            hits_w = self._covers_w(x1, y1, x2, y2)
-            hits_h = self._covers_h(x1, y1, x2, y2)
 
-        else:
-            hits_w = self._intersects_w(x1, y1, x2, y2)
-            hits_h = self._intersects_h(x1, y1, x2, y2)
+        # covers
+        hits_w = self.x1 <= x1 and self.x2 >= x2
+        hits_h = y1 <= self.y <= y2
+
+        # intersects
+        if self._mode == "intersects":
+            hits_w = (x1 <= self.x1 <= x2) or (x1 <= self.x2 <= x2) or hits_w
+            # hits_h = hits_h
 
         return hits_w and hits_h
 
-    def _covers_h(self, x1: float, y1: float, x2: float, y2: float) -> bool:
-        """  The hit area covers the height """
-        return self._intersects_h(x1, y1, x2, y2)
-
-    def _covers_w(self, x1: float, y1: float, x2: float, y2: float) -> bool:
-        """ The hit area covers the width """
-        return self.x1 <= min(x1, x2) and self.x2 >= max(x1, x2)
-
-    def _intersects_h(self, x1: float, y1: float, x2: float, y2: float) -> bool:
-        """  The hit area intersects the height """
-        return min(y1, y2) <= self.y <= max(y1, y2)
-
-    def _intersects_w(self, x1: float, y1: float, x2: float, y2: float) -> bool:
-        """ The hit are intersects the width """
-        return self.x1 <= max(x1, x2) or self.x2 >= min(x1, x2)
-
     def __str__(self):
         return "HorizontalHitArea(x1 = {}, x2 = {}, y = {})".format(self.x1, self.x2, self.y)
-
