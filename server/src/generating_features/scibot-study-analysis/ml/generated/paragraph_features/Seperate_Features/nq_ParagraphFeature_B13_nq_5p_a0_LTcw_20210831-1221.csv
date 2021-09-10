@@ -1,0 +1,6 @@
+user;document;corpus;paragraph;system_relevance;perceived_relevance;system_relevance_type;f_average_fixation_duration;f_average_forward_saccades_length;f_regression_ratio;f_thorough_reading_ratio;f_coherently_read_text_length
+B13;nq_5p_a0_LTcw;nq;0;True;True;r;[0.38176573];[171.05309943];[0.];[0.75107965];[5234.79264297]
+B13;nq_5p_a0_LTcw;nq;1;False;True;i;[0.38050794];[169.88454435];[0.];[1.];[3677.06124914]
+B13;nq_5p_a0_LTcw;nq;2;False;False;i;[0.40746706];[168.12754192];[0.];[0.790317];[3735.88697006]
+B13;nq_5p_a0_LTcw;nq;3;False;False;i;[0.44397471];[157.71792786];[0.];[1.];[10203.99506754]
+B13;nq_5p_a0_LTcw;nq;4;False;False;i;[0.3360927];[159.8230207];[0.];[0.7075259];[5121.39059481]
