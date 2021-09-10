@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { DocumentApi } from '../api/document/document.api';
-import { UserApi } from '../api/user/user.api';
-import { IDocument } from '../models/document.model';
-import { DataState } from '../state/data/data.state';
+import { DocumentApi } from '../../api/document/document.api';
+import { UserApi } from '../../api/user/user.api';
+import { IDocument } from '../../models/document.model';
+import { DataState } from '../../state/data/data.state';
 
 @Injectable({
   providedIn: 'root'

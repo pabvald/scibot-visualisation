@@ -1,0 +1,21 @@
+:host {
+    display: flex;
+    justify-content: center;
+}
+
+#legend {
+    min-height: 3vh;
+    flex-grow: 0.5;
+    background-color: grey;
+    margin: auto;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: space-evenly;
+
+    span {
+        flex-grow: 1;
+        flex-basis: 0;
+        text-align: center;
+    }
+}

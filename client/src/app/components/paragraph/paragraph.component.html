@@ -1,4 +1,9 @@
-<div id="content" *ngIf="paragraph && paragraph.labels.length > 0">
+<div id="content" 
+    *ngIf="paragraph && paragraph.hasLabels"
+    [ngStyle]="{
+        'padding-left.%': (100 * paragraph.x1),
+        'padding-right.%': (100 * (1-paragraph.x2))
+    }">
     <app-label *ngFor="let lbl of paragraph.labels; index as i"
                 [label]="lbl">
     </app-label>

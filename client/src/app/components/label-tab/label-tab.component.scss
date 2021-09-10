@@ -1,0 +1,45 @@
+:host {
+  display: flex;
+  flex-direction: row;
+  flex-wrap:nowrap;
+  
+}
+
+.toggle-container {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  justify-content: space-between;
+
+  label {
+    display: flex;
+    align-items: flex-start;
+    padding: 0px 2px 0px 2px;
+  }
+}
+
+.slider-container {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  justify-content: space-around;
+
+  label {
+    flex-grow: 1;
+    display: flex;
+    align-items: center;
+  }
+
+  .value-label {
+    font-weight: 600;
+  }
+
+  mat-slider {
+    flex-grow: 2;
+
+  }  
+}
+
+.margin {
+  margin: 8px;
+}

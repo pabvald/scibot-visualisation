@@ -2,8 +2,12 @@ import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { HttpClientModule } from '@angular/common/http';
 import { MatTabsModule } from '@angular/material/tabs';
-import {MatSelectModule} from '@angular/material/select';
-import {MatButtonModule} from '@angular/material/button';
+import { MatSelectModule} from '@angular/material/select';
+import { MatButtonModule} from '@angular/material/button';
+import { MatSliderModule} from '@angular/material/slider';
+import { MatCardModule} from '@angular/material/card';
+import { FormsModule } from '@angular/forms';
+import {MatSlideToggleModule} from '@angular/material/slide-toggle';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './components/app/app.component';
@@ -14,6 +18,8 @@ import { MainPanelComponent } from './components/main-panel/main-panel.component
 import { DocumentComponent } from './components/document/document.component';
 import { ParagraphComponent } from './components/paragraph/paragraph.component';
 import { LabelComponent } from './components/label/label.component';
+import { LabelTabComponent } from './components/label-tab/label-tab.component';
+import { ColorLegendComponent } from './components/color-legend/color-legend.component';
 
 
 @NgModule({
@@ -24,7 +30,9 @@ import { LabelComponent } from './components/label/label.component';
     MainPanelComponent,
     DocumentComponent,
     ParagraphComponent,
-    LabelComponent
+    LabelComponent,
+    LabelTabComponent,
+    ColorLegendComponent
   ],
   imports: [
     BrowserModule,
@@ -33,7 +41,11 @@ import { LabelComponent } from './components/label/label.component';
     BrowserAnimationsModule,
     MatTabsModule,
     MatSelectModule,
-    MatButtonModule
+    MatButtonModule,
+    MatSliderModule,
+    FormsModule,
+    MatCardModule,
+    MatSlideToggleModule
   ],
   providers: [],
   bootstrap: [AppComponent]

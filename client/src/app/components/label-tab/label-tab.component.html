@@ -1,0 +1,61 @@
+<div class="section">
+  <span class="section-title">
+    Fixation duration:
+  </span>
+  <div class="slider-container">
+    <label id="name-label">Min. fixation</label>
+    <mat-slider
+      class="margin"
+      [disabled]="isDisabled"
+      [min]="minFixationInterval[0]"
+      [max]="minFixationInterval[1]"        
+      [step]="fixationStep"
+      [thumbLabel]="thumbLabel"
+      (change)="onMinFixationChange($event)"
+      aria-labelledby="name-label">
+    </mat-slider>
+    <label class="value-label">{{minFixation}}</label>
+  </div>
+  
+  <div class="slider-container">
+    <label id="name-label">Max. fixation</label>
+    <mat-slider
+          class="margin"
+          [disabled]="isDisabled"
+          [min]="maxFixationInterval[0]"
+          [max]="maxFixationInterval[1]"          
+          [step]="fixationStep"
+          [thumbLabel]="thumbLabel"
+          (change)="onMaxFixationChange($event)"
+          aria-labelledby="name-label">
+      </mat-slider>
+    <label class="value-label">{{maxFixation}}</label>
+  </div>
+</div>
+
+<div class="section">
+  <span class="section-title">
+    Horizontal fixation area: 
+  </span>
+  <div class="slider-container">
+    <label id="name-label">Left margin</label>
+    <span>px</span>
+  </div>
+  <div class="slider-container">
+    <label id="name-label">Right margin</label>
+    <span>px</span>
+  </div>
+</div>
+
+<div class="toggle-container">
+  <label>Off</label>
+  <mat-slide-toggle
+  [checked]="!isDisabled"
+  (change)="onIsDisabledChange($event)">
+  </mat-slide-toggle>
+  <label>On</label>
+</div>
+
+
+
+

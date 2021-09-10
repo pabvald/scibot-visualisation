@@ -1,9 +1,7 @@
-export interface ILabel {
+import { IMapping } from "./mapping.model";
+
+export interface ILabel extends IMapping {
     id: number;
-    x1: number;
-    y1: number;
-    x2: number;
-    y2: number;
     text: string;
     fixationDuration: number;
 }
@@ -26,5 +24,13 @@ export class Label implements ILabel {
         this.y2 = labelObject.y2; 
         this.text = labelObject.text;
         this.fixationDuration = labelObject.fixationDuration;
+    }
+
+    get width(): number {
+        return this.x2 - this.x1;
+    }
+
+    get height(): number {
+        return this.y2 - this.y1;
     }
 }

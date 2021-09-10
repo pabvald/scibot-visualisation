@@ -1,14 +1,12 @@
 import { ILabel, Label } from "./label.model";
+import { IMapping } from "./mapping.model";
 
-export interface IParagraph {
+export interface IParagraph  extends IMapping {
     id: number;
-    x1: number;
-    y1: number;
-    x2: number;
-    y2: number;
     answer: boolean;
     labels: ILabel[];
     isTitle: boolean;
+    hasLabels: boolean;
 }
   
 
@@ -33,5 +31,17 @@ export class Paragraph implements IParagraph {
 
     get isTitle(): boolean {
         return this.id == -1;
+    }
+
+    get hasLabels(): boolean {
+        return this.labels.length > 0;
+    }
+
+    get width(): number {
+        return this.x2 - this.x1;
+    }
+
+    get height(): number {
+        return this.y2 - this.y1;
     }
 }

@@ -1,39 +1,35 @@
  <!-- Check https://material.angular.io/components/select/overview -->
- <div>
     <!-- User selection -->
-    <mat-form-field appearance="fill">
-        <mat-label>User</mat-label>
-        <mat-select [(value)]="selUserId">
-            <mat-option *ngFor="let uid of userIds" [value]="uid">
-                {{uid}}
-            </mat-option>
-        </mat-select>
-    </mat-form-field>
+<mat-form-field appearance="fill">
+    <mat-label>User</mat-label>
+    <mat-select [(value)]="selUserId">
+        <mat-option *ngFor="let uid of userIds" [value]="uid">
+            {{uid}}
+        </mat-option>
+    </mat-select>
+</mat-form-field>
 
-    <!-- Document selection -->
-    <mat-form-field appearance="fill">
-        <mat-label>Document</mat-label>
-        <mat-select [(value)]="selDocumentId">
-            <mat-option *ngFor="let docid of documentIds" [value]="docid">
-                {{docid}}
-            </mat-option>
-        </mat-select>
-    </mat-form-field>
+<!-- Document selection -->
+<mat-form-field appearance="fill">
+    <mat-label>Document</mat-label>
+    <mat-select [(value)]="selDocumentId">
+        <mat-option *ngFor="let docid of documentIds" [value]="docid">
+            {{docid}}
+        </mat-option>
+    </mat-select>
+</mat-form-field>
 
-    <!-- Load button -->
-    <button mat-button  *ngIf="isUpdating; else notUpdating" 
-            color="primary" 
-            [disabled]="true">
-        Loading...
+<!-- Load button -->
+<button mat-button  *ngIf="isUpdating; else notUpdating" 
+        color="primary" 
+        [disabled]="true">
+    Loading...
+</button>
+    
+<ng-template #notUpdating>
+    <button mat-button color="primary" 
+            (click)="loadData()" 
+            [disabled]="loadDisabled">
+        Load
     </button>
-      
-    <ng-template #notUpdating>
-        <button mat-button color="primary" 
-                (click)="loadData()" 
-                [disabled]="loadDisabled">
-            Load
-        </button>
-    </ng-template> 
-
-
-</div>
+</ng-template> 
