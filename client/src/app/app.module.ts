@@ -6,8 +6,10 @@ import { MatSelectModule} from '@angular/material/select';
 import { MatButtonModule} from '@angular/material/button';
 import { MatSliderModule} from '@angular/material/slider';
 import { MatCardModule} from '@angular/material/card';
-import { FormsModule } from '@angular/forms';
-import {MatSlideToggleModule} from '@angular/material/slide-toggle';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { MatSlideToggleModule} from '@angular/material/slide-toggle';
+import { MatInputModule} from '@angular/material/input';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './components/app/app.component';
@@ -45,7 +47,10 @@ import { ColorLegendComponent } from './components/color-legend/color-legend.com
     MatSliderModule,
     FormsModule,
     MatCardModule,
-    MatSlideToggleModule
+    MatSlideToggleModule,
+    MatFormFieldModule,
+    MatInputModule,
+    ReactiveFormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

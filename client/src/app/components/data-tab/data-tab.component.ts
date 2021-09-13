@@ -22,7 +22,7 @@ export class DataTabComponent implements OnInit {
   }
 
   /** Load button is disabled */
-  get loadDisabled(): boolean {
+  get isLoadDisabled(): boolean {
     return (this.selUserId === undefined) || (this.selDocumentId === undefined);
   }
 

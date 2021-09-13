@@ -23,21 +23,38 @@ export class LabelLevelState {
   }
 
   /**
+   * @returns the app state is being updated (`true`) or not (`false`)
+   */
+  isDisabled$(): Observable<boolean> {
+    return this.labelLevelDisabled$.asObservable();
+  }
+  
+  /**
+   * @returns minimum fixation time (ms) to be visualized
+   */
+   getMinFixation$(): Observable<number> {
+    return this.minFixation$.asObservable();
+  } 
+
+  /**
+   * @returns maximum fixation time (ms) to be visualized
+   */
+   getMaxFixation$(): Observable<number> {
+    return this.maxFixation$.asObservable();
+  }
+
+  /**
    * @param isUpdating `true` if the state has been updated, `false` if the state 
    * is going to be updated
    */
   setUpdating(isUpdating: boolean) {
     this.updating$.next(isUpdating);
   }
-
-  /**
-   * @returns the app state is being updated (`true`) or not (`false`)
-   */
-   isDisabled$(): Observable<boolean> {
-    return this.labelLevelDisabled$.asObservable();
-  }
   
-  setDisabled(isDisabled: boolean): void {
+  /**
+   * @param isDisabled the label level is disabled
+   */
+  setDisabled(isDisabled: boolean) {
     return this.labelLevelDisabled$.next(isDisabled);
   }
 
@@ -47,28 +64,13 @@ export class LabelLevelState {
    */
   setLabelLevelDisabled(isLabelLevelDisabled: boolean) {
     this.labelLevelDisabled$.next(isLabelLevelDisabled);
-  }
-
-
-  /**
-   * @returns minimum fixation time (ms) to be visualized
-   */
-  getMinFixation$(): Observable<number> {
-    return this.minFixation$.asObservable();
-  } 
+  }  
 
   /**
    * @param minFixation new minimum fixation time (ms)
    */
   setMinFixation(minFixation: number) {
     this.minFixation$.next(minFixation);
-  }
-
-  /**
-   * @returns maximum fixation time (ms) to be visualized
-   */
-  getMaxFixation$(): Observable<number> {
-    return this.maxFixation$.asObservable();
   }
 
   /**

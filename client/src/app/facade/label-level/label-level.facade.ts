@@ -1,7 +1,9 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
+import { IFixationArea } from 'src/app/models/fixation-area.model';
 import { DataState } from 'src/app/state/data/data.state';
 import { LabelLevelState } from 'src/app/state/label-level/label-level.state';
+import { DataFacade } from '../data/data.facade';
 
 @Injectable({
   providedIn: 'root'
@@ -10,14 +12,16 @@ export class LabelLevelFacade {
 
   private minFixation$: Observable<number>;
   private maxFixation$: Observable<number>;
+  private fixationArea$: Observable<IFixationArea>;
 
   constructor(
+    private dataFacade: DataFacade,
     private labelState: LabelLevelState,
     private dataState: DataState) { 
 
       this.minFixation$ = this.labelState.getMinFixation$();
       this.maxFixation$ = this.labelState.getMaxFixation$();
-     
+      this.fixationArea$ = this.dataState.getFixationArea$();     
     }
 
   /** Some state is being updated */
@@ -29,11 +33,31 @@ export class LabelLevelFacade {
   isDisabled$(): Observable<boolean> {
     return this.labelState.isDisabled$();
   }
-
-  setDisabled(isDisabled: boolean): void {
-    this.labelState.setDisabled(isDisabled);
+  
+  /**
+   * @returns the mimimum visualized fixation. 
+   */
+   getMinFixation$(): Observable<number> {
+    return this.minFixation$;
   }
 
+  /**
+   * @returns the maximum visualized fixation.
+   */
+   getMaxFixation$(): Observable<number> {
+    return this.maxFixation$;
+  }
+
+  getFixationArea$(): Observable<IFixationArea> {
+    return this.fixationArea$;
+  }
+
+  /**
+   * @param isDisabled the label level is disabled
+   */
+  setDisabled(isDisabled: boolean) {
+    this.labelState.setDisabled(isDisabled);
+  }
 
   /**
    * Sets the mimimum visualized fixation.
@@ -50,13 +74,6 @@ export class LabelLevelFacade {
   }
 
   /**
-   * @returns the mimimum visualized fixation. 
-   */
-  getMinFixation$(): Observable<number> {
-    return this.minFixation$;
-  }
-
-  /**
    * Sets the maximum visualized fixation.
    * @param maxFixation new maximum visualized fixation
    */
@@ -67,10 +84,12 @@ export class LabelLevelFacade {
   }
 
   /**
-   * @returns the maximum visualized fixation.
+   * Sets the fixation area.
+   * @param fixationArea fixation area
    */
-  getMaxFixation$(): Observable<number> {
-    return this.maxFixation$;
+  setFixationArea(fixationArea: IFixationArea) {
+    this.dataState.setUpdating(true);
+    this.dataState.setFixationArea(fixationArea);
+    this.dataFacade.reloadDocument();
   }
-
 }

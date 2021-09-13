@@ -2,7 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { MatSlideToggleChange } from '@angular/material/slide-toggle';
 import { MatSliderChange } from '@angular/material/slider';
 import { LabelLevelFacade } from 'src/app/facade/label-level/label-level.facade';
-import { LabelLevelState } from 'src/app/state/label-level/label-level.state';
+import { FixationArea, IFixationArea } from 'src/app/models/fixation-area.model';
+import { FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 
 @Component({
   selector: 'app-label-tab',
@@ -12,25 +13,69 @@ import { LabelLevelState } from 'src/app/state/label-level/label-level.state';
 export class LabelTabComponent implements OnInit {
   
   isDisabled: boolean = false; 
+  isLabelLevelUpdating: boolean = false;
+  isDataUpdating: boolean = false;
 
   fixationStep = 50;
   thumbLabel = false;
   minFixation: number = 0;
-  maxFixation: number = 700;  
+  maxFixation: number = 0; 
   minFixationInterval: number[] = [0, 300];
   maxFixationInterval: number[] = [400, 700];
    
-  
-  constructor(private labelLevelFacade: LabelLevelFacade) { 
+  fixationAreaOptions: FormGroup;
+  leftMarginCtrl = new FormControl({value: null}, Validators.min(0));
+  rightMarginCtrl = new FormControl({value: null}, Validators.min(0));
+
+
+  constructor(private labelLevelFacade: LabelLevelFacade, fb: FormBuilder) { 
+    
+    // create form group
+    this.fixationAreaOptions = fb.group({
+      leftMargin: this.leftMarginCtrl,
+      rightMargin: this.rightMarginCtrl
+    });
+    
+    // subscriptions
     this.labelLevelFacade.isDisabled$()
-                         .subscribe((d) => {this.isDisabled = d});
+                        .subscribe((value) => {
+                          this.isDisabled = value; 
+                          this.enableFixationAreaOptions();
+                        });
     this.labelLevelFacade.getMinFixation$()
-                        .subscribe((value) => {this.minFixation = value});
+                        .subscribe((value) => { this.minFixation = value; });
     this.labelLevelFacade.getMaxFixation$()
-                        .subscribe((value) => {this.maxFixation = value});
+                        .subscribe((value) => { this.maxFixation = value; });
+    this.labelLevelFacade.getFixationArea$()
+                        .subscribe((fixationArea) => {
+                          this.fixationAreaOptions.controls['leftMargin']
+                                                  .setValue(fixationArea.leftMargin);
+                          this.fixationAreaOptions.controls['rightMargin']
+                                                  .setValue(fixationArea.rightMargin);
+                        });    
   }
 
   ngOnInit(): void {
+    this.enableFixationAreaOptions();
+  }
+
+  /**
+   * The apply button is disabled.
+   */
+  get isApplyDisabled(): boolean {
+    return !this.fixationAreaOptions.valid;
+  }
+
+  /**
+   * Enables or disables the form controls depending on the 
+   * `@this.isDisable` value.
+   */
+  enableFixationAreaOptions() {
+    if (this.isDisabled) {
+      this.fixationAreaOptions.disable();
+    } else {
+      this.fixationAreaOptions.enable();
+    }
   }
 
   /**
@@ -60,4 +105,12 @@ export class LabelTabComponent implements OnInit {
     }
   }
 
+  setFixationArea() {
+    if (this.fixationAreaOptions.valid) {
+      this.labelLevelFacade.setFixationArea(
+        new FixationArea(this.leftMarginCtrl.value, this.rightMarginCtrl.value)
+      );
+    }
+    
+  }
 }

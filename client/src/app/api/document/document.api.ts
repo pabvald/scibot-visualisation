@@ -1,7 +1,8 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { IDocument, Document } from 'src/app/models/document.model';
+import { IFixationArea } from 'src/app/models/fixation-area.model';
 import { API_BASE } from '../config';
 
 @Injectable({
@@ -24,9 +25,19 @@ export class DocumentApi {
    * 
    * @param user_id user id
    * @param doc_id document id
+   * @param fixationArea fixation area description
    * @returns the document data of a certain user
    */
-  getDocument(user_id: string, doc_id: string): Observable<IDocument> {
-    return this.http.get<IDocument>(`${this.api}/${user_id}/${doc_id}`);
+  getDocument(user_id: string, doc_id: string, 
+              fixationArea: IFixationArea | undefined): Observable<IDocument> {
+    let httpParams = new HttpParams()
+    
+    console.log("Loading document");
+    if (fixationArea) {
+      Object.keys(fixationArea).forEach(key => {
+          httpParams = httpParams.append(key, fixationArea[key as keyof IFixationArea]);
+        });
+    }
+    return this.http.get<IDocument>(`${this.api}/${user_id}/${doc_id}`, {params: httpParams});
   }
 }

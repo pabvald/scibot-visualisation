@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
+import { IFixationArea } from 'src/app/models/fixation-area.model';
 import { DocumentApi } from '../../api/document/document.api';
 import { UserApi } from '../../api/user/user.api';
 import { IDocument } from '../../models/document.model';
@@ -22,7 +23,6 @@ export class DataFacade {
       this.userIds$ = this.userApi.getIds();
       this.documentIds$ = this.documentApi.getIds();
       this.document$ = this.dataState.getDocument$();
-      
     }
   
   /** The data state is being updated */
@@ -52,13 +52,31 @@ export class DataFacade {
   }
 
   /**
-   * Loads a document.
-   * @param user_id user id
-   * @param doc_id document id
+   * Reloads the current document.
    */
-  loadDocument(user_id: string, doc_id: string) {
+  reloadDocument() {
+    let userId: string = ""; 
+    let docId: string = "";
+    
+    this.document$.subscribe((doc) =>{
+      userId = doc.userId;
+      docId = doc.id;    
+    })
+    this.loadDocument(userId, docId);
+  }
+
+  /**
+   * Loads a document.
+   * @param userId user id
+   * @param docId document id
+   */
+  loadDocument(userId: string, docId: string) {
+    let fixationArea: IFixationArea | undefined = undefined;
+
     this.dataState.setUpdating(true);
-    this.documentApi.getDocument(user_id, doc_id)
+    this.dataState.getFixationArea$()
+                  .subscribe((data) => {fixationArea = data});
+    this.documentApi.getDocument(userId, docId, fixationArea)
       .subscribe(
         (document) => this.dataState.setDocument(document),
         (error) => console.log(error),
