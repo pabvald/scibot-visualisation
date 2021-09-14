@@ -16,28 +16,27 @@ export class DocumentApi {
 
   /**
    * @returns all the user ids
-   */
+   */ 
   getIds(): Observable<string[]> {
     return this.http.get<string[]>(`${this.api}/ids`);
   }
 
   /**
    * 
-   * @param user_id user id
-   * @param doc_id document id
+   * @param userID user id
+   * @param docId document id
    * @param fixationArea fixation area description
    * @returns the document data of a certain user
    */
-  getDocument(user_id: string, doc_id: string, 
+  getDocument(userID: string, docId: string, 
               fixationArea: IFixationArea | undefined): Observable<IDocument> {
     let httpParams = new HttpParams()
     
-    console.log("Loading document");
     if (fixationArea) {
       Object.keys(fixationArea).forEach(key => {
           httpParams = httpParams.append(key, fixationArea[key as keyof IFixationArea]);
         });
     }
-    return this.http.get<IDocument>(`${this.api}/${user_id}/${doc_id}`, {params: httpParams});
+    return this.http.get<IDocument>(`${this.api}/${userID}/${docId}`, {params: httpParams});
   }
 }

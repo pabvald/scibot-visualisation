@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Observable, combineLatest} from 'rxjs';
+import { first, take} from 'rxjs/operators';
 import { IFixationArea } from 'src/app/models/fixation-area.model';
 import { DocumentApi } from '../../api/document/document.api';
 import { UserApi } from '../../api/user/user.api';
@@ -23,8 +24,29 @@ export class DataFacade {
       this.userIds$ = this.userApi.getIds();
       this.documentIds$ = this.documentApi.getIds();
       this.document$ = this.dataState.getDocument$();
-    }
+      this.initializeDataState();
+  }
+
+  /**
+   *  Initialize the data state.
+   */
+  initializeDataState() {
+    let docId = "";
+    let userId = "";
+    combineLatest([this.userIds$, this.documentIds$])
+      .pipe(first())
+      .subscribe( 
+        ([userIds, documentIds]) => {
+            docId = documentIds[0];
+            userId = userIds[0];
+            this.loadDocument(userId, docId);
+          },
+        (error) => { console.log(error); },
+        () => { }
+        );
+  }
   
+
   /** The data state is being updated */
   isUpdating$(): Observable<boolean> {
     return this.dataState.isUpdating$();
@@ -57,11 +79,10 @@ export class DataFacade {
   reloadDocument() {
     let userId: string = ""; 
     let docId: string = "";
-    
-    this.document$.subscribe((doc) =>{
-      userId = doc.userId;
-      docId = doc.id;    
-    })
+    this.document$.pipe(first()).subscribe(document => {
+      userId = document.userId;
+      docId = document.id;
+    });
     this.loadDocument(userId, docId);
   }
 
@@ -71,16 +92,16 @@ export class DataFacade {
    * @param docId document id
    */
   loadDocument(userId: string, docId: string) {
-    let fixationArea: IFixationArea | undefined = undefined;
+    let fixationArea: IFixationArea | undefined;
 
     this.dataState.setUpdating(true);
     this.dataState.getFixationArea$()
                   .subscribe((data) => {fixationArea = data});
     this.documentApi.getDocument(userId, docId, fixationArea)
       .subscribe(
-        (document) => this.dataState.setDocument(document),
-        (error) => console.log(error),
-        () => this.dataState.setUpdating(false)
+        (document) => { this.dataState.setDocument(document); },
+        (error) => { console.log(error); },
+        () => { this.dataState.setUpdating(false); }
       );
   }
 

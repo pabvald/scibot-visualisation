@@ -10,6 +10,8 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatSlideToggleModule} from '@angular/material/slide-toggle';
 import { MatInputModule} from '@angular/material/input';
+import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
+
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './components/app/app.component';
@@ -22,6 +24,7 @@ import { ParagraphComponent } from './components/paragraph/paragraph.component';
 import { LabelComponent } from './components/label/label.component';
 import { LabelTabComponent } from './components/label-tab/label-tab.component';
 import { ColorLegendComponent } from './components/color-legend/color-legend.component';
+import { DocumentDetailsComponent } from './components/document-details/document-details.component';
 
 
 @NgModule({
@@ -34,7 +37,8 @@ import { ColorLegendComponent } from './components/color-legend/color-legend.com
     ParagraphComponent,
     LabelComponent,
     LabelTabComponent,
-    ColorLegendComponent
+    ColorLegendComponent,
+    DocumentDetailsComponent
   ],
   imports: [
     BrowserModule,
@@ -50,7 +54,8 @@ import { ColorLegendComponent } from './components/color-legend/color-legend.com
     MatSlideToggleModule,
     MatFormFieldModule,
     MatInputModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    MatProgressSpinnerModule
   ],
   providers: [],
   bootstrap: [AppComponent]

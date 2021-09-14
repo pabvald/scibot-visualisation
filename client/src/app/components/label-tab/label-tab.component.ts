@@ -4,6 +4,7 @@ import { MatSliderChange } from '@angular/material/slider';
 import { LabelLevelFacade } from 'src/app/facade/label-level/label-level.facade';
 import { FixationArea, IFixationArea } from 'src/app/models/fixation-area.model';
 import { FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
+import { DataFacade } from 'src/app/facade/data/data.facade';
 
 @Component({
   selector: 'app-label-tab',
@@ -28,7 +29,10 @@ export class LabelTabComponent implements OnInit {
   rightMarginCtrl = new FormControl({value: null}, Validators.min(0));
 
 
-  constructor(private labelLevelFacade: LabelLevelFacade, fb: FormBuilder) { 
+  constructor(
+    private dataFacade: DataFacade,
+    private labelLevelFacade: LabelLevelFacade, 
+    fb: FormBuilder) { 
     
     // create form group
     this.fixationAreaOptions = fb.group({
@@ -42,6 +46,10 @@ export class LabelTabComponent implements OnInit {
                           this.isDisabled = value; 
                           this.enableFixationAreaOptions();
                         });
+    this.dataFacade.isUpdating$()
+                        .subscribe((value) => { this.isDataUpdating = value; })
+    this.labelLevelFacade.isUpdating$()
+                        .subscribe((value) => { this.isLabelLevelUpdating = value; });
     this.labelLevelFacade.getMinFixation$()
                         .subscribe((value) => { this.minFixation = value; });
     this.labelLevelFacade.getMaxFixation$()
@@ -57,6 +65,13 @@ export class LabelTabComponent implements OnInit {
 
   ngOnInit(): void {
     this.enableFixationAreaOptions();
+  }
+
+  /**
+   * Any state is being updated.
+   */
+  get isUpdating(): boolean {
+    return this.isLabelLevelUpdating || this.isDataUpdating;
   }
 
   /**
@@ -105,6 +120,9 @@ export class LabelTabComponent implements OnInit {
     }
   }
 
+  /**
+   * 
+   */
   setFixationArea() {
     if (this.fixationAreaOptions.valid) {
       this.labelLevelFacade.setFixationArea(

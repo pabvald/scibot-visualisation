@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable, Subject } from 'rxjs';
+import { BehaviorSubject, Observable, ReplaySubject, Subject } from 'rxjs';
 import { FixationArea, IFixationArea } from 'src/app/models/fixation-area.model';
 import { IDocument } from '../../models/document.model';
 
@@ -8,8 +8,8 @@ import { IDocument } from '../../models/document.model';
 })
 export class DataState {
 
-  private updating$ = new BehaviorSubject<boolean>(false);
-  private document$ = new Subject<IDocument>();
+  private updating$ = new BehaviorSubject<boolean>(true);
+  private document$ = new ReplaySubject<IDocument>();
   private fixationArea$ = new BehaviorSubject<IFixationArea>(
                                             new FixationArea(8, 14));
   private fixationLeftMargin$  = new BehaviorSubject<number>(8);
@@ -54,7 +54,7 @@ export class DataState {
    * @param isUpdating `true` if the state has been updated, `false` if the state 
    * is going to be updated
    */
-   setUpdating(isUpdating: boolean) {
+  setUpdating(isUpdating: boolean) {
     this.updating$.next(isUpdating);
   }
 

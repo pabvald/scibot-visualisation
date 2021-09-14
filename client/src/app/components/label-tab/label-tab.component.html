@@ -66,7 +66,7 @@
 
   <!-- Reload button -->
   <div class="button-container">
-    <button mat-button  *ngIf="isDataUpdating; else notUpdating" 
+    <button mat-button  *ngIf="isUpdating; else notUpdating" 
       color="primary" 
       [disabled]="true">
       Applying...
@@ -86,8 +86,9 @@
 <div class="toggle-container">
   <label>Off</label>
   <mat-slide-toggle
-  [checked]="!isDisabled"
-  (change)="onIsDisabledChange($event)">
+    color="primary"
+    [checked]="!isDisabled"
+    (change)="onIsDisabledChange($event)">
   </mat-slide-toggle>
   <label>On</label>
 </div>

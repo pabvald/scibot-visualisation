@@ -19,6 +19,10 @@ export class DataTabComponent implements OnInit {
     this.dataFacade.isUpdating$().subscribe((value) => {this.isUpdating = value});
     this.dataFacade.getUserIds$().subscribe((data) => {this.userIds = data});
     this.dataFacade.getDocumentIds$().subscribe((data) => {this.documentIds = data});
+    this.dataFacade.getDocument$().subscribe((document) => {
+      this.selDocumentId = document.id;
+      this.selUserId = document.userId;
+    })
   }
 
   /** Load button is disabled */
@@ -30,7 +34,8 @@ export class DataTabComponent implements OnInit {
    * Methods
    */
   
-  ngOnInit() {}
+  ngOnInit() {
+  }
 
   /** Load document */
   loadData(): void {

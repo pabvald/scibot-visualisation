@@ -1,0 +1,82 @@
+
+
+<!-- begin snippet: js hide: false console: true babel: null -->
+
+<!-- language: lang-js -->
+
+    const WIDTH = 101; // 0 to 100
+    const HEIGHT = 1;
+      
+    let context;
+
+    function initCanvas(gradientColors) // gradientColors [colorA, colorB, ..]
+    {
+      // Canvas
+      const canvasElement = document.createElement("CANVAS");
+      canvasElement.width = WIDTH;
+      canvasElement.height = HEIGHT;
+
+      context = canvasElement.getContext("2d");
+      
+      // Gradient
+      const gradient = context.createLinearGradient(0, 0, WIDTH, 0); // x0, y0, x1, y1
+      
+      const step = 1 / (gradientColors.length - 1); // need to validate at least two colors in gradientColors
+      let val = 0;
+      gradientColors.forEach(color => {
+        gradient.addColorStop(val, color);
+        val += step;
+      });
+
+      // Fill with gradient
+      context.fillStyle = gradient;
+      context.fillRect(0, 0, WIDTH, HEIGHT); // x, y, width, height
+    }
+
+    function getColor(percent) // percent [0..100]
+    {
+      const color = context.getImageData(percent, 0, 1, 1); // x, y, width, height
+      const rgba = color.data;
+      
+      return `rgb(${ rgba[0] }, ${ rgba[1] }, ${ rgba[2] })`;
+    }
+
+    // Test:
+    initCanvas(['red', 'orange', 'green', 'lime', 'blue']);
+
+    document.getElementById("color0"  ).style.backgroundColor = getColor(0);
+    document.getElementById("color10" ).style.backgroundColor = getColor(10);
+    document.getElementById("color20" ).style.backgroundColor = getColor(20);
+    document.getElementById("color30" ).style.backgroundColor = getColor(30);
+    document.getElementById("color40" ).style.backgroundColor = getColor(40);
+    document.getElementById("color50" ).style.backgroundColor = getColor(50);
+    document.getElementById("color60" ).style.backgroundColor = getColor(60);
+    document.getElementById("color70" ).style.backgroundColor = getColor(70);
+    document.getElementById("color80" ).style.backgroundColor = getColor(80);
+    document.getElementById("color90" ).style.backgroundColor = getColor(90);
+    document.getElementById("color100").style.backgroundColor = getColor(100);
+
+<!-- language: lang-css -->
+
+    .example {
+      width: 100px;
+      height: 25px;
+    }
+
+<!-- language: lang-html -->
+
+    <h3>Gradient colors: red, orange, green, lime, blue</h3>
+    <div id="color0"   class="example">0%  </div>
+    <div id="color10"  class="example">10% </div>
+    <div id="color20"  class="example">20% </div>
+    <div id="color30"  class="example">30% </div>
+    <div id="color40"  class="example">40% </div>
+    <div id="color50"  class="example">50% </div>
+    <div id="color60"  class="example">60% </div>
+    <div id="color70"  class="example">70% </div>
+    <div id="color80"  class="example">80% </div>
+    <div id="color90"  class="example">90% </div>
+    <div id="color100" class="example">100%</div>
+
+<!-- end snippet -->
+
