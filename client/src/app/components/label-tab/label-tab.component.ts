@@ -98,6 +98,7 @@ export class LabelTabComponent implements OnInit {
    */
   onMinFixationChange(event: MatSliderChange): void {
     if (event.value) {
+      console.log("minFixation " + event.value);
       this.labelLevelFacade.setMinFixation(event.value);
     }    
   }
@@ -107,6 +108,7 @@ export class LabelTabComponent implements OnInit {
    */
   onMaxFixationChange(event: MatSliderChange): void {
     if (event.value) {
+      console.log("maxFixation " + event.value);
       this.labelLevelFacade.setMaxFixation(event.value);
     }    
   }

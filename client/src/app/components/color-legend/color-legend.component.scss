@@ -3,21 +3,24 @@
 :host {
     display: flex;
     justify-content: center;
+    padding: 0.5% 0%;
+
+    div {
+        height: 3vh;
+        flex-grow: 0.7;
+        background: $gradient-right;
+        margin: auto;
+        display: flex;
+        flex-direction: row;
+        flex-wrap: nowrap;
+        justify-content: space-evenly;
+    
+        span {
+            flex-grow: 1;
+            flex-basis: 0;
+            text-align: center;
+            font-size: 0.85vw;
+        }
+    }    
 }
 
-#legend {
-    min-height: 3vh;
-    flex-grow: 0.5;
-    background: $gradient-right;
-    margin: auto;
-    display: flex;
-    flex-direction: row;
-    flex-wrap: nowrap;
-    justify-content: space-evenly;
-
-    span {
-        flex-grow: 1;
-        flex-basis: 0;
-        text-align: center;
-    }
-}

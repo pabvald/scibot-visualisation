@@ -1,0 +1,28 @@
+:host{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+
+    padding: 0.5% 0% 1% 0%;
+    //border-bottom: 1px solid black;
+   
+    div {
+        flex-grow: 1;
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        b {
+            text-align: center;
+        }
+
+        span {
+            padding: 2px 4px;
+            //background-color: rgb(216, 208, 208);
+        }
+    }
+
+    div#query {
+        flex-grow: 4;
+    }
+
+}

@@ -6,7 +6,6 @@ import { BehaviorSubject, Observable } from 'rxjs';
 })
 export class LabelLevelState {
 
-  
   private updating$ = new BehaviorSubject<boolean>(false);
   private labelLevelDisabled$ = new BehaviorSubject<boolean>(false);
   private minFixation$ = new BehaviorSubject<number>(0);

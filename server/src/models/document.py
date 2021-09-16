@@ -64,6 +64,10 @@ class DocumentModel(object):
         return cls(user_id, article_id, corpus, article.query.strip(), paragraphs)
 
     @property
+    def query(self) -> str:
+        return self._query
+
+    @property
     def user_id(self) -> str:
         return self._user_id
 

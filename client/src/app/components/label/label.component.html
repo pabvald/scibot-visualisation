@@ -1,4 +1,5 @@
 <div id="content" 
-    *ngIf="label">
+    *ngIf="label"
+    [ngStyle]="{ 'background-color': color }">
 {{label.text}}
 </div>

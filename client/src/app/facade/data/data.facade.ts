@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Observable, combineLatest} from 'rxjs';
-import { first, take} from 'rxjs/operators';
+import { first, shareReplay, take} from 'rxjs/operators';
 import { IFixationArea } from 'src/app/models/fixation-area.model';
 import { DocumentApi } from '../../api/document/document.api';
 import { UserApi } from '../../api/user/user.api';
@@ -21,8 +21,8 @@ export class DataFacade {
     private userApi: UserApi,
     private dataState: DataState) { 
       
-      this.userIds$ = this.userApi.getIds();
-      this.documentIds$ = this.documentApi.getIds();
+      this.userIds$ = this.userApi.getIds().pipe(shareReplay(1));
+      this.documentIds$ = this.documentApi.getIds().pipe(shareReplay(1));
       this.document$ = this.dataState.getDocument$();
       this.initializeDataState();
   }

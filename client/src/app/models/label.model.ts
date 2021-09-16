@@ -23,9 +23,18 @@ export class Label implements ILabel {
         this.x2 = labelObject.x2; 
         this.y2 = labelObject.y2; 
         this.text = labelObject.text;
-        this.fixationDuration = labelObject.fixationDuration;
+        this.fixationDuration = Label.transFixDuration(labelObject.fixationDuration);
     }
 
+    /**
+     * Transforms the fixation duration to the corresponding units.
+     * @param duration in seconds
+     * @returns durations in miliseconds
+     */
+    private static transFixDuration(duration: number): number {
+        return (duration * 1000); 
+    }
+    
     get width(): number {
         return this.x2 - this.x1;
     }

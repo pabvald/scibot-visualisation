@@ -36,8 +36,8 @@ DOC_IDS = ["g-rel_q075-1_i",
            "nq_7p_a5_NTE0"]
 
 parser = reqparse.RequestParser()
-parser.add_argument('hit_left_margin', type=int, default=8)
-parser.add_argument('hit_right_margin', type=int, default=14)
+parser.add_argument('leftMargin', type=int, default=8)
+parser.add_argument('rightMargin', type=int, default=14)
 
 
 class DocumentResource(Resource):
@@ -53,8 +53,8 @@ class DocumentResource(Resource):
             doc_id: document id
         """
         args = parser.parse_args()
-        hit_left_margin = args['hit_left_margin']
-        hit_right_margin = args['hit_right_margin']
+        hit_left_margin = args['leftMargin']
+        hit_right_margin = args['rightMargin']
 
         if user_id not in USER_IDS:
             return {'message': f"The id '{user_id}' does not correspond to any user"}, 404
