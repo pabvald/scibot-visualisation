@@ -10,10 +10,7 @@ export class DataState {
 
   private updating$ = new BehaviorSubject<boolean>(true);
   private document$ = new ReplaySubject<IDocument>();
-  private fixationArea$ = new BehaviorSubject<IFixationArea>(
-                                            new FixationArea(8, 14));
-  private fixationLeftMargin$  = new BehaviorSubject<number>(8);
-  private fixationRightMargin$ = new BehaviorSubject<number>(14);
+  private fixationArea$ = new BehaviorSubject<IFixationArea>(new FixationArea(8, 14));
 
 
   constructor() { }
@@ -37,20 +34,6 @@ export class DataState {
   }
 
   /**
-   * @returns left margin of the fixation area
-   */
-  getFixationLeftMargin$(): Observable<number> {
-    return this.fixationLeftMargin$.asObservable();
-  }
-
-  /**
-   * @returns right margin of the fixation area
-   */
-  getFixationRightMargin$(): Observable<number> {
-    return this.fixationRightMargin$.asObservable();
-  }
-
-  /**
    * @param isUpdating `true` if the state has been updated, `false` if the state 
    * is going to be updated
    */
@@ -69,21 +52,5 @@ export class DataState {
   setFixationArea(fixationArea: IFixationArea) {
     this.fixationArea$.next(fixationArea);
   }
-  
-  /**
-   * Sets the new left margin of the fixation area.
-   * @param fixationleftMargin new left margin of the fixation area
-   */
-  setFixationLeftMargin(fixationleftMargin: number) {
-    this.fixationLeftMargin$.next(fixationleftMargin);
-  }
-
-  /**
-   * Sets the new right margin of the fixation area.
-   * @param fixationRightMargin new right margin of the fixation area
-   */
-  setFixationRightMargin(fixationRightMargin: number) {
-    this.fixationRightMargin$.next(fixationRightMargin);
-  }
-  
+    
 }

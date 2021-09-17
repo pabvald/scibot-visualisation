@@ -3,21 +3,25 @@
     flex-direction: row;
     flex-wrap: nowrap;
 
-    padding: 0.5% 0% 1% 0%;
-    //border-bottom: 1px solid black;
+    padding: 0.5% 1% 1% 1%;
    
     div {
         flex-grow: 1;
         display: flex;
         flex-wrap: wrap;
         align-items: center;
+
         b {
+            padding: 0.5vh 1vw;
             text-align: center;
         }
 
         span {
-            padding: 2px 4px;
-            //background-color: rgb(216, 208, 208);
+            font-size: 1vw;
+            padding: 0.5vh 1vw;
+            background-color: rgb(240, 239, 239);
+            border: 1px solid rgba(187, 183, 183, 0.938);
+            border-radius: 12px;            
         }
     }
 

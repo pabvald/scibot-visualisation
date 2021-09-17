@@ -3,7 +3,7 @@
     Fixation duration:
   </span>
   <div class="slider-container">
-    <label id="name-label">Min. fixation</label>
+    <label id="name-label">Fixation Min</label>
     <mat-slider
       color="primary"
       class="margin"
@@ -20,7 +20,7 @@
   </div>
   
   <div class="slider-container">
-    <label id="name-label">Max. fixation</label>
+    <label id="name-label">Fixation Max</label>
     <mat-slider
           color="primary"
           class="margin"
@@ -36,6 +36,7 @@
     <label class="value-label">{{maxFixation}}</label>
   </div>
 </div>
+
 
 <div class="section">
   <span class="section-title">
@@ -63,27 +64,26 @@
     <span matSuffix>letters</span>
     <mat-error *ngIf="rightMarginCtrl.invalid">Min margin: 0 letters</mat-error>
   </mat-form-field> 
-
-  <!-- Reload button -->
-  <div class="button-container">
-    <button mat-button  *ngIf="isUpdating; else notUpdating" 
-      color="primary" 
-      [disabled]="true">
-      Applying...
-    </button>
-
-    <ng-template #notUpdating>
-      <button mat-button color="primary" 
-          [disabled]="isApplyDisabled"
-          (click)="setFixationArea()">
-      Apply
-      </button>
-    </ng-template> 
-  </div>
-  
 </div>
 
-<div class="toggle-container">
+<div class="section" id="button-container">
+  <!-- Reload button -->
+  <button mat-button  *ngIf="isUpdating; else notUpdating" 
+    color="primary" 
+    [disabled]="true">
+    Applying...
+  </button>
+
+  <ng-template #notUpdating>
+    <button mat-button color="primary" 
+        [disabled]="isApplyDisabled"
+        (click)="setFixationArea()">
+    Apply
+    </button>
+  </ng-template> 
+</div>
+
+<div class="section" id="toggle-container">
   <label>Off</label>
   <mat-slide-toggle
     color="primary"

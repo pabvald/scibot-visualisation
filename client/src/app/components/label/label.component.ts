@@ -39,6 +39,7 @@ export class LabelComponent implements OnInit {
    * Computes the color of the gradient for the label.
    */
   get color(): string {
+    const alpha = 0.7;
     let colorName: string = `rgb(255, 255, 255)`; // white
     let percent: number; 
 
@@ -50,7 +51,7 @@ export class LabelComponent implements OnInit {
         const color = this.colorGradient.getImageData(percent, 0, 1, 1);
         const rgba = color.data;
         
-        colorName =  `rgb(${ rgba[0] }, ${ rgba[1] }, ${ rgba[2] })`;
+        colorName =  `rgb(${ rgba[0] }, ${ rgba[1] }, ${ rgba[2] }, ${alpha})`;
       }     
     } 
 

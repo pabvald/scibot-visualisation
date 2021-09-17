@@ -1,0 +1,40 @@
+:host {
+    display: flex;
+    flex-direction: row;
+    flex-wrap:nowrap;
+    align-items: center;
+
+    div {
+        padding: 1vh 1vw;
+    }
+
+    div#fields-container {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+
+        mat-form-field {
+            margin-left: 1vw;
+            font-size: 0.9em;
+        }   
+
+        label {
+            display: flex;
+            align-items: baseline;
+        }
+    }
+    
+    div#buttons-container {
+        flex-grow: 1;
+        display: flex;
+        justify-content: flex-start;
+    }
+}
+
+::ng-deep .mat-form-field {
+    .mat-form-field-wrapper {
+        .mat-form-field-flex {
+            padding: 0 .75em;      
+        }            
+    }
+}
