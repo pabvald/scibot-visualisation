@@ -8,7 +8,6 @@ from os.path import join as pjoin
 class ScibotMappingLoader:
     _LABELS_EXT = '*_labels.csv'
     _PARS_EXT = '*_paragraphs.csv'
-    _MODE = 'main'
     _INCLUDE_DATA_SOURCE = []  # "g_rel", "GoogleNQ"
     _STUDY_TYPE = ["main"]  # "main", "train"
 

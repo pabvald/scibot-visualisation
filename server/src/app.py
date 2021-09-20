@@ -2,13 +2,15 @@ from flask import Flask
 from flask_cors import CORS
 from flask_restful import Api
 from resources.user import UserListResource
-from data_loading import SciBotDataLoader, ScibotMappingLoader
+from data_loading import (SciBotDataLoader, ScibotMappingLoader, 
+                         ScibotParagraphFeaturesLoader)
 from resources.document import DocumentResource, DocumentListResource
 
 app = Flask(__name__)
 app.config.from_object('config.Config')  # load configuration
 app.dataloader = SciBotDataLoader(data_dir=app.config['GAZE_DIR'], article_dir=app.config['ARTICLE_DIR'])
 app.mappingloader = ScibotMappingLoader(data_dir=app.config['MAPPING_DIR'])
+app.featuresloader = ScibotParagraphFeaturesLoader(data_dir=app.config['PAR_FEATURES_DIR'])
 
 api = Api(app)
 CORS(app)  # allow CORS

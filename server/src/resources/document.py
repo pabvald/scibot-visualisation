@@ -76,14 +76,16 @@ class DocumentResource(Resource):
             gaze = app.dataloader.grel_reading[user_id][doc_id[:-2]]['dataframe']
             pars_mapping = app.mappingloader.grel_paragraphs[doc_id[:-2]]
             labels_mapping = app.mappingloader.grel_labels[doc_id[:-2]]
+            par_features = app.featuresloader.grel_par_features[user_id][doc_id[:-2]]
         else:
             article = app.dataloader.google_nq_articles[doc_id]
             gaze = app.dataloader.google_nq_reading[user_id][doc_id]['dataframe']
             pars_mapping = app.mappingloader.google_nq_paragraphs[doc_id[:-2]]
             labels_mapping = app.mappingloader.google_nq_labels[doc_id[:-2]]
+            par_features = app.featuresloader.google_nq_par_features[user_id][doc_id]
 
         # create document representation
-        document = DocumentModel.from_data(user_id, article, gaze, pars_mapping, labels_mapping)
+        document = DocumentModel.from_data(user_id, article, gaze, pars_mapping, labels_mapping, par_features)
         # compute fixations on the document's labels
         self._fixation_service.compute_horizontal_hits(document, hit_left_margin, hit_right_margin)
         # serialize document

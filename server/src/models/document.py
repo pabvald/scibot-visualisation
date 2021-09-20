@@ -35,7 +35,7 @@ class DocumentModel(object):
 
     @classmethod 
     def from_data(cls, user_id: str, article: Article, gaze_data: DataFrame, pars_mapping: DataFrame,
-                  labels_mapping: DataFrame):
+                  labels_mapping: DataFrame, par_features: DataFrame):
         paragraphs = []
         _, article_id = os.path.split(article.article_id)
 
@@ -48,17 +48,21 @@ class DocumentModel(object):
             if par_id >= 0: 
                 if corpus == Corpus.grel:
                     par_parsing = {'answer': any([par['answer'] for par in article.paragraphs])}
+                    features = list(par_features.to_numpy()[0])
                 else:
                     par_parsing = {'answer': article.paragraphs[par_id]['answer']}
+                    features = list(par_features.loc[par_features['paragraph_id'] == par_id].to_numpy()[0])
 
             else:
+                features = []
                 par_parsing = {'answer': False}
 
             par_gaze = gaze_data.loc[gaze_data['paragraph_id'] == par_id]
-            par_mapping = pars_mapping.loc[pars_mapping['paragraph_id'] == par_id].to_numpy()[0]
+            par_mapping = list(pars_mapping.loc[pars_mapping['paragraph_id'] == par_id].to_numpy()[0])
             labels_selection = labels_mapping.loc[labels_mapping['paragraph_id'] == par_id]
+
             paragraphs.append(
-                ParagraphModel.from_data(par_parsing, par_gaze, par_mapping, labels_selection)
+                ParagraphModel.from_data(par_parsing, par_gaze, par_mapping, labels_selection, features)
             )
         
         return cls(user_id, article_id, corpus, article.query.strip(), paragraphs)

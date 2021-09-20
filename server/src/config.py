@@ -19,7 +19,8 @@ class Config(object):
     GAZE_DIR = pjoin(DATA_DIR, 'gaze', GAZEDATA_VERSION)
     ARTICLE_DIR = pjoin(DATA_DIR, 'articles')
     MAPPING_DIR = pjoin(DATA_DIR, 'mapping')
-
+    PAR_FEATURES_DIR = pjoin(DATA_DIR, 'paragraph_features')
+    
     # Study's screen dimensions
     SCREEN_WIDTH = 2560
     SCREEN_HEIGHT = 1440
