@@ -1,6 +1,10 @@
 import { ILabel, Label } from "./label.model";
 import { IMapping } from "./mapping.model";
 
+
+/**
+ * Paragraph interface.
+ */
 export interface IParagraph  extends IMapping {
     id: number;
     answer: boolean;
@@ -10,6 +14,9 @@ export interface IParagraph  extends IMapping {
 }
   
 
+/**
+ * Paragraph representation.
+ */
 export class Paragraph implements IParagraph {
     public id: number;
     public x1: number;
@@ -24,6 +31,9 @@ export class Paragraph implements IParagraph {
     public thoroughReadRatio: number;
     public coherentReadLength: number;
 
+    /**
+     * @param paragraphObject a paragraph JSON object
+     */
     constructor(paragraphObject: any) {
         this.id = paragraphObject.id;
         this.x1 = paragraphObject.x1; 
@@ -59,3 +69,45 @@ export class Paragraph implements IParagraph {
         return this.y2 - this.y1;
     }
 }
+
+/** 
+ * Paragraph feature interface.
+ */
+ export interface IParagraphFeatureConf {
+    id: string;     
+    name: string;
+    enabled: boolean; 
+}
+
+export const paragraphFeatures: IParagraphFeatureConf[] = [
+    {
+        id: "avgFixDuration", 
+        name: "Avg. fixation duration", 
+        enabled: false
+    },
+
+    {
+        id: "avgForwardSaccadeLength", 
+        name: "Avg. forward saccade length", 
+        enabled: false
+    },
+
+    {
+        id: "regRatio", 
+        name: "Regression ratio", 
+        enabled: false
+    },
+
+    {
+        id: "thoroughReadRatio", 
+        name: "Thorough read ratio", 
+        enabled: false
+    },
+
+    {
+        id: "coherentReadLength", 
+        name: "Coherent read length", 
+        enabled: false
+    },
+
+];

@@ -25,7 +25,8 @@ import { LabelComponent } from './components/label/label.component';
 import { LabelTabComponent } from './components/label-tab/label-tab.component';
 import { ColorLegendComponent } from './components/color-legend/color-legend.component';
 import { DocumentDetailsComponent } from './components/document-details/document-details.component';
-
+import { ParagraphTabComponent } from './components/paragraph-tab/paragraph-tab.component';
+import {MatCheckboxModule} from '@angular/material/checkbox';
 
 @NgModule({
   declarations: [
@@ -38,7 +39,8 @@ import { DocumentDetailsComponent } from './components/document-details/document
     LabelComponent,
     LabelTabComponent,
     ColorLegendComponent,
-    DocumentDetailsComponent
+    DocumentDetailsComponent,
+    ParagraphTabComponent
   ],
   imports: [
     BrowserModule,
@@ -55,7 +57,8 @@ import { DocumentDetailsComponent } from './components/document-details/document
     MatFormFieldModule,
     MatInputModule,
     ReactiveFormsModule,
-    MatProgressSpinnerModule
+    MatProgressSpinnerModule,
+    MatCheckboxModule
   ],
   providers: [],
   bootstrap: [AppComponent]

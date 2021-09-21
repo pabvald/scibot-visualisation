@@ -15,14 +15,14 @@ export class LabelLevelState {
   constructor() { }
 
   /**
-   * @returns the app state is being updated (`true`) or not (`false`)
+   * @returns the label-level state is being updated (`true`) or not (`false`)
    */
   isUpdating$(): Observable<boolean> {
     return this.updating$.asObservable();
   }
 
   /**
-   * @returns the app state is being updated (`true`) or not (`false`)
+   * @returns the label-level state is disabled (`true`) or not (`false`)
    */
   isDisabled$(): Observable<boolean> {
     return this.labelLevelDisabled$.asObservable();
@@ -43,7 +43,7 @@ export class LabelLevelState {
   }
 
   /**
-   * @param isUpdating `true` if the state has been updated, `false` if the state 
+   * @param isUpdating `false` if the state has been updated, `true` if the state 
    * is going to be updated
    */
   setUpdating(isUpdating: boolean) {
@@ -51,19 +51,11 @@ export class LabelLevelState {
   }
   
   /**
-   * @param isDisabled the label level is disabled
+   * @param isDisabled the label level has to be disabled
    */
   setDisabled(isDisabled: boolean) {
     return this.labelLevelDisabled$.next(isDisabled);
   }
-
-  /**
-   * @param isUpdating `true` if the state has been updated, `false` if the state 
-   * is going to be updated
-   */
-  setLabelLevelDisabled(isLabelLevelDisabled: boolean) {
-    this.labelLevelDisabled$.next(isLabelLevelDisabled);
-  }  
 
   /**
    * @param minFixation new minimum fixation time (ms)

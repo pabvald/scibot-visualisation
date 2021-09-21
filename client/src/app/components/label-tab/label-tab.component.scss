@@ -1,7 +1,5 @@
 :host {
   display: flex;
-  flex-direction: row;
-  flex-wrap:nowrap;
 }
 
 .section {
@@ -21,14 +19,13 @@
   display: flex;
   flex-grow: 1;
   flex-basis: auto;
-  flex-direction: row;
-  justify-content: center;
   padding: 1vh 1vw;
 
   label {
     display: flex;
     align-items: flex-start;
     padding: 0px 2px 0px 2px;
+    margin: 0 1vw;
   }
 }
 

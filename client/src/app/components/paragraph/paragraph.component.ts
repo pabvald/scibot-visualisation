@@ -1,4 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { ParagraphLevelFacade } from 'src/app/facade/paragraph-level/paragraph-level.facade';
 import { IParagraph } from 'src/app/models/paragraph.model';
 
 @Component({
@@ -10,7 +11,7 @@ export class ParagraphComponent implements OnInit {
 
   @Input() paragraph: IParagraph | undefined;
 
-  constructor() { }
+  constructor(private parLevelFacade: ParagraphLevelFacade) { }
 
   ngOnInit(): void {
   }
