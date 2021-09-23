@@ -65,17 +65,17 @@ class ScibotMappingLoader:
         for path in paths:
             # read labels' mapping
             for filename in glob.glob(pjoin(path, self._LABELS_EXT)):
-                doc_id = os.path.split(filename)[-1][:-(len(self._LABELS_EXT) + 1)]
+                doc_id = os.path.split(filename)[-1][:-(len(self._LABELS_EXT) - 1)]
                 data = self._load_mapping(filename)
                 self.google_nq_labels[doc_id] = data
 
             # read paragraphs' mapping
             for filename in glob.glob(pjoin(path, self._PARS_EXT)):
-                doc_id = os.path.split(filename)[-1][:-(len(self._PARS_EXT) + 1)]
+                doc_id = os.path.split(filename)[-1][:-(len(self._PARS_EXT) - 1)]
                 data = self._load_mapping(filename)
                 self.google_nq_paragraphs[doc_id] = data
 
     @staticmethod
     def _load_mapping(path: str):
-        """ Reads a file containing a mapping into a Pandas dataframe """
+        """ Reads a file containing a mapping file into a Pandas dataframe """
         return pd.read_csv(path, delimiter="|", encoding='utf-8', float_precision='round_trip', na_values="None")

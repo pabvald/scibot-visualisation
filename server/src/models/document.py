@@ -51,8 +51,12 @@ class DocumentModel(object):
                     features = list(par_features.to_numpy()[0])
                 else:
                     par_parsing = {'answer': article.paragraphs[par_id]['answer']}
-                    features = list(par_features.loc[par_features['paragraph_id'] == par_id].to_numpy()[0])
-
+                    try:
+                        features = list(par_features.loc[par_features['paragraph_id'] == par_id].to_numpy()[0])
+                    except:
+                        print(par_id)
+                        print(par_features)
+                        features = []
             else:
                 features = []
                 par_parsing = {'answer': False}

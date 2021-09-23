@@ -80,8 +80,8 @@ class DocumentResource(Resource):
         else:
             article = app.dataloader.google_nq_articles[doc_id]
             gaze = app.dataloader.google_nq_reading[user_id][doc_id]['dataframe']
-            pars_mapping = app.mappingloader.google_nq_paragraphs[doc_id[:-2]]
-            labels_mapping = app.mappingloader.google_nq_labels[doc_id[:-2]]
+            pars_mapping = app.mappingloader.google_nq_paragraphs[doc_id]
+            labels_mapping = app.mappingloader.google_nq_labels[doc_id]
             par_features = app.featuresloader.google_nq_par_features[user_id][doc_id]
 
         # create document representation
