@@ -1,9 +1,10 @@
-<div class="section">
+<section id="fixation-duration-settings">
   <span class="section-title">
     Fixation duration:
   </span>
+
   <div class="slider-container">
-    <label id="name-label">Fixation Min</label>
+    <label class="name-label">Fixation Min</label>
     <mat-slider
       color="primary"
       class="margin"
@@ -20,7 +21,7 @@
   </div>
   
   <div class="slider-container">
-    <label id="name-label">Fixation Max</label>
+    <label class="name-label">Fixation Max</label>
     <mat-slider
           color="primary"
           class="margin"
@@ -35,63 +36,78 @@
       </mat-slider>
     <label class="value-label">{{maxFixation}}</label>
   </div>
-</div>
+</section>
 
 
-<div class="section">
-  <span class="section-title">
-    Horizontal fixation area: 
-  </span>
+<section id="fixation-area-settings">
+  <div>
+    <span class="section-title">
+      Horizontal fixation area: 
+    </span>
+    
+    <div class="input-field">
+      <label>Left margin:</label>
+      <mat-form-field appearance="fill">
+        <!-- <mat-label>Left margin</mat-label> -->
+        <input matInput 
+              type="number" 
+              min="0"
+              [formControl]="leftMarginCtrl"
+              required>
+        <span matSuffix>letters</span>
+        <mat-error *ngIf="leftMarginCtrl.invalid">Min margin: 0 letters</mat-error>
+      </mat-form-field>
+    </div>
+    
   
-  <mat-form-field appearance="fill">
-    <mat-label>Left margin</mat-label>
-    <input matInput 
-          type="number" 
-          min="0"
-          [formControl]="leftMarginCtrl"
-          required>
-    <span matSuffix>letters</span>
-    <mat-error *ngIf="leftMarginCtrl.invalid">Min margin: 0 letters</mat-error>
-  </mat-form-field>
+    <div>
+      <label>Right margin:</label>
+      <mat-form-field appearance="fill" color="primary">
+        <!-- <mat-label>Right margin</mat-label> -->
+        <input matInput 
+              type="number"
+              min="0" 
+              [formControl]="rightMarginCtrl"
+              required>
+        <span matSuffix>letters</span>
+        <mat-error *ngIf="rightMarginCtrl.invalid">Min margin: 0 letters</mat-error>
+      </mat-form-field> 
+    </div>
+  </div>
+  
 
-  <mat-form-field appearance="fill" color="primary">
-    <mat-label>Right margin</mat-label>
-    <input matInput 
-          type="number"
-          min="0" 
-          [formControl]="rightMarginCtrl"
-          required>
-    <span matSuffix>letters</span>
-    <mat-error *ngIf="rightMarginCtrl.invalid">Min margin: 0 letters</mat-error>
-  </mat-form-field> 
-</div>
-
-<div class="section" id="button-container">
-  <!-- Reload button -->
-  <button mat-button  *ngIf="isUpdating; else notUpdating" 
-    color="primary" 
-    [disabled]="true">
-    Applying...
-  </button>
-
-  <ng-template #notUpdating>
-    <button mat-button color="primary" 
-        [disabled]="isApplyDisabled"
-        (click)="setFixationArea()">
-    Apply
+  <div>
+    <!-- Reload button -->
+    <button mat-button  *ngIf="isUpdating; else notUpdating" 
+      color="primary" 
+      [disabled]="true">
+      Applying...
     </button>
-  </ng-template> 
-</div>
 
-<div class="section" id="toggle-container">
-  <label>Off</label>
-  <mat-slide-toggle
-    color="primary"
-    [checked]="!isDisabled"
-    (change)="onIsDisabledChange($event)">
-  </mat-slide-toggle>
-  <label>On</label>
-</div>
+    <ng-template #notUpdating>
+      <button mat-button color="primary" 
+          [disabled]="isApplyDisabled"
+          (click)="setFixationArea()">
+      Apply
+      </button>
+    </ng-template> 
+  </div>
+  
+</section>
+
+<section id="button-container">
+  <div id="toggle-container">
+    <label>Off</label>
+    <mat-slide-toggle
+        color="primary"
+        [checked]="!isDisabled"
+        (change)="onIsDisabledChange($event)">
+    </mat-slide-toggle>
+    <label>On</label>
+  </div>
+</section>
+
+
 
 
 

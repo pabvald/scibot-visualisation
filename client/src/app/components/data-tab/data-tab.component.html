@@ -1,30 +1,30 @@
- <!-- Check https://material.angular.io/components/select/overview -->
+<section id="input-container">
     <!-- User selection -->
+    <div>  
+        <label>User:</label>      
+        <mat-form-field appearance="fill">         
+            <mat-select [(value)]="selUserId">
+                <mat-option *ngFor="let uid of userIds" [value]="uid">
+                    {{uid}}
+                </mat-option>
+            </mat-select>
+        </mat-form-field>
+    </div>
 
-<div id="fields-container">
-    <label>User:</label>      
-    <mat-form-field appearance="fill">         
-        <mat-select [(value)]="selUserId">
-            <mat-option *ngFor="let uid of userIds" [value]="uid">
-                {{uid}}
-            </mat-option>
-        </mat-select>
-    </mat-form-field>
-    
     <!-- Document selection -->
-    <label>Document:</label>
-    <mat-form-field appearance="fill">
-        <mat-select [(value)]="selDocumentId">
-            <mat-option *ngFor="let docid of documentIds" [value]="docid">
-                {{docid}}
-            </mat-option>
-        </mat-select>
-    </mat-form-field>
-</div>
+    <div>
+        <label>Document:</label>
+        <mat-form-field appearance="fill">
+            <mat-select [(value)]="selDocumentId">
+                <mat-option *ngFor="let docid of documentIds" [value]="docid">
+                    {{docid}}
+                </mat-option>
+            </mat-select>
+        </mat-form-field>
+    </div>
+</section>
 
-
-
-<div id="button-container">
+<section id="buttons-container">
     <!-- Load button -->
     <button mat-button  *ngIf="isUpdating; else notUpdating" 
         color="primary" 
@@ -39,5 +39,5 @@
         Load
     </button>
     </ng-template> 
-</div>
-
+</section>
+<section></section>

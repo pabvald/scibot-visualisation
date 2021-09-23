@@ -1,34 +1,27 @@
 :host {
     display: flex;
-    flex-direction: row;
-    flex-wrap:nowrap;
-    align-items: center;
+}
+
+section {
+    flex-grow: 1;
+    display: flex;
+    align-items: baseline;
+    padding: 1vh 1vw 0 1vw; 
+}
+
+section#input-container {
+    flex-wrap: wrap;
 
     div {
-        padding: 1vh 1vw;
-    }
-
-    div#fields-container {
-        display: flex;
-        flex-wrap: wrap;
-        justify-content: space-between;
+        label {
+            margin-left: 2vw;
+        }
 
         mat-form-field {
             margin-left: 1vw;
             font-size: 0.9em;
-        }   
-
-        label {
-            display: flex;
-            align-items: baseline;
-        }
-    }
-    
-    div#buttons-container {
-        flex-grow: 1;
-        display: flex;
-        justify-content: flex-start;
-    }
+        } 
+    }  
 }
 
 ::ng-deep .mat-form-field {
