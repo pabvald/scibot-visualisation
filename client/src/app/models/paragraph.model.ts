@@ -11,6 +11,7 @@ export interface IParagraph  extends IMapping {
     labels: ILabel[];
     isTitle: boolean;
     hasLabels: boolean;
+    getFeatureById(id: string): any;
 }
   
 
@@ -68,6 +69,16 @@ export class Paragraph implements IParagraph {
     get height(): number {
         return this.y2 - this.y1;
     }
+
+    getFeatureById(id: string) {
+        let value = null;
+        Object.entries(this).forEach(
+            ([key, v]) => {
+                if (key == id) { value = v; }
+            }
+          );
+        return value;
+    }
 }
 
 /** 
@@ -83,13 +94,13 @@ export const paragraphFeatures: IParagraphFeatureConf[] = [
     {
         id: "avgFixDuration", 
         name: "Avg. fixation duration", 
-        enabled: false
+        enabled: true
     },
 
     {
         id: "avgForwardSaccadeLength", 
         name: "Avg. forward saccade length", 
-        enabled: false
+        enabled: true
     },
 
     {

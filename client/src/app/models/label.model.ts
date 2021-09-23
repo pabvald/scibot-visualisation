@@ -4,10 +4,12 @@ export interface ILabel extends IMapping {
     id: number;
     text: string;
     fixationDuration: number;
+    inTitle: boolean;
 }
 
 export class Label implements ILabel {
 
+    private parId: number;
     public id: number;
     public x1: number;
     public y1: number;
@@ -17,6 +19,7 @@ export class Label implements ILabel {
     public fixationDuration: number;
 
     constructor(labelObject: any) {
+        this.parId = labelObject.parId;
         this.id = labelObject.id;
         this.x1 = labelObject.x1; 
         this.y1 = labelObject.y1; 
@@ -41,5 +44,9 @@ export class Label implements ILabel {
 
     get height(): number {
         return this.y2 - this.y1;
+    }
+
+    get inTitle(): boolean {
+        return this.parId == -1;
     }
 }

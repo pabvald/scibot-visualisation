@@ -9,7 +9,7 @@ export class ParagraphLevelState {
 
   private featuresConf$ = new BehaviorSubject<IParagraphFeatureConf[]>(paragraphFeatures);
   private updating$ = new BehaviorSubject<boolean>(false);
-  private paragraphLevelDisabled$ = new BehaviorSubject<boolean>(true);
+  private paragraphLevelDisabled$ = new BehaviorSubject<boolean>(false);
 
   /**
    * @returns the paragraph-level state is being updated (`true`) or not (`false`)
@@ -51,7 +51,6 @@ export class ParagraphLevelState {
    * @param featureseConf new paragraph features' configuration
    */
   setFeaturesConf(featureseConf: IParagraphFeatureConf[]) {
-    console.log(featureseConf);
     this.featuresConf$.next(featureseConf);
   }
 }

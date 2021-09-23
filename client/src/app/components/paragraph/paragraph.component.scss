@@ -1,3 +1,38 @@
-#content {
-    margin-bottom: 10px;
+.paragraph {
+    position: absolute;
+    display: inline-block;
+    border: 1px red solid;
+}
+
+.paragraph-details {
+    position: absolute;
+    display: inline-block;
+    border: 1px solid blue;
+
+    h3 {
+        font-size: 1.3vw;
+        text-align: center;
+    }
+
+    .features-container {
+        display: flex;
+        flex-direction: column;
+
+        .feature {
+            font-size: 1vw;
+            margin: 0.5vh 0.1vw;
+            display: flex;
+            align-items: flex-end;
+
+            .feature-name {
+                flex-grow: 3;
+                margin-left: 0.3vw;
+            }
+
+            .feature-value {
+                flex-grow: 1;
+                margin: 0 1vw;
+            }
+        }
+    }
 }
