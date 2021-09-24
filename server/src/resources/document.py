@@ -76,13 +76,13 @@ class DocumentResource(Resource):
             gaze = app.dataloader.grel_reading[user_id][doc_id[:-2]]['dataframe']
             pars_mapping = app.mappingloader.grel_paragraphs[doc_id[:-2]]
             labels_mapping = app.mappingloader.grel_labels[doc_id[:-2]]
-            par_features = app.featuresloader.grel_par_features[user_id][doc_id[:-2]]
+            par_features = app.featuresloader.grel_par_features[user_id].get(doc_id[:-2], None)
         else:
             article = app.dataloader.google_nq_articles[doc_id]
             gaze = app.dataloader.google_nq_reading[user_id][doc_id]['dataframe']
             pars_mapping = app.mappingloader.google_nq_paragraphs[doc_id]
             labels_mapping = app.mappingloader.google_nq_labels[doc_id]
-            par_features = app.featuresloader.google_nq_par_features[user_id][doc_id]
+            par_features = app.featuresloader.google_nq_par_features[user_id].get(doc_id, None)
 
         # create document representation
         document = DocumentModel.from_data(user_id, article, gaze, pars_mapping, labels_mapping, par_features)

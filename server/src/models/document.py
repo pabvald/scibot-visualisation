@@ -44,23 +44,16 @@ class DocumentModel(object):
 
         # combine the HTML, gaze and mapping data to create the paragraphs
         par_ids = pars_mapping['paragraph_id'].to_numpy()
-        for par_id in par_ids: 
+        for par_id in par_ids:
+            features = None
+            par_parsing = {'answer': False}
             if par_id >= 0: 
                 if corpus == Corpus.grel:
                     par_parsing = {'answer': any([par['answer'] for par in article.paragraphs])}
-                    features = list(par_features.to_numpy()[0])
                 else:
                     par_parsing = {'answer': article.paragraphs[par_id]['answer']}
-                    try:
-                        features = list(par_features.loc[par_features['paragraph_id'] == par_id].to_numpy()[0])
-                    except:
-                        print(par_id)
-                        print(par_features)
-                        features = []
-            else:
-                features = []
-                par_parsing = {'answer': False}
 
+            features = par_features.loc[par_features['paragraph'] == par_id]
             par_gaze = gaze_data.loc[gaze_data['paragraph_id'] == par_id]
             par_mapping = list(pars_mapping.loc[pars_mapping['paragraph_id'] == par_id].to_numpy()[0])
             labels_selection = labels_mapping.loc[labels_mapping['paragraph_id'] == par_id]
