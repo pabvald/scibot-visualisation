@@ -28,6 +28,7 @@ import { DocumentDetailsComponent } from './components/document-details/document
 import { ParagraphTabComponent } from './components/paragraph-tab/paragraph-tab.component';
 import {MatCheckboxModule} from '@angular/material/checkbox';
 
+
 @NgModule({
   declarations: [
     AppComponent,

@@ -79,7 +79,7 @@ export class DataFacade {
   reloadDocument() {
     let userId: string = ""; 
     let docId: string = "";
-    this.document$.pipe(first()).subscribe(document => {
+    this.document$.subscribe(document => {
       userId = document.userId;
       docId = document.id;
     });
@@ -97,6 +97,7 @@ export class DataFacade {
     this.dataState.setUpdating(true);
     this.dataState.getFixationArea$()
                   .subscribe((data) => {fixationArea = data});
+    console.log(fixationArea);
     this.documentApi.getDocument(userId, docId, fixationArea)
       .subscribe(
         (document) => { this.dataState.setDocument(document); },

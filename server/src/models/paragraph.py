@@ -53,7 +53,7 @@ class ParagraphModel(object):
         features_dict = {}
         par_id, par_x1, par_y1, par_x2, par_y2 = par_mapping
 
-        if not features.empty:
+        if features is not None and not features.empty:
             features_dict = features.to_dict('records')[0]
             features_dict.pop('paragraph', None)
 

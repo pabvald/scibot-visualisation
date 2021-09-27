@@ -26,11 +26,7 @@ export class Paragraph implements IParagraph {
     public y2: number;
     public answer: boolean;
     public labels: ILabel[];
-    public avgFixDuration: number;
-    public avgForwardSaccadeLength: number;
-    public regRatio: number;
-    public thoroughReadRatio: number;
-    public coherentReadLength: number;
+    public features: any;
 
     /**
      * @param paragraphObject a paragraph JSON object
@@ -43,11 +39,7 @@ export class Paragraph implements IParagraph {
         this.y2 = paragraphObject.y2; 
         this.answer = paragraphObject.answer;
         this.labels = paragraphObject.labels.map((lbl: any) => new Label(lbl));
-        this.avgFixDuration = paragraphObject.avgFixDuration;
-        this.avgForwardSaccadeLength = paragraphObject.avgForwardSaccadeLength;
-        this.regRatio = paragraphObject.regRatio;
-        this.thoroughReadRatio = paragraphObject.thoroughReadRatio;
-        this.coherentReadLength = paragraphObject.coherentReadLength;
+        this.features = paragraphObject.features;
     }
 
     get isTitle(): boolean {
@@ -72,7 +64,7 @@ export class Paragraph implements IParagraph {
 
     getFeatureById(id: string) {
         let value = null;
-        Object.entries(this).forEach(
+        Object.entries(this.features).forEach(
             ([key, v]) => {
                 if (key == id) { value = v; }
             }
@@ -87,38 +79,6 @@ export class Paragraph implements IParagraph {
  export interface IParagraphFeatureConf {
     id: string;     
     name: string;
+    units: string;
     enabled: boolean; 
 }
-
-export const paragraphFeatures: IParagraphFeatureConf[] = [
-    {
-        id: "avgFixDuration", 
-        name: "Avg. fixation duration", 
-        enabled: true
-    },
-
-    {
-        id: "avgForwardSaccadeLength", 
-        name: "Avg. forward saccade length", 
-        enabled: true
-    },
-
-    {
-        id: "regRatio", 
-        name: "Regression ratio", 
-        enabled: false
-    },
-
-    {
-        id: "thoroughReadRatio", 
-        name: "Thorough read ratio", 
-        enabled: false
-    },
-
-    {
-        id: "coherentReadLength", 
-        name: "Coherent read length", 
-        enabled: false
-    },
-
-];

@@ -9,10 +9,17 @@ import { IParagraph, IParagraphFeatureConf } from 'src/app/models/paragraph.mode
 })
 export class ParagraphComponent implements OnInit {
 
+  // Inputs
   @Input() paragraph: IParagraph | undefined;
+
 
   isParLevelDisabled: boolean = true;
   featuresConf: IParagraphFeatureConf[] = [];
+
+  // Style
+  styleIdHeight: number = 6;
+  styleWidthReduction: number = 2.5;
+  styleColorBarWidth: number = 1.1;
 
   constructor(private parLevelFacade: ParagraphLevelFacade) { 
 
@@ -24,6 +31,19 @@ export class ParagraphComponent implements OnInit {
   }
 
   ngOnInit(): void {
+  }
+
+  /**
+   * Determines if there are visible features.
+   */
+  get areVisibleFeatures(): boolean {
+    let anyVisible = false;
+    this.featuresConf.forEach((f) => {
+      if (f.enabled && this.paragraph?.getFeatureById(f.id) != null) {
+        anyVisible = true;
+      }
+    });
+    return anyVisible;
   }
 
 }
