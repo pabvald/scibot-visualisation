@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { combineLatest, Observable, of } from 'rxjs';
-import { first, shareReplay, take} from 'rxjs/operators';
+import { first, shareReplay, take, map} from 'rxjs/operators';
 import { IFixationArea } from 'src/app/models/fixation-area.model';
 import { DataState } from 'src/app/state/data/data.state';
 import { LabelLevelState } from 'src/app/state/label-level/label-level.state';
@@ -71,6 +71,34 @@ export class LabelLevelFacade {
     }
     return context;    
   }
+
+  /**
+   * Computes the color of a certain point in the fixation duration range.
+   * @param fixationDuration a fixation duration
+   * @param alpha transparency of the rgb colors
+   */
+  getColor$(fixationDuration: number | undefined, alpha: number = 0.7): Observable<string> {
+    const a = alpha;
+    const defaultColor : string =  `rgb(255, 255, 255)`; // white;
+    let color : string = defaultColor;
+    let percent : number = 0;  
+    
+    return combineLatest([this.minFixation$, this.maxFixation$]).pipe(map(([min, max]) => {
+
+      if (fixationDuration != undefined) {
+        percent = ((fixationDuration - min) / max) * 100;
+        percent = Math.min(100, percent);
+
+        if (percent >= 0 && this.colorGradient != null) {
+          const colorObj = this.colorGradient.getImageData(percent, 0, 1, 1);
+          const rgba = colorObj.data;
+  
+          color =  `rgb(${ rgba[0] }, ${ rgba[1] }, ${ rgba[2] }, ${a})`;
+        }
+      }    
+      return color;
+    }))
+  }
   
   /** Some state is being updated */
   isUpdating$(): Observable<boolean> {
@@ -101,21 +129,6 @@ export class LabelLevelFacade {
    */
   getFixationArea$(): Observable<IFixationArea> {
     return this.fixationArea$;
-  }
-
-  /**
-   * @returns color gradient
-   */
-  getColorGradient(): CanvasRenderingContext2D | null {
-    return this.colorGradient;
-  } 
-
-  /**
-   * 
-   * @returns colors of the color gradient
-   */
-  getColors(): string[] {
-    return this.colors;
   }
 
   /**

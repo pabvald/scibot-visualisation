@@ -8,12 +8,11 @@ import { ILabel } from 'src/app/models/label.model';
   styleUrls: ['./label.component.scss']
 })
 export class LabelComponent implements OnInit {
-
-
+  
   @Input() label: ILabel | undefined; 
   @Input() isTitle: boolean = false; 
   
-  colorGradient: any;
+  color : string = "";
   isLabelLevelDisabled: boolean = false; 
   minFixation: number = 0.0;
   maxFixation: number = 0.0;
@@ -27,34 +26,11 @@ export class LabelComponent implements OnInit {
                         .subscribe((value) => { this.minFixation = value; });
     this.labelLevelFacade.getMaxFixation$()
                         .subscribe((value) => { this.maxFixation = value; });
-    
-    this.colorGradient = this.labelLevelFacade.getColorGradient();
   }
 
   ngOnInit(): void {
-
-  }
-
-  /**
-   * Computes the color of the gradient for the label.
-   */
-  get color(): string {
-    const alpha = 0.7;
-    let colorName: string = `rgb(255, 255, 255)`; // white
-    let percent: number; 
-
-    if (this.colorGradient && this.label && !this.isLabelLevelDisabled) {
-      percent = ((this.label?.fixationDuration - this.minFixation) / this.maxFixation) * 100;
-      percent = Math.min(100, percent);
-
-      if (percent >= 0) {
-        const color = this.colorGradient.getImageData(percent, 0, 1, 1);
-        const rgba = color.data;
-        
-        colorName =  `rgb(${ rgba[0] }, ${ rgba[1] }, ${ rgba[2] }, ${alpha})`;
-      }     
-    } 
-
-    return colorName;
+    // Subscriptions
+    this.labelLevelFacade.getColor$(this.label?.fixationDuration)
+                        .subscribe((value) => { this.color = value; });
   }
 }

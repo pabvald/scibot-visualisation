@@ -1,5 +1,10 @@
-<div *ngIf="!isLabelLevelDisabled">
-    <span *ngFor="let color of colors; index as i">
-        {{ minFixation + (i * ((maxFixation - minFixation)/ colors.length))}} ms
+<div [ngClass]="{'colored': !isLabelLevelDisabled}">
+    <span *ngFor="let i of splitting"
+          [ngClass]="{'invisible': (i % SHOW_EACH != 0)}"
+         >
+        {{minFixation + (i * ((maxFixation - minFixation) / SPLITS)) | number : '1.0-0'}} ms
+    </span>
+    <span id="last-one">
+        &#8805; {{minFixation + (((maxFixation - minFixation))) | number : '1.0-0'}} ms
     </span>
 </div>
