@@ -17,10 +17,11 @@
     [ngStyle]="{
         'top.%': (100 * paragraph.y1),
         'left.%': (100 * (paragraph.x1 ) - 1.4),
-        'width.%': styleColorBarWidth,
-        'max-width.%': styleColorBarWidth,
+        'width.%': COLORBAR_WIDTH,
+        'max-width.%': COLORBAR_WIDTH,
         'height.%': (100 * paragraph.height),
-        'max-height.%': (100 * paragraph.height)
+        'max-height.%': (100 * paragraph.height),
+        'background': color
     }">
 </div>
 
@@ -29,11 +30,11 @@
     class="paragraph-id"
     [ngStyle]="{
         'top.%': (100 * paragraph.y1),
-        'left.%': (100 * (paragraph.x1 - paragraph.width / styleWidthReduction) - 2),
-        'width.%': (100 * paragraph.width / styleWidthReduction),
-        'max-width.%': (100 * paragraph.width / styleWidthReduction),
-        'height.%': styleIdHeight,
-        'max-height.%':styleIdHeight
+        'left.%': (100 * (paragraph.x1 - paragraph.width / WIDTH_REDUCTION) - 2),
+        'width.%': (100 * paragraph.width / WIDTH_REDUCTION),
+        'max-width.%': (100 * paragraph.width / WIDTH_REDUCTION),
+        'height.%': ID_HEIGHT,
+        'max-height.%': ID_HEIGHT
     }">
    Paragraph {{paragraph.id}}
 </div>
@@ -42,12 +43,12 @@
 <div *ngIf="!isParLevelDisabled && paragraph && !paragraph.isTitle && paragraph.hasLabels "
     class="paragraph-features"
     [ngStyle]="{
-        'top.%': (100 * paragraph.y1 + styleIdHeight),
-        'left.%': (100 * (paragraph.x1 - paragraph.width / styleWidthReduction) - 2),
-        'width.%': (100 * paragraph.width / styleWidthReduction),
-        'max-width.%': (100 * paragraph.width / styleWidthReduction),
-        'height.%': (100 * paragraph.height - styleIdHeight),
-        'max-height.%': (100 * paragraph.height - styleIdHeight)
+        'top.%': (100 * paragraph.y1 + ID_HEIGHT),
+        'left.%': (100 * (paragraph.x1 - paragraph.width / WIDTH_REDUCTION) - 2),
+        'width.%': (100 * paragraph.width / WIDTH_REDUCTION),
+        'max-width.%': (100 * paragraph.width / WIDTH_REDUCTION),
+        'height.%': (100 * paragraph.height - ID_HEIGHT),
+        'max-height.%': (100 * paragraph.height - ID_HEIGHT)
     }">
 
     <span *ngFor="let feature of featuresConf">

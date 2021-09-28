@@ -35,18 +35,18 @@ export class ColorLegendComponent implements OnInit {
     return [...Array(this.SPLITS).keys()];
   }
 
-  /**
-   * Obtains the correponding color given a certain fixation duration
-   * @param fixationDuration fixation duration in ms
-   * @returns color in RBGA format
-   */
-  getColor(index : number): string {
-    let fixationDuration = this.minFixation + 
-                          (index * ((this.maxFixation - this.minFixation) / this.SPLITS))
-    let color : string = "";
-    this.labelLevelFacade.getColor$(fixationDuration, 0.9)
-                        .pipe(first())
-                        .subscribe((value => { color = value; }));
-    return color;
-  } 
+  // /**
+  //  * Obtains the correponding color given a certain fixation duration
+  //  * @param fixationDuration fixation duration in ms
+  //  * @returns color in RBGA format
+  //  */
+  // getColor(index : number): string {
+  //   let fixationDuration = this.minFixation + 
+  //                         (index * ((this.maxFixation - this.minFixation) / this.SPLITS))
+  //   let color : string = "";
+  //   this.labelLevelFacade.getColor$(fixationDuration, 0.9)
+  //                       .pipe(first())
+  //                       .subscribe((value => { color = value; }));
+  //   return color;
+  // } 
 }

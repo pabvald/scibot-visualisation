@@ -12,6 +12,7 @@ import { DataFacade } from '../data/data.facade';
 export class LabelLevelFacade {
 
   private colorGradient: CanvasRenderingContext2D | null;
+  private isLabelLevelDisabled$: Observable<boolean>;
   private minFixation$: Observable<number>;
   private maxFixation$: Observable<number>;
   private fixationArea$: Observable<IFixationArea>;  
@@ -31,6 +32,7 @@ export class LabelLevelFacade {
     private labelState: LabelLevelState,
     private dataState: DataState) { 
 
+      this.isLabelLevelDisabled$ = this.labelState.isDisabled$();
       this.minFixation$ = this.labelState.getMinFixation$();
       this.maxFixation$ = this.labelState.getMaxFixation$();
       this.fixationArea$ = this.dataState.getFixationArea$();     
@@ -79,13 +81,15 @@ export class LabelLevelFacade {
    */
   getColor$(fixationDuration: number | undefined, alpha: number = 0.7): Observable<string> {
     const a = alpha;
-    const defaultColor : string =  `rgb(255, 255, 255)`; // white;
+    const defaultColor : string =  `rgb(255, 255, 255, 1)`; // white;
     let color : string = defaultColor;
     let percent : number = 0;  
     
-    return combineLatest([this.minFixation$, this.maxFixation$]).pipe(map(([min, max]) => {
-
-      if (fixationDuration != undefined) {
+    return combineLatest([this.minFixation$, 
+                          this.maxFixation$, 
+                          this.isLabelLevelDisabled$]).pipe(map(([min, max, disabled]) => {  
+      color = defaultColor;
+      if (!disabled && fixationDuration != undefined) {
         percent = ((fixationDuration - min) / max) * 100;
         percent = Math.min(100, percent);
 
@@ -94,8 +98,8 @@ export class LabelLevelFacade {
           const rgba = colorObj.data;
   
           color =  `rgb(${ rgba[0] }, ${ rgba[1] }, ${ rgba[2] }, ${a})`;
-        }
-      }    
+        } 
+      } 
       return color;
     }))
   }

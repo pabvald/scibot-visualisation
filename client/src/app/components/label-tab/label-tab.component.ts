@@ -93,22 +93,14 @@ export class LabelTabComponent implements OnInit {
     }
   }
 
-  /**
-   * @param event change on the mininum fixation slider's value
-   */
-  onMinFixationChange(event: MatSliderChange): void {
-    if (event.value) {
-      this.labelLevelFacade.setMinFixation(event.value);
-    }    
+  /** Update the minimum fixation duration */
+  updateMinFixation()  {
+    this.labelLevelFacade.setMinFixation(this.minFixation);
   }
 
-  /**
-   * @param event change on the maximum fixation slider's value
-   */
-  onMaxFixationChange(event: MatSliderChange): void {
-    if (event.value) {
-      this.labelLevelFacade.setMaxFixation(event.value);
-    }    
+  /** Update the maximum fixation duration */
+  updateMaxFixation() {
+    this.labelLevelFacade.setMaxFixation(this.maxFixation);
   }
 
   /** 
@@ -121,14 +113,14 @@ export class LabelTabComponent implements OnInit {
   }
 
   /**
-   * 
+   * Updates the fixation area configuration.
    */
-  setFixationArea() {
+  updateFixationArea() {
     if (this.fixationAreaOptions.valid) {
       this.labelLevelFacade.setFixationArea(
         new FixationArea(this.leftMarginCtrl.value, this.rightMarginCtrl.value)
       );
-    }
-    
+    }    
   }
+  
 }

@@ -97,7 +97,6 @@ export class DataFacade {
     this.dataState.setUpdating(true);
     this.dataState.getFixationArea$()
                   .subscribe((data) => {fixationArea = data});
-    console.log(fixationArea);
     this.documentApi.getDocument(userId, docId, fixationArea)
       .subscribe(
         (document) => { this.dataState.setDocument(document); },

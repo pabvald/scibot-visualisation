@@ -4,11 +4,11 @@ import { BehaviorSubject, Observable } from 'rxjs';
 
 
  const featuresConf: IParagraphFeatureConf[] = [
-  //{ id: "f_total_time",           name: "Total time",              enabled: true },
-  //{ id: "f_fixn_n",               name: "No. fixations",           enabled: true },
-  //{ id: "f_fixn_dur_sum",         name: "Sum fixation duration",   enabled: true },
-  { id: "f_fixn_dur_avg",         name: "Avg. fixation duration",   units: "u", enabled: true  },
-  { id: "f_fixn_dur_sd",          name: "Sd. fixation duration",    units: "u", enabled: false },
+  //{ id: "f_total_time",           name: "Total time",             units: "u", enabled: true },
+  //{ id: "f_fixn_n",               name: "No. fixations",          units: "u", enabled: true },
+  //{ id: "f_fixn_dur_sum",         name: "Sum fixation duration",  units: "u", enabled: true },
+  //{ id: "f_fixn_dur_avg",         name: "Avg. fixation duration",   units: "u", enabled: true  },
+  //{ id: "f_fixn_dur_sd",          name: "Sd. fixation duration",    units: "u", enabled: false },
   { id: "f_scan_distance_h",      name: "Scan distance horizontal", units: "u", enabled: true  },
   { id: "f_scan_distance_v",      name: "Scan distance vertical",   units: "u", enabled: true  },
   { id: "f_scan_distance_euclid", name: "Scan distance euclidean",  units: "u", enabled: true  },
@@ -31,7 +31,7 @@ export class ParagraphLevelState {
 
   private featuresConf$ = new BehaviorSubject<IParagraphFeatureConf[]>(featuresConf);
   private updating$ = new BehaviorSubject<boolean>(false);
-  private paragraphLevelDisabled$ = new BehaviorSubject<boolean>(false);
+  private paragraphLevelDisabled$ = new BehaviorSubject<boolean>(true);
 
   /**
    * @returns the paragraph-level state is being updated (`true`) or not (`false`)

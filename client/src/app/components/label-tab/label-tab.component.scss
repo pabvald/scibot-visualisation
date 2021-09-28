@@ -32,6 +32,21 @@ section#fixation-area-settings {
       margin-left: 1vw;
       font-size: 0.9em;
   } 
+
+  div#button-container {
+    position: relative;
+
+    button, mat-spinner {
+      position: absolute;
+      margin-left: 1vw;
+      bottom: 10%;
+    }
+
+    mat-spinner {
+      margin-left: 2.5vw;
+    }
+  }
+
 }
 
 ::ng-deep .mat-form-field {
@@ -42,7 +57,7 @@ section#fixation-area-settings {
   }
 }
 
-section#button-container{
+section#enabling-settings{
   flex-grow: 1;
   #toggle-container {
     display: flex;

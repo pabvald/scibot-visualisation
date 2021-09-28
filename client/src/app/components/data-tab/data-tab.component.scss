@@ -1,5 +1,6 @@
 :host {
     display: flex;
+    margin-top: 2vh;
 }
 
 section {
@@ -22,6 +23,10 @@ section#input-container {
             font-size: 0.9em;
         } 
     }  
+}
+
+mat-spinner {
+    margin-top: 1vh;
 }
 
 ::ng-deep .mat-form-field {

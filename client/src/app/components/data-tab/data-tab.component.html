@@ -26,11 +26,10 @@
 
 <section id="buttons-container">
     <!-- Load button -->
-    <button mat-button  *ngIf="isUpdating; else notUpdating" 
-        color="primary" 
-        [disabled]="true">
-    Loading...
-    </button>
+    <mat-spinner *ngIf="isUpdating; else notUpdating"
+                color="primary"
+                [diameter]="20">
+    </mat-spinner>
 
     <ng-template #notUpdating>
     <button mat-button color="primary" 

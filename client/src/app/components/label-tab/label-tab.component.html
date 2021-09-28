@@ -12,9 +12,9 @@
       [min]="minFixationInterval[0]"
       [max]="minFixationInterval[1]"        
       [step]="fixationStep"
-      [value]="minFixation"
       [thumbLabel]="thumbLabel"
-      (change)="onMinFixationChange($event)"
+      [(ngModel)]="minFixation"
+      (ngModelChange)="updateMinFixation()"
       aria-labelledby="name-label">
     </mat-slider>
     <label class="value-label">{{minFixation}}</label>
@@ -27,11 +27,11 @@
           class="margin"
           [disabled]="isDisabled"
           [min]="maxFixationInterval[0]"
-          [max]="maxFixationInterval[1]" 
-          [value]="maxFixation"         
+          [max]="maxFixationInterval[1]"   
           [step]="fixationStep"
           [thumbLabel]="thumbLabel"
-          (change)="onMaxFixationChange($event)"
+          [(ngModel)]="maxFixation"
+          (ngModelChange)="updateMaxFixation()"
           aria-labelledby="name-label">
       </mat-slider>
     <label class="value-label">{{maxFixation}}</label>
@@ -76,18 +76,17 @@
   </div>
   
 
-  <div>
+  <div id="button-container">
     <!-- Reload button -->
-    <button mat-button  *ngIf="isUpdating; else notUpdating" 
-      color="primary" 
-      [disabled]="true">
-      Applying...
-    </button>
+    <mat-spinner *ngIf="isUpdating; else notUpdating"
+                color="primary"
+                [diameter]="20">
+    </mat-spinner>
 
     <ng-template #notUpdating>
       <button mat-button color="primary" 
           [disabled]="isApplyDisabled"
-          (click)="setFixationArea()">
+          (click)="updateFixationArea()">
       Apply
       </button>
     </ng-template> 
@@ -95,7 +94,7 @@
   
 </section>
 
-<section id="button-container">
+<section id="enabling-settings">
   <div id="toggle-container">
     <label>Off</label>
     <mat-slide-toggle
