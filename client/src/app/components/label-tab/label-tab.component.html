@@ -8,10 +8,10 @@
     <mat-slider
       color="primary"
       class="margin"
-      [disabled]="isDisabled"
+      [disabled]="!isEnabled"
       [min]="minFixationInterval[0]"
       [max]="minFixationInterval[1]"        
-      [step]="fixationStep"
+      [step]="sliderStep"
       [thumbLabel]="thumbLabel"
       [(ngModel)]="minFixation"
       (ngModelChange)="updateMinFixation()"
@@ -25,10 +25,10 @@
     <mat-slider
           color="primary"
           class="margin"
-          [disabled]="isDisabled"
+          [disabled]="!isEnabled"
           [min]="maxFixationInterval[0]"
           [max]="maxFixationInterval[1]"   
-          [step]="fixationStep"
+          [step]="sliderStep"
           [thumbLabel]="thumbLabel"
           [(ngModel)]="maxFixation"
           (ngModelChange)="updateMaxFixation()"
@@ -84,7 +84,8 @@
     </mat-spinner>
 
     <ng-template #notUpdating>
-      <button mat-button color="primary" 
+      <button mat-stroked-button 
+          color="primary" 
           [disabled]="isApplyDisabled"
           (click)="updateFixationArea()">
       Apply
@@ -99,8 +100,8 @@
     <label>Off</label>
     <mat-slide-toggle
         color="primary"
-        [checked]="!isDisabled"
-        (change)="onIsDisabledChange($event)">
+        [checked]="isEnabled"
+        (change)="setLabelLevelEnabled($event.checked)">
     </mat-slide-toggle>
     <label>On</label>
   </div>

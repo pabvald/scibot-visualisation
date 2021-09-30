@@ -12,7 +12,7 @@ import { DataFacade } from '../data/data.facade';
 export class LabelLevelFacade {
 
   private colorGradient: CanvasRenderingContext2D | null;
-  private isLabelLevelDisabled$: Observable<boolean>;
+  private isLabelLevelEnabled$: Observable<boolean>;
   private minFixation$: Observable<number>;
   private maxFixation$: Observable<number>;
   private fixationArea$: Observable<IFixationArea>;  
@@ -32,7 +32,7 @@ export class LabelLevelFacade {
     private labelState: LabelLevelState,
     private dataState: DataState) { 
 
-      this.isLabelLevelDisabled$ = this.labelState.isDisabled$();
+      this.isLabelLevelEnabled$ = this.labelState.isEnabled$();
       this.minFixation$ = this.labelState.getMinFixation$();
       this.maxFixation$ = this.labelState.getMaxFixation$();
       this.fixationArea$ = this.dataState.getFixationArea$();     
@@ -87,9 +87,9 @@ export class LabelLevelFacade {
     
     return combineLatest([this.minFixation$, 
                           this.maxFixation$, 
-                          this.isLabelLevelDisabled$]).pipe(map(([min, max, disabled]) => {  
+                          this.isLabelLevelEnabled$]).pipe(map(([min, max, enabled]) => {  
       color = defaultColor;
-      if (!disabled && fixationDuration != undefined) {
+      if (enabled && fixationDuration != undefined) {
         percent = ((fixationDuration - min) / max) * 100;
         percent = Math.min(100, percent);
 
@@ -109,9 +109,9 @@ export class LabelLevelFacade {
     return (this.dataState.isUpdating$() || this.labelState.isUpdating$());
   }
 
-  /** Some state is being updated */
-  isDisabled$(): Observable<boolean> {
-    return this.labelState.isDisabled$();
+  /** The label-level is enabled */
+  isEnabled$(): Observable<boolean> {
+    return this.labelState.isEnabled$();
   }
   
   /**
@@ -136,10 +136,10 @@ export class LabelLevelFacade {
   }
 
   /**
-   * @param isDisabled the label level is disabled
+   * @param isEnabled the label level is enabled
    */
-  setDisabled(isDisabled: boolean) {
-    this.labelState.setDisabled(isDisabled);
+  setEnabled(isEnabled: boolean) {
+    this.labelState.setEnabled(isEnabled);
   }
 
   /**

@@ -3,11 +3,12 @@ from marshmallow import Schema, fields
 from pandas.core.frame import DataFrame
 
 from flask import current_app as app
+from .bounding_box import BoundingBox
 from .label import LabelModel, LabelSchema
 from features import FixationEvent, SaccadeEvent
 
 
-class ParagraphModel(object):
+class ParagraphModel(BoundingBox):
     """
     Representation of  a paragraph.
     """

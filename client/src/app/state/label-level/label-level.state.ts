@@ -7,7 +7,7 @@ import { BehaviorSubject, Observable } from 'rxjs';
 export class LabelLevelState {
 
   private updating$ = new BehaviorSubject<boolean>(false);
-  private labelLevelDisabled$ = new BehaviorSubject<boolean>(false);
+  private enabled$ = new BehaviorSubject<boolean>(true);
   private minFixation$ = new BehaviorSubject<number>(0);
   private maxFixation$ = new BehaviorSubject<number>(600);
 
@@ -22,10 +22,10 @@ export class LabelLevelState {
   }
 
   /**
-   * @returns the label-level state is disabled (`true`) or not (`false`)
+   * @returns the label-level state is enabled (`true`) or disabled (`false`)
    */
-  isDisabled$(): Observable<boolean> {
-    return this.labelLevelDisabled$.asObservable();
+  isEnabled$(): Observable<boolean> {
+    return this.enabled$.asObservable();
   }
   
   /**
@@ -51,10 +51,10 @@ export class LabelLevelState {
   }
   
   /**
-   * @param isDisabled the label level has to be disabled
+   * @param isEnabled the label level has to be enabled
    */
-  setDisabled(isDisabled: boolean) {
-    return this.labelLevelDisabled$.next(isDisabled);
+  setEnabled(isEnabled: boolean) {
+    return this.enabled$.next(isEnabled);
   }
 
   /**

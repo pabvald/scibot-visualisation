@@ -5,7 +5,7 @@
                     class="example-margin"
                     color="primary"
                     [checked]="feature.enabled"
-                    [disabled]="isDisabled"
+                    [disabled]="!isEnabled"
                     [(ngModel)]="feature.enabled"
                     (ngModelChange)="updateAllEnabled()">
         {{feature.name}}
@@ -18,8 +18,8 @@
         <label>Off</label>
         <mat-slide-toggle
             color="primary"
-            [checked]="!isDisabled"
-            (change)="onIsDisabledChange($event)">
+            [checked]="isEnabled"
+            (change)="setParLevelEnabled($event.checked)">
         </mat-slide-toggle>
         <label>On</label>
     </div>
@@ -28,7 +28,7 @@
         <mat-checkbox class="example-margin"
                 color="primary"
                 [checked]="allFeaturesEnabled"   
-                [disabled]="isDisabled"            
+                [disabled]="!isEnabled"            
                 [indeterminate]="someFeaturesEnabled"
                 (change)="setAllFeatures($event.checked)">
         All selected

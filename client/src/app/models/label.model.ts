@@ -1,6 +1,6 @@
-import { IMapping } from "./mapping.model";
+import { IBoundingBox } from "./bounding-box.model";
 
-export interface ILabel extends IMapping {
+export interface ILabel extends IBoundingBox {
     id: number;
     text: string;
     fixationDuration: number;

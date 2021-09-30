@@ -32,9 +32,10 @@
     </mat-spinner>
 
     <ng-template #notUpdating>
-    <button mat-button color="primary" 
-            (click)="loadData()" 
-            [disabled]="isLoadDisabled">
+    <button mat-stroked-button 
+        color="primary" 
+        (click)="loadData()" 
+        [disabled]="isLoadDisabled">
         Load
     </button>
     </ng-template> 

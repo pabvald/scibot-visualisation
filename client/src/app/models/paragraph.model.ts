@@ -1,11 +1,11 @@
 import { ILabel, Label } from "./label.model";
-import { IMapping } from "./mapping.model";
+import { IBoundingBox } from "./bounding-box.model";
 
 
 /**
  * Paragraph interface.
  */
-export interface IParagraph  extends IMapping {
+export interface IParagraph  extends IBoundingBox {
     id: number;
     answer: boolean;
     labels: ILabel[];

@@ -13,15 +13,15 @@ export class LabelComponent implements OnInit {
   @Input() isTitle: boolean = false; 
   
   color : string = "";
-  isLabelLevelDisabled: boolean = false; 
+  isLabelLevelEnabled: boolean = false; 
   minFixation: number = 0.0;
   maxFixation: number = 0.0;
 
   constructor(private labelLevelFacade: LabelLevelFacade) {
 
     // Subscriptions
-    this.labelLevelFacade.isDisabled$()
-                        .subscribe((value) =>  { this.isLabelLevelDisabled = value; });
+    this.labelLevelFacade.isEnabled$()
+                        .subscribe((value) =>  { this.isLabelLevelEnabled = value; });
     this.labelLevelFacade.getMinFixation$()
                         .subscribe((value) => { this.minFixation = value; });
     this.labelLevelFacade.getMaxFixation$()

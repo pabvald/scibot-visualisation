@@ -12,7 +12,7 @@ class Config(object):
 
     # Data versions
     GAZE_VERSION = 'v05'
-    MAPPING_VERSION = 'v05'
+    MAPPING_VERSION = 'v04'
 
     # Paths
     DIR = os.path.dirname(__file__)

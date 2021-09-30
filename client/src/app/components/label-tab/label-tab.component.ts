@@ -13,17 +13,20 @@ import { DataFacade } from 'src/app/facade/data/data.facade';
 })
 export class LabelTabComponent implements OnInit {
   
-  isDisabled: boolean = false; 
+  // General settings
+  isEnabled: boolean = false; 
   isLabelLevelUpdating: boolean = false;
   isDataUpdating: boolean = false;
 
-  fixationStep = 50;
+  // Fixation duration settings
+  sliderStep = 50;
   thumbLabel = false;
   minFixation: number = 0;
   maxFixation: number = 0; 
   minFixationInterval: number[] = [0, 300];
   maxFixationInterval: number[] = [400, 700];
    
+  // Fixation area settings
   fixationAreaOptions: FormGroup;
   leftMarginCtrl = new FormControl({value: null}, Validators.min(0));
   rightMarginCtrl = new FormControl({value: null}, Validators.min(0));
@@ -41,9 +44,9 @@ export class LabelTabComponent implements OnInit {
     });
     
     // subscriptions
-    this.labelLevelFacade.isDisabled$()
+    this.labelLevelFacade.isEnabled$()
                         .subscribe((value) => {
-                          this.isDisabled = value; 
+                          this.isEnabled = value; 
                           this.enableFixationAreaOptions();
                         });
     this.dataFacade.isUpdating$()
@@ -83,14 +86,22 @@ export class LabelTabComponent implements OnInit {
 
   /**
    * Enables or disables the form controls depending on the 
-   * `@this.isDisable` value.
+   * `@this.isEnabled` value.
    */
   enableFixationAreaOptions() {
-    if (this.isDisabled) {
-      this.fixationAreaOptions.disable();
-    } else {
+    if (this.isEnabled) {
       this.fixationAreaOptions.enable();
+    } else {
+      this.fixationAreaOptions.disable();
     }
+  }
+
+  /**
+   * Enable/disable the lebel level.
+   * @param enabled is enabled.
+   */
+   setLabelLevelEnabled(enabled: boolean) {
+    this.labelLevelFacade.setEnabled(enabled);
   }
 
   /** Update the minimum fixation duration */
@@ -101,16 +112,7 @@ export class LabelTabComponent implements OnInit {
   /** Update the maximum fixation duration */
   updateMaxFixation() {
     this.labelLevelFacade.setMaxFixation(this.maxFixation);
-  }
-
-  /** 
-   * @param event change on the checked slide toggle's value
-   */
-  onIsDisabledChange(event: MatSlideToggleChange): void {
-    if (event) {
-      this.labelLevelFacade.setDisabled(!event.checked);
-    }
-  }
+  }  
 
   /**
    * Updates the fixation area configuration.

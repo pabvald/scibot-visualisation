@@ -20,10 +20,10 @@ export class ParagraphLevelFacade {
   }
 
   /** 
-   * @returns The paragraph-level state is disabled  
+   * @returns The paragraph-level state is enabled  
    */
-  isDisabled$(): Observable<boolean> {
-    return this.paragraphLevelState.isDisabled$();
+  isEnabled$(): Observable<boolean> {
+    return this.paragraphLevelState.isEnabled$();
   }
 
   /**
@@ -34,10 +34,10 @@ export class ParagraphLevelFacade {
   }
 
   /**
-   * @param isDisabled the paragraph level is set to 'disabled'
+   * @param isEnabled the paragraph level is to be enabled or not.
    */
-  setDisabled(isDisabled: boolean) {
-    this.paragraphLevelState.setDisabled(isDisabled);
+  setDisabled(isEnabled: boolean) {
+    this.paragraphLevelState.setEnabled(isEnabled);
   }
 
   /**

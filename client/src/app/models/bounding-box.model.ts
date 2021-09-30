@@ -1,4 +1,4 @@
-export interface IMapping {
+export interface IBoundingBox {
     x1: number;
     y1: number;
     x2: number;

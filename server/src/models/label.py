@@ -1,9 +1,10 @@
 from flask import current_app as app
 from features import FixationEvent
+from .bounding_box import BoundingBox
 from marshmallow import Schema, fields
 
 
-class LabelModel(object):
+class LabelModel(BoundingBox):
     """
     Representation of a label.
     """

@@ -10,7 +10,7 @@ export class DataState {
 
   private updating$ = new BehaviorSubject<boolean>(true);
   private document$ = new ReplaySubject<IDocument>();
-  private fixationArea$ = new BehaviorSubject<IFixationArea>(new FixationArea(8, 14));
+  private fixationArea$ = new BehaviorSubject<IFixationArea>(new FixationArea(3, 14));
 
 
   constructor() { }

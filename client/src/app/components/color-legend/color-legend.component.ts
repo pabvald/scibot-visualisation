@@ -12,14 +12,14 @@ export class ColorLegendComponent implements OnInit {
   readonly SPLITS : number = 20;
   readonly SHOW_EACH: number = 3;
 
-  isLabelLevelDisabled : boolean = false;
+  isLabelLevelEnabled : boolean = false;
   minFixation : number = 0;
   maxFixation : number = 600;
   
   constructor(private labelLevelFacade: LabelLevelFacade) {
     // Subscriptions
-    this.labelLevelFacade.isDisabled$()
-                        .subscribe((value) => { this.isLabelLevelDisabled = value; });
+    this.labelLevelFacade.isEnabled$()
+                        .subscribe((value) => { this.isLabelLevelEnabled = value; });
     this.labelLevelFacade.getMinFixation$()
                         .subscribe((value) => {this.minFixation = value});
 

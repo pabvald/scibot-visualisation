@@ -1,4 +1,4 @@
-<div [ngClass]="{'colored': !isLabelLevelDisabled}">
+<div [ngClass]="{'colored': isLabelLevelEnabled}">
     <span *ngFor="let i of splitting"
           [ngClass]="{'invisible': (i % SHOW_EACH != 0)}"
          >

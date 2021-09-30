@@ -1,26 +1,26 @@
-import abc
+from abc import ABCMeta, abstractmethod
 
 from typing import List
 
 from features import FixationEvent
 
 
-class FixationArea(metaclass=abc.ABCMeta):
+class FixationArea(metaclass=ABCMeta):
 
     @staticmethod
-    @abc.abstractmethod
+    @abstractmethod
     def from_fixations(self, fixations: List[FixationEvent]):
         pass
 
-    @abc.abstractmethod
+    @abstractmethod
     def hits(self, x1: float, y1: float, x2: float, y2: float) -> bool:
         pass
 
 
 class HorizontalFixationArea(FixationArea):
-    _PIXELS_PER_LETTER = 20  # pixels of that a letter occupies in the screen of the study
+    _PIXELS_PER_LETTER = 20  # pixels that a letter occupies in the screen of the study
 
-    def __init__(self, fixation: FixationEvent, left_margin: int = 8, right_margin: int = 14, mode: str = "covers"):
+    def __init__(self, fixation: FixationEvent, left_margin: int = 3, right_margin: int = 14, mode: str = "intersects"):
         """
         Args:
             fixation: the fixation event from which the fixation area is created

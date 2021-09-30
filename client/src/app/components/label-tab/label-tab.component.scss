@@ -11,19 +11,23 @@ section {
 }
 
 section#fixation-duration-settings {
+
   .slider-container {
     display: flex;
     align-items: center;
     padding-left: 2vw;
       
-    .name-label {
+    .name-label .value-label {
       padding: 0 1vw;
     }
+
   }
+
 }
 
 section#fixation-area-settings {
   flex-direction: row;
+
   label {
       margin-left: 2vw;
   }
@@ -49,16 +53,9 @@ section#fixation-area-settings {
 
 }
 
-::ng-deep .mat-form-field {
-  .mat-form-field-wrapper {
-      .mat-form-field-flex {
-          padding: 0 .60vw;      
-      }            
-  }
-}
-
 section#enabling-settings{
   flex-grow: 1;
+
   #toggle-container {
     display: flex;
     flex-grow: 1;
@@ -75,3 +72,10 @@ section#enabling-settings{
   }
 }
 
+::ng-deep .mat-form-field {
+  .mat-form-field-wrapper {
+      .mat-form-field-flex {
+          padding: 0 .60vw;      
+      }            
+  }
+}

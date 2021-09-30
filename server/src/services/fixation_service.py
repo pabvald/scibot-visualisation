@@ -19,10 +19,10 @@ class FixationService(object):
             right_margin: the right margin of the horizontal fixation area in number of letters.
         """
         for paragraph in document.paragraphs:
+            # consider only the gaze points assign to each paragraph
             for fixation in paragraph.fixations:
                 # create fixation area from fixation
-                fixation_area = HorizontalFixationArea(fixation=fixation, left_margin=left_margin,
-                                                       right_margin=right_margin)
+                fixation_area = HorizontalFixationArea(fixation=fixation, left_margin=left_margin, right_margin=right_margin)
 
                 # check which labels of are hit
                 i = 0

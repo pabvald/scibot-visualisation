@@ -7,8 +7,8 @@ import { BehaviorSubject, Observable } from 'rxjs';
   //{ id: "f_total_time",           name: "Total time",             units: "u", enabled: true },
   //{ id: "f_fixn_n",               name: "No. fixations",          units: "u", enabled: true },
   //{ id: "f_fixn_dur_sum",         name: "Sum fixation duration",  units: "u", enabled: true },
-  //{ id: "f_fixn_dur_avg",         name: "Avg. fixation duration",   units: "u", enabled: true  },
-  //{ id: "f_fixn_dur_sd",          name: "Sd. fixation duration",    units: "u", enabled: false },
+  //{ id: "f_fixn_dur_avg",         name: "Avg. fixation duration", units: "u", enabled: true  },
+  //{ id: "f_fixn_dur_sd",          name: "Sd. fixation duration",  units: "u", enabled: false },
   { id: "f_scan_distance_h",      name: "Scan distance horizontal", units: "u", enabled: true  },
   { id: "f_scan_distance_v",      name: "Scan distance vertical",   units: "u", enabled: true  },
   { id: "f_scan_distance_euclid", name: "Scan distance euclidean",  units: "u", enabled: true  },
@@ -31,7 +31,7 @@ export class ParagraphLevelState {
 
   private featuresConf$ = new BehaviorSubject<IParagraphFeatureConf[]>(featuresConf);
   private updating$ = new BehaviorSubject<boolean>(false);
-  private paragraphLevelDisabled$ = new BehaviorSubject<boolean>(true);
+  private enabled$ = new BehaviorSubject<boolean>(true);
 
   /**
    * @returns the paragraph-level state is being updated (`true`) or not (`false`)
@@ -41,10 +41,10 @@ export class ParagraphLevelState {
   }
 
   /**
-   * @returns the paragraph level is disabled
+   * @returns the paragraph level is enabled
    */
-  isDisabled$(): Observable<boolean> {
-    return this.paragraphLevelDisabled$.asObservable();
+  isEnabled$(): Observable<boolean> {
+    return this.enabled$.asObservable();
   }
 
   /**
@@ -63,10 +63,10 @@ export class ParagraphLevelState {
   }
   
   /**
-   * @param isDisabled the paragraph level has to be disabled
+   * @param isEnabled the paragraph level has to be enabled
    */
-  setDisabled(isDisabled: boolean) {
-    this.paragraphLevelDisabled$.next(isDisabled);
+  setEnabled(isEnabled: boolean) {
+    this.enabled$.next(isEnabled);
   }  
 
   /**

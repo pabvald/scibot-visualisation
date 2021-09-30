@@ -15,7 +15,7 @@ export interface Feature {
 })
 export class ParagraphTabComponent implements OnInit {
 
-  isDisabled: boolean = true; 
+  isEnabled: boolean = true; 
   isParLevelStateUpdating: boolean = false;
   features: IParagraphFeatureConf[] = [];
   allFeaturesEnabled: boolean = false;
@@ -23,8 +23,8 @@ export class ParagraphTabComponent implements OnInit {
   constructor(private parLevelFacade: ParagraphLevelFacade) { 
 
     // subscriptions 
-    this.parLevelFacade.isDisabled$()
-                      .subscribe((value) => { this.isDisabled = value; });
+    this.parLevelFacade.isEnabled$()
+                      .subscribe((value) => { this.isEnabled = value; });
     this.parLevelFacade.isUpdating$()
                       .subscribe((value) => { this.isParLevelStateUpdating = value; });
     this.parLevelFacade.getFeaturesConf$()
@@ -66,17 +66,17 @@ export class ParagraphTabComponent implements OnInit {
     }
   }
 
-  updateFeaturesConf(): void {
-    this.parLevelFacade.setFeaturesConf(this.features);
+  /**
+   * Enable/disabled the paragraph level
+   * @param enable the paragraph level is enabled
+   */
+  setParLevelEnabled(enable: boolean): void {
+    this.parLevelFacade.setDisabled(enable);
   }
 
-  /** 
-   * @param event change on the 'checked' toggle's value
-   */
-  onIsDisabledChange(event: MatSlideToggleChange): void {
-    if (event) {
-      this.parLevelFacade.setDisabled(!event.checked);
-    }
+  /** Update the feature configuration */
+  updateFeaturesConf(): void {
+    this.parLevelFacade.setFeaturesConf(this.features);
   }
 
 }
