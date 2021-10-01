@@ -60,7 +60,7 @@ class DocumentModel(object):
             labels_selection = labels_mapping.loc[labels_mapping['paragraph_id'] == par_id]
 
             paragraphs.append(
-                ParagraphModel.from_data(par_parsing, par_gaze, par_mapping, labels_selection, features)
+                ParagraphModel.from_data(article_id, par_parsing, par_gaze, par_mapping, labels_selection, features)
             )
         
         return cls(user_id, article_id, corpus, article.query.strip(), paragraphs)

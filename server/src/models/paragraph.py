@@ -13,7 +13,7 @@ class ParagraphModel(BoundingBox):
     Representation of  a paragraph.
     """
 
-    def __init__(self, par_id: int, x1: float, y1: float, x2: float, y2: float, answer: bool,
+    def __init__(self, article_id: str, par_id: int, x1: float, y1: float, x2: float, y2: float, answer: bool,
                  labels: List[LabelModel], gaze_data: DataFrame, features: Dict):
         """
         Args:
@@ -27,23 +27,20 @@ class ParagraphModel(BoundingBox):
             gaze_data: gaze points within the paragraph.
             features: precomputed features
         """
+        super().__init__(article_id, x1, y1, x2, y2)
         self._id = par_id
-        self._x1 = x1
-        self._y1 = y1
-        self._x2 = x2
-        self._y2 = y2
         self._answer = answer
         self._labels = labels
         self._gaze_data = gaze_data
-        self._normalized_coord = True
         self._features = features
 
     @classmethod
-    def from_data(cls, parsing: Dict, gaze_data: DataFrame, par_mapping: DataFrame,
+    def from_data(cls, article_id: str, parsing: Dict, gaze_data: DataFrame, par_mapping: DataFrame,
                   labels_mapping: DataFrame, features: DataFrame=None):
         """
         Create a paragraph from
         Args:
+            article_id: id of the article
             parsing: data from the HTML parsing
             gaze_data: gaze points within the paragraph
             par_mapping: mapping of the paragraph coordinates
@@ -61,54 +58,14 @@ class ParagraphModel(BoundingBox):
         # Generate paragraph's labels
         for j, label_mapping in labels_mapping.iterrows():
             par_labels.append(
-                LabelModel.from_mapping(label_mapping)
+                LabelModel.from_data(article_id, label_mapping)
             )
-        return cls(par_id, par_x1, par_y1, par_x2, par_y2, parsing['answer'], par_labels, gaze_data,
+        return cls(article_id, par_id, par_x1, par_y1, par_x2, par_y2, parsing['answer'], par_labels, gaze_data,
                    features_dict)
-
-    @property
-    def normalized_coord(self) -> bool:
-        return self._normalized_coord
-
-    @normalized_coord.setter
-    def normalized_coord(self, nc: bool):
-        self._normalized_coord = nc
 
     @property
     def id(self) -> int:
         return self._id
-
-    @property
-    def x1(self) -> float:
-        result = self._x1
-        if not self._normalized_coord:
-            result *= app.config['SCREEN_WIDTH']
-        return result
-
-    @property
-    def y1(self) -> float:
-        result = self._y1
-        if not self._normalized_coord:
-            result *= app.config['SCREEN_HEIGHT']
-        return result
-
-    @property
-    def x2(self) -> float:
-        result = self._x2
-        if not self._normalized_coord:
-            result *= app.config['SCREEN_WIDTH']
-        return result
-
-    @property
-    def y2(self) -> float:
-        result = self._y2
-        if not self._normalized_coord:
-            result *= app.config['SCREEN_HEIGHT']
-        return result
-
-    @property
-    def coordinates(self):
-        return self.x1, self.y1, self.x2, self.y2
 
     @property
     def answer(self) -> bool:

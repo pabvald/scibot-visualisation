@@ -5,7 +5,7 @@ from os.path import join as pjoin
 class Config(object):
     DEBUG = True
     DEVELOPMENT = True
-    # SECRET_KEY = 'do-i-really-need-this'
+    # SECRET_KEY = ''
     # FLASK_HTPASSWD_PATH = '/secret/.htpasswd'
     # FLASK_SECRET = SECRET_KEY
     # DB_HOST = 'database' # a docker link

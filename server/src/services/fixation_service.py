@@ -1,5 +1,6 @@
 
 from models import DocumentModel, ParagraphModel, LabelModel
+from models.bounding_box import AxisOrigin
 from features import HorizontalFixationArea
 
 
@@ -24,19 +25,27 @@ class FixationService(object):
                 # create fixation area from fixation
                 fixation_area = HorizontalFixationArea(fixation=fixation, left_margin=left_margin, right_margin=right_margin)
 
-                # check which labels of are hit
+                # check which labels in the paragraph are hit
                 i = 0
                 line_hit = False
                 possible_hits = True
 
                 while i < len(paragraph.labels) and possible_hits:
                     label = paragraph.labels[i]
+
+                    # modify coordinates (scale, origin) to match gaze data
                     label.normalized_coord = False
-                    if fixation_area.hits(*label.coordinates):
+                    label.axis_origin = AxisOrigin.BL
+
+                    if fixation_area.hits(label):
                         label.add_fixation(fixation)
                         line_hit = True
                     elif line_hit:  # no more hits are possible in the next lines
                         possible_hits = False
+
+                    # reset coordinates to original state
                     label.normalized_coord = True
+                    label.axis_origin = AxisOrigin.TL
+
                     i += 1
 
