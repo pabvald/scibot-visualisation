@@ -5,7 +5,8 @@ import math
 from scipy.spatial import ConvexHull
 
 from .fixation_event import FixationEvent
-from .saccade_event import SaccadeEvent
+from .fixation_event import FixationEventWithReadingState
+from .saccade_event import SaccadeEvent, SaccadeEventWithReadingState
 from .fixation_area import FixationArea, HorizontalFixationArea
 
 

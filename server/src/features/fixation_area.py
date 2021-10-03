@@ -2,7 +2,7 @@ import abc
 
 from typing import List
 
-from features import FixationEvent
+from .fixation_event import FixationEvent
 
 
 class FixationArea(metaclass=abc.ABCMeta):

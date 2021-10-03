@@ -1,7 +1,7 @@
 import os
 import logging
 import pandas as pd
-from data_loading.article_parser import ArticleParser
+from .article_parser import ArticleParser
 
 
 class SciBotDataLoader:

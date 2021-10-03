@@ -38,3 +38,20 @@ class FixationEvent:
     def from_dataframe(df: pd.DataFrame) -> List:
         fixation_groups = df.groupby(by="fixation_id")
         return [FixationEvent(_id, _df) for _id, _df in fixation_groups if _id != np.nan]
+class FixationEventWithReadingState(FixationEvent):
+    def __init__(self,fixation_id, fixation_data):
+        super.__init__(fixation_id, fixation_data)
+        self._reading_state = ""
+
+    @property
+    def reading_state(self):
+        return self._reading_state
+
+    @reading_state.setter
+    def reading_state(self, reading_state):
+        self._reading_state = reading_state
+
+    @property
+    def paragraph_id(self):
+        value_counts = self._df.groupby('paragraph_id').value_counts()
+        return value_counts.index[0][0]

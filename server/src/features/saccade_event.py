@@ -47,3 +47,46 @@ class SaccadeEvent:
             saccades.append(SaccadeEvent(event_id=i, start_fixation=fixations[i], end_fixation=fixations[i+1]))
 
         return saccades
+
+class SaccadeEventWithReadingState(SaccadeEvent):
+    def __init__(self, event_id: int, start_fixation: FixationEvent, end_fixation: FixationEvent):
+        super(SaccadeEventWithReadingState, self).__init__(event_id, start_fixation, end_fixation)
+        self._saccade_direction_h = np.sign(end_fixation.gaze_x - start_fixation.gaze_x)
+        self._saccade_type = ''
+        self._start_fixation = start_fixation
+        self._reading_state = ""
+
+    @property
+    def saccade_direction_h(self):
+        return self._saccade_direction_h
+
+    @property
+    def saccade_type(self):
+        return self._saccade_type
+
+    @saccade_type.setter
+    def saccade_type(self, new_type):
+        self._saccade_type = new_type
+
+    @property
+    def start_fixation(self):
+        return self._start_fixation
+
+    @property
+    def reading_state(self):
+        return self._reading_state
+
+    @reading_state.setter
+    def reading_state(self, reading_state):
+        self._reading_state = reading_state
+
+    def update_reading_state_for_fixation(self, reading_state):
+        self.start_fixation.reading_state = reading_state
+
+    @staticmethod
+    def from_fixations(fixations: List[FixationEvent]):
+        saccades = []
+        for i in range(len(fixations)-1):
+            saccades.append(SaccadeEventWithReadingState(event_id=i, start_fixation=fixations[i], end_fixation=fixations[i+1]))
+
+        return saccades
