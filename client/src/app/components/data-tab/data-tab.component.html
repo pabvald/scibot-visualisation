@@ -1,39 +1,43 @@
- <!-- Check https://material.angular.io/components/select/overview -->
- <div>
+<section id="input-container">
     <!-- User selection -->
-    <mat-form-field appearance="fill">
-        <mat-label>User</mat-label>
-        <mat-select [(value)]="selUserId">
-            <mat-option *ngFor="let uid of userIds" [value]="uid">
-                {{uid}}
-            </mat-option>
-        </mat-select>
-    </mat-form-field>
+    <div>  
+        <label>User:</label>      
+        <mat-form-field appearance="fill">         
+            <mat-select [(value)]="selUserId">
+                <mat-option *ngFor="let uid of userIds" [value]="uid">
+                    {{uid}}
+                </mat-option>
+            </mat-select>
+        </mat-form-field>
+    </div>
 
     <!-- Document selection -->
-    <mat-form-field appearance="fill">
-        <mat-label>Document</mat-label>
-        <mat-select [(value)]="selDocumentId">
-            <mat-option *ngFor="let docid of documentIds" [value]="docid">
-                {{docid}}
-            </mat-option>
-        </mat-select>
-    </mat-form-field>
+    <div>
+        <label>Document:</label>
+        <mat-form-field appearance="fill">
+            <mat-select [(value)]="selDocumentId">
+                <mat-option *ngFor="let docid of documentIds" [value]="docid">
+                    {{docid}}
+                </mat-option>
+            </mat-select>
+        </mat-form-field>
+    </div>
+</section>
 
+<section id="buttons-container">
     <!-- Load button -->
-    <button mat-button  *ngIf="isUpdating; else notUpdating" 
-            color="primary" 
-            [disabled]="true">
-        Loading...
-    </button>
-      
+    <mat-spinner *ngIf="isUpdating; else notUpdating"
+                color="primary"
+                [diameter]="20">
+    </mat-spinner>
+
     <ng-template #notUpdating>
-        <button mat-button color="primary" 
-                (click)="loadData()" 
-                [disabled]="loadDisabled">
-            Load
-        </button>
+    <button mat-stroked-button 
+        color="primary" 
+        (click)="loadData()" 
+        [disabled]="isLoadDisabled">
+        Load
+    </button>
     </ng-template> 
-
-
-</div>
+</section>
+<section></section>

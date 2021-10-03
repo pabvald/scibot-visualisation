@@ -1,0 +1,38 @@
+:host {
+    display: flex;
+    margin-top: 2vh;
+}
+
+section {
+    flex-grow: 1;
+    display: flex;
+    align-items: baseline;
+    padding: 1vh 1vw 0 1vw; 
+}
+
+section#input-container {
+    flex-wrap: wrap;
+
+    div {
+        label {
+            margin-left: 2vw;
+        }
+
+        mat-form-field {
+            margin-left: 1vw;
+            font-size: 0.9em;
+        } 
+    }  
+}
+
+mat-spinner {
+    margin-top: 1vh;
+}
+
+::ng-deep .mat-form-field {
+    .mat-form-field-wrapper {
+        .mat-form-field-flex {
+            padding: 0 .75em;      
+        }            
+    }
+}

@@ -1,3 +1,16 @@
 :host {
     flex-shrink: 0;
+    border-bottom: 1px grey solid;
+    min-height: 15%;
+    font-size: 0.9vw;
+}
+
+// Angular material labels
+::ng-deep .mat-tab-label .mat-tab-label-content {
+    font-size: min(1vw, 4vh);
+}
+
+::ng-deep.mat-tab-label, ::ng-deep.mat-tab-label-active{
+    min-height: 0!important;
+    height: 5vh!important;
 }

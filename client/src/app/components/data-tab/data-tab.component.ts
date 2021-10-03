@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { DataFacade } from 'src/app/facade/data.facade';
+import { DataFacade } from 'src/app/facade/data/data.facade';
 
 @Component({
   selector: 'app-data-tab',
@@ -19,10 +19,14 @@ export class DataTabComponent implements OnInit {
     this.dataFacade.isUpdating$().subscribe((value) => {this.isUpdating = value});
     this.dataFacade.getUserIds$().subscribe((data) => {this.userIds = data});
     this.dataFacade.getDocumentIds$().subscribe((data) => {this.documentIds = data});
+    this.dataFacade.getDocument$().subscribe((document) => {
+      this.selDocumentId = document.id;
+      this.selUserId = document.userId;
+    })
   }
 
   /** Load button is disabled */
-  get loadDisabled(): boolean {
+  get isLoadDisabled(): boolean {
     return (this.selUserId === undefined) || (this.selDocumentId === undefined);
   }
 
@@ -30,7 +34,8 @@ export class DataTabComponent implements OnInit {
    * Methods
    */
   
-  ngOnInit() {}
+  ngOnInit() {
+  }
 
   /** Load document */
   loadData(): void {

@@ -1,3 +1,19 @@
-:host {
+#content {
+    position: absolute;
+    display: inline-block;
+    border: 0.25px solid white;
+    background: white;
     
-}
+    span {
+        height: 100%;
+        width: 100%;
+        font-size: min(2vh, 1vw);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    span.title {
+        font-size: min(3vh, 2vw);
+    }
+}   

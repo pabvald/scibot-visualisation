@@ -5,4 +5,10 @@
     display: flex;
     flex-direction: column;
     flex-wrap: nowrap;
+    align-items: center;
+}
+
+footer {
+    min-height: 5px;
+    height: 5px;
 }

@@ -36,8 +36,8 @@ DOC_IDS = ["g-rel_q075-1_i",
            "nq_7p_a5_NTE0"]
 
 parser = reqparse.RequestParser()
-parser.add_argument('hit_left_margin', type=int, default=8)
-parser.add_argument('hit_right_margin', type=int, default=14)
+parser.add_argument('leftMargin', type=int, default=8)
+parser.add_argument('rightMargin', type=int, default=14)
 
 
 class DocumentResource(Resource):
@@ -53,8 +53,8 @@ class DocumentResource(Resource):
             doc_id: document id
         """
         args = parser.parse_args()
-        hit_left_margin = args['hit_left_margin']
-        hit_right_margin = args['hit_right_margin']
+        hit_left_margin = args['leftMargin']
+        hit_right_margin = args['rightMargin']
 
         if user_id not in USER_IDS:
             return {'message': f"The id '{user_id}' does not correspond to any user"}, 404
@@ -76,14 +76,16 @@ class DocumentResource(Resource):
             gaze = app.dataloader.grel_reading[user_id][doc_id[:-2]]['dataframe']
             pars_mapping = app.mappingloader.grel_paragraphs[doc_id[:-2]]
             labels_mapping = app.mappingloader.grel_labels[doc_id[:-2]]
+            par_features = app.featuresloader.grel_par_features[user_id].get(doc_id[:-2], None)
         else:
             article = app.dataloader.google_nq_articles[doc_id]
             gaze = app.dataloader.google_nq_reading[user_id][doc_id]['dataframe']
-            pars_mapping = app.mappingloader.google_nq_paragraphs[doc_id[:-2]]
-            labels_mapping = app.mappingloader.google_nq_labels[doc_id[:-2]]
+            pars_mapping = app.mappingloader.google_nq_paragraphs[doc_id]
+            labels_mapping = app.mappingloader.google_nq_labels[doc_id]
+            par_features = app.featuresloader.google_nq_par_features[user_id].get(doc_id, None)
 
         # create document representation
-        document = DocumentModel.from_data(user_id, article, gaze, pars_mapping, labels_mapping)
+        document = DocumentModel.from_data(user_id, article, gaze, pars_mapping, labels_mapping, par_features)
         # compute fixations on the document's labels
         self._fixation_service.compute_horizontal_hits(document, hit_left_margin, hit_right_margin)
         # serialize document

@@ -1,26 +1,27 @@
-import abc
+from abc import ABCMeta, abstractmethod
 
 from typing import List
 
-from .fixation_event import FixationEvent
+from features import FixationEvent
+from models.bounding_box import BoundingBox
 
 
-class FixationArea(metaclass=abc.ABCMeta):
+class FixationArea(metaclass=ABCMeta):
 
     @staticmethod
-    @abc.abstractmethod
+    @abstractmethod
     def from_fixations(self, fixations: List[FixationEvent]):
         pass
 
-    @abc.abstractmethod
-    def hits(self, x1: float, y1: float, x2: float, y2: float) -> bool:
+    @abstractmethod
+    def hits(self, bb: BoundingBox) -> bool:
         pass
 
 
 class HorizontalFixationArea(FixationArea):
-    _PIXELS_PER_LETTER = 20  # pixels of that a letter occupies in the screen of the study
+    _PIXELS_PER_LETTER = 20  # pixels that a letter occupies in the screen of the study
 
-    def __init__(self, fixation: FixationEvent, left_margin: int = 8, right_margin: int = 14, mode: str = "covers"):
+    def __init__(self, fixation: FixationEvent, left_margin: int = 3, right_margin: int = 14, mode: str = "intersects"):
         """
         Args:
             fixation: the fixation event from which the fixation area is created
@@ -71,16 +72,14 @@ class HorizontalFixationArea(FixationArea):
         assert m in ["intersects", "covers"], "invalid label mode"
         self._mode = m
 
-    def hits(self, x1: float, y1: float, x2: float, y2: float) -> bool:
+    def hits(self, bb: BoundingBox) -> bool:
         """
         Determines if a label is hit by the fixation area.
 
         Args:
-            x1: first x coordinate
-            y1: first y coordinate
-            x2: second x coordinate
-            y2: second y coordinate
+            bb: bounding box
         """
+        x1, y1, x2, y2 = bb.coordinates
 
         # covers
         hits_w = self.x1 <= x1 and self.x2 >= x2

@@ -1,5 +1,77 @@
-<div id="content" *ngIf="paragraph && paragraph.labels.length > 0">
-    <app-label *ngFor="let lbl of paragraph.labels; index as i"
-                [label]="lbl">
-    </app-label>
+<!-- Paragraph -->
+<div *ngIf="paragraph && paragraph.hasLabels"
+    class="paragraph" 
+    [ngStyle]="{
+        'top.%': (100 * paragraph.y1),
+        'left.%': (100 * paragraph.x1),
+        'width.%': (100 * paragraph.width),
+        'max-width.%': (100 * paragraph.width),
+        'height.%': (100 * paragraph.height * HEIGHT_REDUCTION),
+        'max-height.%': (100 * paragraph.height * HEIGHT_REDUCTION)
+    }">    
+</div> 
+
+<!-- Color bar-->
+<div *ngIf="isParLevelEnabled && paragraph && !paragraph.isTitle && paragraph.hasLabels "
+    class="fixation-duration-bar"
+    [ngStyle]="{
+        'top.%': (100 * paragraph.y1),
+        'left.%': (100 * (paragraph.x1 ) - 1.4),
+        'width.%': COLORBAR_WIDTH,
+        'max-width.%': COLORBAR_WIDTH,
+        'height.%': (100 * paragraph.height * HEIGHT_REDUCTION),
+        'max-height.%': (100 * paragraph.height * HEIGHT_REDUCTION),
+        'background': color
+    }">
 </div>
+
+<!-- Paragraph details: id header -->
+<div *ngIf="isParLevelEnabled && paragraph && !paragraph.isTitle && paragraph.hasLabels "
+    class="paragraph-id"
+    [ngStyle]="{
+        'top.%': (100 * paragraph.y1),
+        'left.%': (100 * (paragraph.x1 - paragraph.width * WIDTH_REDUCTION) - 2),
+        'width.%': (100 * paragraph.width * WIDTH_REDUCTION),
+        'max-width.%': (100 * paragraph.width * WIDTH_REDUCTION),
+        'height.%': ID_HEIGHT,
+        'max-height.%': ID_HEIGHT
+    }">
+   Paragraph {{paragraph.id}}
+</div>
+
+<!-- Paragraph details: features -->
+<div *ngIf="isParLevelEnabled && paragraph && !paragraph.isTitle && paragraph.hasLabels "
+    class="paragraph-features"
+    [ngStyle]="{
+        'top.%': (100 * paragraph.y1 + ID_HEIGHT),
+        'left.%': (100 * (paragraph.x1 - paragraph.width * WIDTH_REDUCTION) - 2),
+        'width.%': (100 * paragraph.width * WIDTH_REDUCTION),
+        'max-width.%': (100 * paragraph.width * WIDTH_REDUCTION),
+        'height.%': (100 * paragraph.height * HEIGHT_REDUCTION - ID_HEIGHT),
+        'max-height.%': (100 * paragraph.height * HEIGHT_REDUCTION - ID_HEIGHT)
+    }">
+
+    <div *ngFor="let feature of featuresConf">
+        <div *ngIf="feature.enabled && 
+                    paragraph.getFeatureById(feature.id) != null"
+            class="feature">
+            <span class="feature-name">
+                - {{feature.name}}:
+            </span>
+            <!-- <span class="feature-name">
+                - {{feature.name}} ({{feature.units}}):
+            </span> -->
+            <span class="feature-value">
+                {{paragraph.getFeatureById(feature.id) | number : '0.1-2'}}
+            </span>
+        </div> 
+    </div>    
+</div>
+
+<!-- Labels -->
+<span *ngIf="paragraph && paragraph.hasLabels"
+    class="labels-container" >
+    <app-label *ngFor="let lbl of paragraph.labels; index as i"
+            [label]="lbl">
+    </app-label>       
+</span>

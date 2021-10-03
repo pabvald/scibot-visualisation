@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { DataFacade } from 'src/app/facade/data.facade';
+import { DataFacade } from 'src/app/facade/data/data.facade';
 import { IDocument, Document} from 'src/app/models/document.model';
 import { DataState } from 'src/app/state/data/data.state';
 

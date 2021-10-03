@@ -1,3 +1,13 @@
-<div id="content" *ngIf="label">
-    <div>{{label.text}}</div>
+<div id="content" 
+    *ngIf="label"
+    [ngStyle]="{ 
+        'background-color': color,
+        'top.%': (100 * label.y1),
+        'left.%': (100 * label.x1),
+        'width.%': (100 * label.width),
+        'max-width.%': (100 * label.width),
+        'height.%': (100 * label.height),
+        'max-height.%': (100 * label.height)
+    }">
+    <span [ngClass]="{'title': label.inTitle}">{{label.text}}</span>
 </div>

@@ -1,4 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { LabelLevelFacade } from 'src/app/facade/label-level/label-level.facade';
 import { ILabel } from 'src/app/models/label.model';
 
 @Component({
@@ -7,29 +8,29 @@ import { ILabel } from 'src/app/models/label.model';
   styleUrls: ['./label.component.scss']
 })
 export class LabelComponent implements OnInit {
-
+  
   @Input() label: ILabel | undefined; 
   @Input() isTitle: boolean = false; 
+  
+  color : string = "";
+  isLabelLevelEnabled: boolean = false; 
+  minFixation: number = 0.0;
+  maxFixation: number = 0.0;
 
-  constructor() { }
+  constructor(private labelLevelFacade: LabelLevelFacade) {
+
+    // Subscriptions
+    this.labelLevelFacade.isEnabled$()
+                        .subscribe((value) =>  { this.isLabelLevelEnabled = value; });
+    this.labelLevelFacade.getMinFixation$()
+                        .subscribe((value) => { this.minFixation = value; });
+    this.labelLevelFacade.getMaxFixation$()
+                        .subscribe((value) => { this.maxFixation = value; });
+  }
 
   ngOnInit(): void {
-
+    // Subscriptions
+    this.labelLevelFacade.getColor$(this.label?.fixationDuration)
+                        .subscribe((value) => { this.color = value; });
   }
-
-  displaySize() {
-    let width = 0;
-    let height = 0;
-    if (this.label) {
-      width = (this.label.x2 - this.label.x1);
-      height = (this.label.y2 - this.label.y1);      
-    }      
-    let sizeStyle = {
-      'width': width  + '%',
-      'height': height + '%',
-      'display': 'inline-block'
-    };
-    return sizeStyle;
-  }
-
 }

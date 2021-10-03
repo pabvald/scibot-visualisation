@@ -1,17 +1,23 @@
 import { ILabel, Label } from "./label.model";
+import { IBoundingBox } from "./bounding-box.model";
 
-export interface IParagraph {
+
+/**
+ * Paragraph interface.
+ */
+export interface IParagraph  extends IBoundingBox {
     id: number;
-    x1: number;
-    y1: number;
-    x2: number;
-    y2: number;
     answer: boolean;
     labels: ILabel[];
     isTitle: boolean;
+    hasLabels: boolean;
+    getFeatureById(id: string): any;
 }
   
 
+/**
+ * Paragraph representation.
+ */
 export class Paragraph implements IParagraph {
     public id: number;
     public x1: number;
@@ -20,7 +26,11 @@ export class Paragraph implements IParagraph {
     public y2: number;
     public answer: boolean;
     public labels: ILabel[];
+    public features: any;
 
+    /**
+     * @param paragraphObject a paragraph JSON object
+     */
     constructor(paragraphObject: any) {
         this.id = paragraphObject.id;
         this.x1 = paragraphObject.x1; 
@@ -29,9 +39,46 @@ export class Paragraph implements IParagraph {
         this.y2 = paragraphObject.y2; 
         this.answer = paragraphObject.answer;
         this.labels = paragraphObject.labels.map((lbl: any) => new Label(lbl));
+        this.features = paragraphObject.features;
     }
 
     get isTitle(): boolean {
         return this.id == -1;
     }
+
+    get hasFeatures(): boolean {
+        return this.id >= 0;
+    }
+
+    get hasLabels(): boolean {
+        return this.labels.length > 0;
+    }
+
+    get width(): number {
+        return this.x2 - this.x1;
+    }
+
+    get height(): number {
+        return this.y2 - this.y1;
+    }
+
+    getFeatureById(id: string) {
+        let value = null;
+        Object.entries(this.features).forEach(
+            ([key, v]) => {
+                if (key == id) { value = v; }
+            }
+          );
+        return value;
+    }
+}
+
+/** 
+ * Paragraph feature interface.
+ */
+ export interface IParagraphFeatureConf {
+    id: string;     
+    name: string;
+    units: string;
+    enabled: boolean; 
 }

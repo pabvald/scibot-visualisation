@@ -1,0 +1,37 @@
+<section id="feature-pool">
+    <span>Feature pool:</span>
+    <div id="features-container">
+      <mat-checkbox *ngFor="let feature of features"
+                    class="example-margin"
+                    color="primary"
+                    [checked]="feature.enabled"
+                    [disabled]="!isEnabled"
+                    [(ngModel)]="feature.enabled"
+                    (ngModelChange)="updateAllEnabled()">
+        {{feature.name}}
+      </mat-checkbox>
+    </div>
+</section>
+
+<section id="button-container">
+    <div id="toggle-container">
+        <label>Off</label>
+        <mat-slide-toggle
+            color="primary"
+            [checked]="isEnabled"
+            (change)="setParLevelEnabled($event.checked)">
+        </mat-slide-toggle>
+        <label>On</label>
+    </div>
+
+    <div>
+        <mat-checkbox class="example-margin"
+                color="primary"
+                [checked]="allFeaturesEnabled"   
+                [disabled]="!isEnabled"            
+                [indeterminate]="someFeaturesEnabled"
+                (change)="setAllFeatures($event.checked)">
+        All selected
+        </mat-checkbox>
+    </div>    
+</section>

@@ -1,10 +1,92 @@
 /* You can add global styles to this file, and also import other style files */
 
+
 html, body { 
     height: 100%; 
     width: 100%;
+    max-width: 100%;
+    padding: 0;
+    margin: 0;
+    overflow: hidden;
 }
 body { 
     margin: 0; 
     font-family: Roboto, "Helvetica Neue", sans-serif; 
+}
+
+
+
+/******* COLOR PALETTE ************/
+$primary: rgb(63 81 181);
+$grey-background: rgb(240, 239, 239, 1);
+$grey-border:rgba(187, 183, 183, 0.9);
+
+/* SCSS HEX */
+$lavender-web:       #dfdef7ff;
+$periwinkle-crayola: #c8d5f2ff;
+$light-steel-blue:   #b1ccedff;
+$middle-blue-green:  #a1d6c6ff;
+$granny-smith-apple: #90e09fff;
+$straw:              #d6cd5fff;
+$sunray:             #d8ab56ff;
+$raw-sienna:         #e1813fff;
+$flame:              #e95727ff;
+$red-ryb:            #ff401fff;
+
+/* SCSS HSL */
+$lavender-web: hsla(242, 61%, 92%, 1);
+$periwinkle-crayola: hsla(221, 62%, 87%, 1);
+$light-steel-blue: hsla(213, 63%, 81%, 1);
+$middle-blue-green: hsla(162, 39%, 74%, 1);
+$granny-smith-apple: hsla(131, 56%, 72%, 1);
+$straw: hsla(55, 59%, 61%, 1);
+$sunray: hsla(39, 63%, 59%, 1);
+$raw-sienna: hsla(24, 73%, 56%, 1);
+$flame: hsla(15, 82%, 53%, 1);
+$red-ryb: hsla(9, 100%, 56%, 1);
+
+/* SCSS RGB */
+$lavender-web: rgba(223, 222, 247, 1);
+$periwinkle-crayola: rgba(200, 213, 242, 1);
+$light-steel-blue: rgba(177, 204, 237, 1);
+$middle-blue-green: rgba(161, 214, 198, 1);
+$granny-smith-apple: rgba(144, 224, 159, 1);
+$straw: rgba(214, 205, 95, 1);
+$sunray: rgba(216, 171, 86, 1);
+$raw-sienna: rgba(225, 129, 63, 1);
+$flame: rgba(233, 87, 39, 1);
+$red-ryb: rgba(255, 64, 31, 1);
+
+/* SCSS Gradient */
+$gradient-top: linear-gradient(0deg, #dfdef7ff, #c8d5f2ff, #b1ccedff, #a1d6c6ff, #90e09fff, #d6cd5fff, #d8ab56ff, #e1813fff, #e95727ff, #ff401fff);
+$gradient-right: linear-gradient(90deg, #dfdef7ff, #c8d5f2ff, #b1ccedff, #a1d6c6ff, #90e09fff, #d6cd5fff, #d8ab56ff, #e1813fff, #e95727ff, #ff401fff);
+$gradient-bottom: linear-gradient(180deg, #dfdef7ff, #c8d5f2ff, #b1ccedff, #a1d6c6ff, #90e09fff, #d6cd5fff, #d8ab56ff, #e1813fff, #e95727ff, #ff401fff);
+$gradient-left: linear-gradient(270deg, #dfdef7ff, #c8d5f2ff, #b1ccedff, #a1d6c6ff, #90e09fff, #d6cd5fff, #d8ab56ff, #e1813fff, #e95727ff, #ff401fff);
+$gradient-top-right: linear-gradient(45deg, #dfdef7ff, #c8d5f2ff, #b1ccedff, #a1d6c6ff, #90e09fff, #d6cd5fff, #d8ab56ff, #e1813fff, #e95727ff, #ff401fff);
+$gradient-bottom-right: linear-gradient(135deg, #dfdef7ff, #c8d5f2ff, #b1ccedff, #a1d6c6ff, #90e09fff, #d6cd5fff, #d8ab56ff, #e1813fff, #e95727ff, #ff401fff);
+$gradient-top-left: linear-gradient(225deg, #dfdef7ff, #c8d5f2ff, #b1ccedff, #a1d6c6ff, #90e09fff, #d6cd5fff, #d8ab56ff, #e1813fff, #e95727ff, #ff401fff);
+$gradient-bottom-left: linear-gradient(315deg, #dfdef7ff, #c8d5f2ff, #b1ccedff, #a1d6c6ff, #90e09fff, #d6cd5fff, #d8ab56ff, #e1813fff, #e95727ff, #ff401fff);
+$gradient-radial: radial-gradient(#dfdef7ff, #c8d5f2ff, #b1ccedff, #a1d6c6ff, #90e09fff, #d6cd5fff, #d8ab56ff, #e1813fff, #e95727ff, #ff401fff);
+
+/******* SCROLLBAR **********/
+/* width */
+::-webkit-scrollbar {
+    width: 0.6vw;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+    box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+    background-color: #F5F5F5;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+    background: rgb(163, 162, 162); 
+    border-radius: 15px;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+    //background: $grey-background;
 }

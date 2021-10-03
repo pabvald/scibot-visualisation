@@ -1,0 +1,114 @@
+<section id="fixation-duration-settings">
+  <span class="section-title">
+    Fixation duration:
+  </span>
+
+  <div class="slider-container">
+    <label class="name-label">Fixation Min</label>
+    <mat-slider
+      color="primary"
+      class="margin"
+      [disabled]="!isEnabled"
+      [min]="minFixationInterval[0]"
+      [max]="minFixationInterval[1]"        
+      [step]="sliderStep"
+      [thumbLabel]="thumbLabel"
+      [(ngModel)]="minFixation"
+      (ngModelChange)="updateMinFixation()"
+      aria-labelledby="name-label">
+    </mat-slider>
+    <label class="value-label">{{minFixation}}</label>
+  </div>
+  
+  <div class="slider-container">
+    <label class="name-label">Fixation Max</label>
+    <mat-slider
+          color="primary"
+          class="margin"
+          [disabled]="!isEnabled"
+          [min]="maxFixationInterval[0]"
+          [max]="maxFixationInterval[1]"   
+          [step]="sliderStep"
+          [thumbLabel]="thumbLabel"
+          [(ngModel)]="maxFixation"
+          (ngModelChange)="updateMaxFixation()"
+          aria-labelledby="name-label">
+      </mat-slider>
+    <label class="value-label">{{maxFixation}}</label>
+  </div>
+</section>
+
+
+<section id="fixation-area-settings">
+  <div>
+    <span class="section-title">
+      Horizontal fixation area: 
+    </span>
+    
+    <div class="input-field">
+      <label>Left margin:</label>
+      <mat-form-field appearance="fill">
+        <!-- <mat-label>Left margin</mat-label> -->
+        <input matInput 
+              type="number" 
+              min="0"
+              [formControl]="leftMarginCtrl"
+              required>
+        <span matSuffix>letters</span>
+        <mat-error *ngIf="leftMarginCtrl.invalid">Min margin: 0 letters</mat-error>
+      </mat-form-field>
+    </div>
+    
+  
+    <div>
+      <label>Right margin:</label>
+      <mat-form-field appearance="fill" color="primary">
+        <!-- <mat-label>Right margin</mat-label> -->
+        <input matInput 
+              type="number"
+              min="0" 
+              [formControl]="rightMarginCtrl"
+              required>
+        <span matSuffix>letters</span>
+        <mat-error *ngIf="rightMarginCtrl.invalid">Min margin: 0 letters</mat-error>
+      </mat-form-field> 
+    </div>
+  </div>
+  
+
+  <div id="button-container">
+    <!-- Reload button -->
+    <mat-spinner *ngIf="isUpdating; else notUpdating"
+                color="primary"
+                [diameter]="20">
+    </mat-spinner>
+
+    <ng-template #notUpdating>
+      <button mat-stroked-button 
+          color="primary" 
+          [disabled]="isApplyDisabled"
+          (click)="updateFixationArea()">
+      Apply
+      </button>
+    </ng-template> 
+  </div>
+  
+</section>
+
+<section id="enabling-settings">
+  <div id="toggle-container">
+    <label>Off</label>
+    <mat-slide-toggle
+        color="primary"
+        [checked]="isEnabled"
+        (change)="setLabelLevelEnabled($event.checked)">
+    </mat-slide-toggle>
+    <label>On</label>
+  </div>
+</section>
+
+
+
+
+
+
