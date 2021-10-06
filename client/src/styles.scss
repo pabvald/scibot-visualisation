@@ -90,3 +90,22 @@ $gradient-radial: radial-gradient(#dfdef7ff, #c8d5f2ff, #b1ccedff, #a1d6c6ff, #9
 ::-webkit-scrollbar-thumb:hover {
     //background: $grey-background;
 }
+
+/********* NOTIFICATIONS **********/
+.success {
+    color: white;
+    background-color: rgba(43, 150, 63, 0.671)!important;
+
+    .mat-button-wrapper {
+        color: white;
+    }
+}
+
+.error {
+    color: white;
+    background-color: rgb(196, 52, 4)!important;
+
+    .mat-button-wrapper {
+        color: white;
+    }
+}

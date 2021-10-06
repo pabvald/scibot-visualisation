@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { Observable, combineLatest} from 'rxjs';
 import { first, shareReplay, take} from 'rxjs/operators';
 import { IFixationArea } from 'src/app/models/fixation-area.model';
+import { NotificationsService } from 'src/app/services/notifications/notifications.service';
 import { DocumentApi } from '../../api/document/document.api';
 import { UserApi } from '../../api/user/user.api';
 import { IDocument } from '../../models/document.model';
@@ -16,14 +17,17 @@ export class DataFacade {
   private documentIds$: Observable<string[]>;
   private document$: Observable<IDocument>;
 
-  constructor(
-    private documentApi: DocumentApi,
+  constructor(    
     private userApi: UserApi,
-    private dataState: DataState) { 
+    private dataState: DataState,
+    private documentApi: DocumentApi,
+    private notificationService: NotificationsService) { 
       
-      this.userIds$ = this.userApi.getIds().pipe(shareReplay(1));
-      this.documentIds$ = this.documentApi.getIds().pipe(shareReplay(1));
       this.document$ = this.dataState.getDocument$();
+      this.userIds$ = this.userApi.getIds()
+                                .pipe(shareReplay(1));
+      this.documentIds$ = this.documentApi.getIds()
+                                          .pipe(shareReplay(1));      
       this.initializeDataState();
   }
 
@@ -33,19 +37,19 @@ export class DataFacade {
   initializeDataState() {
     let docId = "";
     let userId = "";
+    this.dataState.setUpdating(true);
+
     combineLatest([this.userIds$, this.documentIds$])
       .pipe(first())
       .subscribe( 
-        ([userIds, documentIds]) => {
+        ([userIds, documentIds]) => {            
             docId = documentIds[0];
             userId = userIds[0];
             this.loadDocument(userId, docId);
           },
-        (error) => { console.log(error); },
-        () => { }
-        );
-  }
-  
+        (error) => { console.log(error); }
+      )
+  }  
 
   /** The data state is being updated */
   isUpdating$(): Observable<boolean> {
@@ -101,6 +105,8 @@ export class DataFacade {
       .subscribe(
         (document) => { this.dataState.setDocument(document); },
         (error) => { console.log(error); },
+        () => { this.notificationService.showSuccess("Data loaded"); }
+      ).add(
         () => { this.dataState.setUpdating(false); }
       );
   }

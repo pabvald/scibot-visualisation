@@ -8,7 +8,7 @@ import { IDocument } from '../../models/document.model';
 })
 export class DataState {
 
-  private updating$ = new BehaviorSubject<boolean>(true);
+  private updating$ = new BehaviorSubject<boolean>(false);
   private document$ = new ReplaySubject<IDocument>();
   private fixationArea$ = new BehaviorSubject<IFixationArea>(new FixationArea(3, 14));
 

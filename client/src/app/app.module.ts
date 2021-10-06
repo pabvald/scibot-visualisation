@@ -1,6 +1,6 @@
-import { NgModule } from '@angular/core';
+import { ErrorHandler, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatSelectModule} from '@angular/material/select';
 import { MatButtonModule} from '@angular/material/button';
@@ -28,7 +28,9 @@ import { DocumentDetailsComponent } from './components/document-details/document
 import { ParagraphTabComponent } from './components/paragraph-tab/paragraph-tab.component';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { LoadingDialogComponent, LoadingDialogContent } from './components/loading-dialog/loading-dialog.component';
-
+import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { GlobalHttpInterceptorService } from './services/global-http-interceptor/global-http-interceptor.service';
+import { GlobalErrorHandlerService } from './services/global-error-handler/global-error-handler.service';
 
 @NgModule({
   declarations: [
@@ -63,9 +65,12 @@ import { LoadingDialogComponent, LoadingDialogContent } from './components/loadi
     ReactiveFormsModule,
     MatProgressSpinnerModule,
     MatCheckboxModule,
-    MatDialogModule
+    MatDialogModule,
+    MatSnackBarModule
   ],
-  providers: [],
+  providers: [
+    { provide: ErrorHandler, useClass: GlobalErrorHandlerService },
+    { provide: HTTP_INTERCEPTORS, useClass: GlobalHttpInterceptorService, multi: true  }],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

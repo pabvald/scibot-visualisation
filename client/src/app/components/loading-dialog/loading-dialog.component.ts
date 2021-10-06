@@ -1,11 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { DataFacade } from 'src/app/facade/data/data.facade';
 
 @Component({
   selector: 'app-loading-dialog',
-  templateUrl: './loading-dialog.component.html',
-  styleUrls: ['./loading-dialog.component.scss']
+  template: ``
 })
 export class LoadingDialogComponent {
 

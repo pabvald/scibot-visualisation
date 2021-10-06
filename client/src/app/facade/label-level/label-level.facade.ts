@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { combineLatest, Observable, of } from 'rxjs';
+import { combineLatest, Observable, of, throwError } from 'rxjs';
 import { first, shareReplay, take, map} from 'rxjs/operators';
 import { IFixationArea } from 'src/app/models/fixation-area.model';
 import { DataState } from 'src/app/state/data/data.state';
