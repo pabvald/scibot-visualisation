@@ -40,17 +40,12 @@ section#fixation-area-settings {
   div#button-container {
     position: relative;
 
-    button, mat-spinner {
+    button {
       position: absolute;
       margin-left: 1vw;
       bottom: 10%;
     }
-
-    mat-spinner {
-      margin-left: 2.5vw;
-    }
   }
-
 }
 
 section#enabling-settings{

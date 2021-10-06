@@ -78,19 +78,13 @@
 
   <div id="button-container">
     <!-- Reload button -->
-    <mat-spinner *ngIf="isUpdating; else notUpdating"
-                color="primary"
-                [diameter]="20">
-    </mat-spinner>
-
-    <ng-template #notUpdating>
-      <button mat-stroked-button 
-          color="primary" 
-          [disabled]="isApplyDisabled"
-          (click)="updateFixationArea()">
-      Apply
-      </button>
-    </ng-template> 
+    <button  *ngIf="!isUpdating"
+        mat-stroked-button 
+        color="primary" 
+        [disabled]="isApplyDisabled"
+        (click)="updateFixationArea()">
+    Apply
+    </button>
   </div>
   
 </section>

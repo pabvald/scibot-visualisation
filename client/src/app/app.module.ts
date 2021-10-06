@@ -11,7 +11,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatSlideToggleModule} from '@angular/material/slide-toggle';
 import { MatInputModule} from '@angular/material/input';
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
-
+import {MatDialogModule} from '@angular/material/dialog';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './components/app/app.component';
@@ -26,7 +26,8 @@ import { LabelTabComponent } from './components/label-tab/label-tab.component';
 import { ColorLegendComponent } from './components/color-legend/color-legend.component';
 import { DocumentDetailsComponent } from './components/document-details/document-details.component';
 import { ParagraphTabComponent } from './components/paragraph-tab/paragraph-tab.component';
-import {MatCheckboxModule} from '@angular/material/checkbox';
+import { MatCheckboxModule } from '@angular/material/checkbox';
+import { LoadingDialogComponent, LoadingDialogContent } from './components/loading-dialog/loading-dialog.component';
 
 
 @NgModule({
@@ -41,7 +42,9 @@ import {MatCheckboxModule} from '@angular/material/checkbox';
     LabelTabComponent,
     ColorLegendComponent,
     DocumentDetailsComponent,
-    ParagraphTabComponent
+    ParagraphTabComponent,
+    LoadingDialogComponent,
+    LoadingDialogContent
   ],
   imports: [
     BrowserModule,
@@ -59,7 +62,8 @@ import {MatCheckboxModule} from '@angular/material/checkbox';
     MatInputModule,
     ReactiveFormsModule,
     MatProgressSpinnerModule,
-    MatCheckboxModule
+    MatCheckboxModule,
+    MatDialogModule
   ],
   providers: [],
   bootstrap: [AppComponent]

@@ -25,19 +25,13 @@
 </section>
 
 <section id="buttons-container">
-    <!-- Load button -->
-    <mat-spinner *ngIf="isUpdating; else notUpdating"
-                color="primary"
-                [diameter]="20">
-    </mat-spinner>
-
-    <ng-template #notUpdating>
-    <button mat-stroked-button 
+    <!-- Load button -->    
+    <button  *ngIf="!isUpdating" mat-stroked-button 
         color="primary" 
         (click)="loadData()" 
         [disabled]="isLoadDisabled">
         Load
     </button>
-    </ng-template> 
+
 </section>
 <section></section>
