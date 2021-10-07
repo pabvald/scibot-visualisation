@@ -18,6 +18,10 @@ body {
 
 /******* COLOR PALETTE ************/
 $primary: rgb(63 81 181);
+$green-correct-text: rgba(30, 155, 53);
+$green-correct-background: rgb(128, 240, 179);
+$red-error-text: rgb(179, 6, 6);
+$red-error-background: rgb(240, 133, 133);
 $grey-background: rgb(240, 239, 239, 1);
 $grey-border:rgba(187, 183, 183, 0.9);
 
@@ -69,32 +73,28 @@ $gradient-bottom-left: linear-gradient(315deg, #dfdef7ff, #c8d5f2ff, #b1ccedff, 
 $gradient-radial: radial-gradient(#dfdef7ff, #c8d5f2ff, #b1ccedff, #a1d6c6ff, #90e09fff, #d6cd5fff, #d8ab56ff, #e1813fff, #e95727ff, #ff401fff);
 
 /******* SCROLLBAR **********/
-/* width */
-::-webkit-scrollbar {
-    width: 0.6vw;
+*::-webkit-scrollbar,
+*::-webkit-scrollbar-thumb {
+  width: 15px;
+  border-radius: 13px;
+  background-clip: padding-box;
+  border: 5px solid transparent;
+  background-color: white;
 }
 
-/* Track */
+*::-webkit-scrollbar-thumb {        
+  box-shadow: inset 0 0 0 10px;
+}
+
 ::-webkit-scrollbar-track {
-    box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
-    background-color: #F5F5F5;
-}
-
-/* Handle */
-::-webkit-scrollbar-thumb {
-    background: rgb(163, 162, 162); 
-    border-radius: 15px;
-}
-
-/* Handle on hover */
-::-webkit-scrollbar-thumb:hover {
-    //background: $grey-background;
+    box-shadow: none;
+    background-color: white;
 }
 
 /********* NOTIFICATIONS **********/
 .success {
     color: white;
-    background-color: rgba(43, 150, 63, 0.671)!important;
+    background-color: rgba(30, 155, 53, 0.671)!important;
 
     .mat-button-wrapper {
         color: white;

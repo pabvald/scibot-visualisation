@@ -12,7 +12,7 @@
 </div> 
 
 <!-- Color bar-->
-<div *ngIf="isParLevelEnabled && paragraph && !paragraph.isTitle && paragraph.hasLabels "
+<!-- <div *ngIf="isParLevelEnabled && paragraph && !paragraph.isTitle && paragraph.hasLabels "
     class="fixation-duration-bar"
     [ngStyle]="{
         'top.%': (100 * paragraph.y1),
@@ -23,7 +23,7 @@
         'max-height.%': (100 * paragraph.height * HEIGHT_REDUCTION),
         'background': color
     }">
-</div>
+</div> -->
 
 <!-- Paragraph details: id header -->
 <div *ngIf="isParLevelEnabled && paragraph && !paragraph.isTitle && paragraph.hasLabels "
@@ -36,7 +36,7 @@
         'height.%': ID_HEIGHT,
         'max-height.%': ID_HEIGHT
     }">
-   Paragraph {{paragraph.id}}
+    <h2>Paragraph {{paragraph.id}}</h2>   
 </div>
 
 <!-- Paragraph details: features -->
@@ -55,8 +55,9 @@
         <div *ngIf="feature.enabled && 
                     paragraph.getFeatureById(feature.id) != null"
             class="feature">
+            <span class="feature-bullet">-</span>
             <span class="feature-name">
-                - {{feature.name}}:
+                {{feature.name}}:
             </span>
             <!-- <span class="feature-name">
                 - {{feature.name}} ({{feature.units}}):
@@ -65,6 +66,36 @@
                 {{paragraph.getFeatureById(feature.id) | number : '0.1-2'}}
             </span>
         </div> 
+    </div>    
+</div>
+
+<!-- Relevance -->
+<!-- Paragraph details: features -->
+<div *ngIf="isParLevelEnabled && paragraph && !paragraph.isTitle && paragraph.hasLabels"
+    class="paragraph-relevance"
+    [ngStyle]="{
+        'top.%': (100 * paragraph.y1),
+        'left.%': (100 * (paragraph.x2) + 2),
+        'width.%': (100 * paragraph.width * WIDTH_REDUCTION),
+        'max-width.%': (100 * paragraph.width * WIDTH_REDUCTION),
+        'height.%': (100 * paragraph.height * HEIGHT_REDUCTION - ID_HEIGHT),
+        'max-height.%': (100 * paragraph.height * HEIGHT_REDUCTION - ID_HEIGHT)
+    }">
+    <div class="relevance-container">
+        <div class="relevance">
+            <span class="relevance-name">System relevance:</span>
+            <span *ngIf="paragraph.systemRelevance"
+                class="badge relevant-badge ">&#10003;</span>
+            <span *ngIf="!paragraph.systemRelevance"
+            class="badge irrelevant-badge">&#10005;</span>
+        </div>
+        <div class="relevance">
+            <span class="relevance-name">Percieved relevance:</span>
+            <span *ngIf="paragraph.perceivedRelevance"
+                class="badge relevant-badge">&#10003;</span>
+            <span *ngIf="!paragraph.perceivedRelevance"
+                class="badge irrelevant-badge">&#10005;</span>
+        </div>
     </div>    
 </div>
 

@@ -1,3 +1,5 @@
+@import '../../../styles.scss';
+
 :host {
     flex-grow: 1;
     overflow-x: hidden;
@@ -6,8 +8,19 @@
     position: relative;
     width: 75vw;
     max-width: 75vw;
-    //border: 5px solid black;
+    border-left: 1px solid rgba(0, 0, 0, 0.2);
+    border-right: 1px solid rgba(0, 0, 0, 0.2);
+    background: white;
+    color: rgba(0, 0, 0, 0);
+    text-shadow: 0 0 black;
+    //box-shadow: 0 1px 6px rgba(0, 0, 0, 0.2);
+    transition: color .3s ease;
 }
+
+:host:hover {
+    color: rgba(0, 0, 0, 0.3);
+  }
+
 
 #placeholder {
     display: flex;

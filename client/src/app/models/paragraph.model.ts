@@ -7,7 +7,8 @@ import { IBoundingBox } from "./bounding-box.model";
  */
 export interface IParagraph  extends IBoundingBox {
     id: number;
-    answer: boolean;
+    systemRelevance: boolean;
+    perceivedRelevance: boolean;
     labels: ILabel[];
     isTitle: boolean;
     hasLabels: boolean;
@@ -24,7 +25,8 @@ export class Paragraph implements IParagraph {
     public y1: number;
     public x2: number;
     public y2: number;
-    public answer: boolean;
+    public systemRelevance: boolean;
+    public perceivedRelevance: boolean;
     public labels: ILabel[];
     public features: any;
 
@@ -37,7 +39,8 @@ export class Paragraph implements IParagraph {
         this.y1 = paragraphObject.y1; 
         this.x2 = paragraphObject.x2; 
         this.y2 = paragraphObject.y2; 
-        this.answer = paragraphObject.answer;
+        this.systemRelevance = paragraphObject.systemRelevance;
+        this.perceivedRelevance = paragraphObject.perceivedRelevance;
         this.labels = paragraphObject.labels.map((lbl: any) => new Label(lbl));
         this.features = paragraphObject.features;
     }

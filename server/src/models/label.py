@@ -21,9 +21,8 @@ class LabelModel(BoundingBox):
             y2: second y coordinate
             text: text contained in the label
         """
-        super().__init__(article_id, x1, y1, x2, y2)
+        super().__init__(article_id, label_id, x1, y1, x2, y2)
         self._par_id = par_id
-        self._id = label_id
         self._text = text
         self._fixation_durations = []
 
@@ -41,10 +40,6 @@ class LabelModel(BoundingBox):
     @property
     def par_id(self) -> int:
         return self._par_id
-
-    @property
-    def id(self) -> int:
-        return self._id
 
     @property
     def text(self) -> str:

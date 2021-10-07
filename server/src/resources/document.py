@@ -7,7 +7,6 @@ from flask import current_app as app
 from services import FixationService
 from models import DocumentModel, DocumentSchema
 
-
 DOC_IDS = ["g-rel_q075-1_i",
            "g-rel_q076-1_r",
            "g-rel_q128-1_r",
@@ -70,22 +69,39 @@ class DocumentResource(Resource):
 
         corpus = "g-REL" if doc_id.startswith("g-rel") else "GoogleNQ"
 
-        # load data
         if corpus == "g-REL":
+            # HTML parsed article
             article = app.dataloader.grel_articles[doc_id]
+            # gaze data
             gaze = app.dataloader.grel_reading[user_id][doc_id[:-2]]['dataframe']
+            # paragraph features
+            par_features = app.featuresloader.grel_par_features[user_id].get(doc_id[:-2], None)
+            # relevance
+            system_relevance = app.dataloader.grel_reading[user_id][doc_id[:-2]]['system_relevance']
+            perceived_relevance = app.dataloader.grel_reading[user_id][doc_id[:-2]]['perceived_relevance']
+            # mappings
             pars_mapping = app.mappingloader.grel_paragraphs[doc_id[:-2]]
             labels_mapping = app.mappingloader.grel_labels[doc_id[:-2]]
-            par_features = app.featuresloader.grel_par_features[user_id].get(doc_id[:-2], None)
+
         else:
+            # HTML parsed article
             article = app.dataloader.google_nq_articles[doc_id]
+            # gaze data
             gaze = app.dataloader.google_nq_reading[user_id][doc_id]['dataframe']
+            # paragraph features
+            par_features = app.featuresloader.google_nq_par_features[user_id].get(doc_id, None)
+            # relevance
+            system_relevance = app.dataloader.google_nq_reading[user_id][doc_id]['system_relevance']
+            perceived_relevance = app.dataloader.google_nq_reading[user_id][doc_id]['perceived_relevance']
+            # mappings
             pars_mapping = app.mappingloader.google_nq_paragraphs[doc_id]
             labels_mapping = app.mappingloader.google_nq_labels[doc_id]
-            par_features = app.featuresloader.google_nq_par_features[user_id].get(doc_id, None)
 
         # create document representation
-        document = DocumentModel.from_data(user_id, article, gaze, pars_mapping, labels_mapping, par_features)
+        document = DocumentModel.from_data(user_id=user_id, article=article, system_relevance=system_relevance,
+                                           perceived_relevance=perceived_relevance, gaze_data=gaze,
+                                           pars_mapping=pars_mapping, labels_mapping=labels_mapping,
+                                           par_features=par_features)
         # compute fixations on the document's labels
         self._fixation_service.compute_horizontal_hits(document, hit_left_margin, hit_right_margin)
         # serialize document

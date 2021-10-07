@@ -6,8 +6,8 @@ from os.path import join as pjoin
 
 
 class ScibotParagraphFeaturesLoader:
-    _GREL_FILE_EXT = "_LongestVisitFeatureExtractor_20210826-1403_10s.csv"
-    _NQ_FILE_EXT = "_LongestVisitFeatureExtractor_20210826-1404_10s.csv"
+    _GREL_FILE_EXT = "_LongestVisitFeatureExtractor_20210826-1344_3s.csv"
+    _NQ_FILE_EXT = "_LongestVisitFeatureExtractor_20210826-1345_3s.csv"
     _EXCLUDE_USER_LIST = []  # ["A02", "A05"]  # exclude A02 for g-REL only
     _INCLUDE_USER_LIST = []  # if emtpy every user besides excluded will be analysed, "A01", "B01"
     _INCLUDE_DATA_SOURCE = []  # "g_rel", "GoogleNQ"

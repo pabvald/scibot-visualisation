@@ -1,6 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { MatSlideToggleChange } from '@angular/material/slide-toggle';
-import { MatSliderChange } from '@angular/material/slider';
 import { LabelLevelFacade } from 'src/app/facade/label-level/label-level.facade';
 import { FixationArea, IFixationArea } from 'src/app/models/fixation-area.model';
 import { FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
@@ -23,8 +21,8 @@ export class LabelTabComponent implements OnInit {
   thumbLabel = false;
   minFixation: number = 0;
   maxFixation: number = 0; 
-  minFixationInterval: number[] = [0, 300];
-  maxFixationInterval: number[] = [400, 700];
+  minFixationInterval: number[] = [0, 400];
+  maxFixationInterval: number[] = [500, 800];
    
   // Fixation area settings
   fixationAreaOptions: FormGroup;

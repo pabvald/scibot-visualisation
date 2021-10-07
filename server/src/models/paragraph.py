@@ -13,8 +13,9 @@ class ParagraphModel(BoundingBox):
     Representation of  a paragraph.
     """
 
-    def __init__(self, article_id: str, par_id: int, x1: float, y1: float, x2: float, y2: float, answer: bool,
-                 labels: List[LabelModel], gaze_data: DataFrame, features: Dict):
+    def __init__(self, article_id: str, par_id: int, x1: float, y1: float, x2: float, y2: float,
+                 system_relevance: bool, perceived_relevance: bool, gaze_data: DataFrame,
+                 labels: List[LabelModel], features: Dict):
         """
         Args:
             par_id: paragraph's id
@@ -22,26 +23,29 @@ class ParagraphModel(BoundingBox):
             y1: first y coordinate
             x2: second x coordinate
             y2: second y coordinate
-            answer: the paragraph contains the answer or not
             labels: list of labels
             gaze_data: gaze points within the paragraph.
+            system_relevance: whether the paragraph is relevance for the query
+            perceived_relevance: whether the user perceived the paragraph as relevant
             features: precomputed features
         """
-        super().__init__(article_id, x1, y1, x2, y2)
-        self._id = par_id
-        self._answer = answer
+        super().__init__(article_id, par_id, x1, y1, x2, y2)
+        self._system_relevance = system_relevance
+        self._perceived_relevance = perceived_relevance
         self._labels = labels
         self._gaze_data = gaze_data
         self._features = features
 
     @classmethod
-    def from_data(cls, article_id: str, parsing: Dict, gaze_data: DataFrame, par_mapping: DataFrame,
-                  labels_mapping: DataFrame, features: DataFrame=None):
+    def from_data(cls, article_id: str, parsing: Dict, system_relevance: bool, perceived_relevance: bool,
+                  gaze_data: DataFrame, par_mapping: DataFrame, labels_mapping: DataFrame, features: DataFrame=None):
         """
         Create a paragraph from
         Args:
             article_id: id of the article
             parsing: data from the HTML parsing
+            system_relevance: whether the paragraph is relevant or not
+            perceived_relevance: whether the user has labeled the paragraph as relevant or not
             gaze_data: gaze points within the paragraph
             par_mapping: mapping of the paragraph coordinates
             labels_mapping: mapping of the label coordinates
@@ -53,23 +57,23 @@ class ParagraphModel(BoundingBox):
 
         if features is not None and not features.empty:
             features_dict = features.to_dict('records')[0]
-            features_dict.pop('paragraph', None)
+            features_dict.pop('paragraph', None)  # remove the paragraph's id
 
-        # Generate paragraph's labels
+        # create paragraph's labels
         for j, label_mapping in labels_mapping.iterrows():
             par_labels.append(
-                LabelModel.from_data(article_id, label_mapping)
+                LabelModel.from_data(article_id=article_id, mapping=label_mapping)
             )
-        return cls(article_id, par_id, par_x1, par_y1, par_x2, par_y2, parsing['answer'], par_labels, gaze_data,
-                   features_dict)
+        return cls(article_id, par_id, par_x1, par_y1, par_x2, par_y2, system_relevance,
+                   perceived_relevance, gaze_data, par_labels, features_dict)
 
     @property
-    def id(self) -> int:
-        return self._id
+    def system_relevance(self) -> bool:
+        return self._system_relevance
 
     @property
-    def answer(self) -> bool:
-        return self._answer
+    def perceived_relevance(self) -> bool:
+        return self._perceived_relevance
 
     @property
     def labels(self) -> List[LabelModel]:
@@ -100,6 +104,7 @@ class ParagraphSchema(Schema):
     y1 = fields.Float()
     x2 = fields.Float()
     y2 = fields.Float()
-    answer = fields.Boolean()
+    system_relevance = fields.Boolean(data_key="systemRelevance")
+    perceived_relevance = fields.Boolean(data_key="perceivedRelevance")
     labels = fields.List(fields.Nested(LabelSchema))
     features = fields.Dict()

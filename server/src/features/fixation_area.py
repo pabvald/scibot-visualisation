@@ -2,7 +2,7 @@ from abc import ABCMeta, abstractmethod
 
 from typing import List
 
-from features import FixationEvent
+from .fixation_event import FixationEvent
 from models.bounding_box import BoundingBox
 
 

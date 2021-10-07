@@ -34,8 +34,8 @@ class DocumentModel(object):
         self._paragraphs = paragraphs
 
     @classmethod 
-    def from_data(cls, user_id: str, article: Article, gaze_data: DataFrame, pars_mapping: DataFrame,
-                  labels_mapping: DataFrame, par_features: DataFrame = None):
+    def from_data(cls, user_id: str, article: Article, system_relevance: List[bool], perceived_relevance: List[bool],
+                  gaze_data: DataFrame, pars_mapping: DataFrame, labels_mapping: DataFrame, par_features: DataFrame = None):
         paragraphs = []
         _, article_id = os.path.split(article.article_id)
 
@@ -45,9 +45,14 @@ class DocumentModel(object):
         # combine the HTML, gaze and mapping data to create the paragraphs
         par_ids = pars_mapping['paragraph_id'].to_numpy()
         for par_id in par_ids:
+            par_sys_rel = False
+            par_percv_rel = False
             features = None
             par_parsing = {'answer': False}
-            if par_id >= 0: 
+            if par_id >= 0:
+                par_sys_rel = system_relevance[par_id]
+                par_percv_rel = perceived_relevance[par_id]
+
                 if corpus == Corpus.grel:
                     par_parsing = {'answer': any([par['answer'] for par in article.paragraphs])}
                 else:
@@ -60,7 +65,9 @@ class DocumentModel(object):
             labels_selection = labels_mapping.loc[labels_mapping['paragraph_id'] == par_id]
 
             paragraphs.append(
-                ParagraphModel.from_data(article_id, par_parsing, par_gaze, par_mapping, labels_selection, features)
+                ParagraphModel.from_data(article_id=article_id, parsing=par_parsing, system_relevance=par_sys_rel,
+                                         perceived_relevance=par_percv_rel, gaze_data=par_gaze,
+                                         par_mapping=par_mapping, labels_mapping=labels_selection, features=features)
             )
         
         return cls(user_id, article_id, corpus, article.query.strip(), paragraphs)

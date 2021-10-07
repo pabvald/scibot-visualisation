@@ -39,11 +39,12 @@ class BoundingBox(object):
     _SCREEN_WIDTH = 2560
     _SCREEN_HEIGHT = 1440
 
-    def __init__(self, filename: str, x1: float, y1: float, x2: float, y2: float):
+    def __init__(self, filename: str, id: int, x1: float, y1: float, x2: float, y2: float):
         """
 
         Args:
             filename: name of the file
+            id: identifier
             x1: first normalized x coordinate
             y1: first normalized y coordinate
             x2: second normalized x coordinate
@@ -52,6 +53,7 @@ class BoundingBox(object):
         """
         self._vp_w = VIEWPORT_DIMS[filename]['viewport_width']
         self._vp_h = VIEWPORT_DIMS[filename]['viewport_height']
+        self._id = id
         self._x1 = x1
         self._y1 = y1
         self._x2 = x2
@@ -75,6 +77,9 @@ class BoundingBox(object):
     def axis_origin(self, ax: AxisOrigin):
         self._axis_origin = ax
 
+    @property
+    def id(self) -> int:
+        return self._id
     @property
     def x1(self) -> float:
         return min(self._transform_x(self._x1), self._transform_x(self._x2))
