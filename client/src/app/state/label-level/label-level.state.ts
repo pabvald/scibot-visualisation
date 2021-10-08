@@ -8,7 +8,7 @@ export class LabelLevelState {
 
   private updating$ = new BehaviorSubject<boolean>(false);
   private enabled$ = new BehaviorSubject<boolean>(true);
-  private minFixation$ = new BehaviorSubject<number>(0);
+  private minFixation$ = new BehaviorSubject<number>(50);
   private maxFixation$ = new BehaviorSubject<number>(600);
 
 

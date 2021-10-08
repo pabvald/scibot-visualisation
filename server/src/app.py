@@ -1,4 +1,4 @@
-from flask import Flask
+from flask import Flask, render_template
 from flask_cors import CORS
 from flask_restful import Api
 from resources.user import UserListResource
@@ -14,6 +14,10 @@ app.featuresloader = ScibotParagraphFeaturesLoader(data_dir=app.config['PAR_FEAT
 
 api = Api(app)
 CORS(app)  # allow CORS
+
+@app.route('/', methods=['GET'])
+def root():
+    return render_template('index.html') # Return index.html
 
 # --- API calls ---
 api.add_resource(UserListResource, '/api/user/ids')
