@@ -5,9 +5,10 @@ angular_dependencies:
   image: node:12-alpine
   stage: dependencies
   script:
+    - cd client
     - npm install
   only:
-    - master
+    - main
   cache:
     key:
       files:
