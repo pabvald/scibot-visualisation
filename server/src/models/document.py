@@ -7,7 +7,7 @@ from pandas.core.frame import DataFrame
 
 from data_loading.article_parser import Article
 from features import FixationEvent, SaccadeEvent
-from models.paragraph import ParagraphModel, ParagraphSchema
+from .paragraph import ParagraphModel, ParagraphSchema
 
 
 class Corpus(Enum):
@@ -33,9 +33,10 @@ class DocumentModel(object):
         self._query = query
         self._paragraphs = paragraphs
 
-    @classmethod 
-    def from_data(cls, user_id: str, article: Article, system_relevance: List[bool], perceived_relevance: List[bool],
-                  gaze_data: DataFrame, pars_mapping: DataFrame, labels_mapping: DataFrame, par_features: DataFrame = None):
+    @classmethod
+    def from_data(cls, user_id: str, article: Article, gaze_data: DataFrame, pars_mapping: DataFrame,
+                  labels_mapping: DataFrame, system_relevance: List[bool], perceived_relevance: List[bool],
+                  pred_relevance: Dict, pars_features: Dict):
         paragraphs = []
         _, article_id = os.path.split(article.article_id)
 
@@ -46,43 +47,40 @@ class DocumentModel(object):
         par_ids = pars_mapping['paragraph_id'].to_numpy()
         for par_id in par_ids:
             par_sys_rel = False
-            par_percv_rel = False
-            features = None
-            par_parsing = {'answer': False}
+            par_percieved_rel = False
+
             if par_id >= 0:
                 par_sys_rel = system_relevance[par_id]
-                par_percv_rel = perceived_relevance[par_id]
+                par_percieved_rel = perceived_relevance[par_id]
 
-                if corpus == Corpus.grel:
-                    par_parsing = {'answer': any([par['answer'] for par in article.paragraphs])}
-                else:
-                    par_parsing = {'answer': article.paragraphs[par_id]['answer']}
-
-            if par_features is not None:
-                features = par_features.loc[par_features['paragraph'] == par_id]
+            par_pred_rel = pred_relevance.get(par_id, tuple([-1.0, False]))
+            par_features = pars_features.get(par_id, {})
             par_gaze = gaze_data.loc[gaze_data['paragraph_id'] == par_id]
             par_mapping = list(pars_mapping.loc[pars_mapping['paragraph_id'] == par_id].to_numpy()[0])
             labels_selection = labels_mapping.loc[labels_mapping['paragraph_id'] == par_id]
 
             paragraphs.append(
-                ParagraphModel.from_data(article_id=article_id, parsing=par_parsing, system_relevance=par_sys_rel,
-                                         perceived_relevance=par_percv_rel, gaze_data=par_gaze,
-                                         par_mapping=par_mapping, labels_mapping=labels_selection, features=features)
+                ParagraphModel.from_data(article_id=article_id,
+                                         gaze_data=par_gaze,
+                                         par_mapping=par_mapping, labels_mapping=labels_selection,
+                                         system_relevance=par_sys_rel, perceived_relevance=par_percieved_rel,
+                                         pred_relevance=par_pred_rel,
+                                         features=par_features)
             )
-        
+
         return cls(user_id, article_id, corpus, article.query.strip(), paragraphs)
 
     @property
-    def query(self) -> str:
-        return self._query
+    def id(self) -> str:
+        return self._id
 
     @property
     def user_id(self) -> str:
         return self._user_id
 
     @property
-    def id(self) -> str:
-        return self._id
+    def query(self) -> str:
+        return self._query
 
     @property
     def corpus(self) -> str:
@@ -104,7 +102,6 @@ class DocumentModel(object):
 
 
 class DocumentSchema(Schema):
-
     user_id = fields.Str(data_key="userId")
     id = fields.Str()
     corpus = fields.Str()

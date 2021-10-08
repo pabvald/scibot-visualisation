@@ -15,6 +15,7 @@ export class ParagraphComponent implements OnInit {
 
   // Constants
   readonly ID_HEIGHT: number = 5; // in %
+  readonly MARGIN: number = 4; // in %
   readonly COLORBAR_WIDTH: number = 1.1; // in %
   readonly HEIGHT_REDUCTION: number = 0.95; 
   readonly WIDTH_REDUCTION: number = 0.5; 

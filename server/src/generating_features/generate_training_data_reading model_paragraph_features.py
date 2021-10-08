@@ -1,26 +1,28 @@
+import os
 import logging
-from server.src.data_loading import SciBotDataLoader, extract_paragraph_visits_vectorized
-from server.src.features import extract_features, FixationEventWithReadingState, SaccadeEventWithReadingState
-from generate_training_data_convex_hull_features import FeatureExtractor
-
+import datetime
 import pandas as pd
 import numpy as np
-import os
-import datetime
 
-FONTSIZE = 20.5 # In Buscher's paper, their font size is 12pt, which is 16px
+from generate_training_data_convex_hull_features import FeatureExtractor
+from server.src.data_loading import SciBotDataLoader, extract_paragraph_visits_vectorized
+from server.src.features import extract_features, FixationEventWithReadingState, SaccadeEventWithReadingState
+
+FONTSIZE = 20.5  # In Buscher's paper, their font size is 12pt, which is 16px
 READING_DETECTOR_THRESHOLD = 30;
 SKIMMING_DETECTOR_THRESHOLD = 20;
 
 logger = logging.getLogger(__name__)
 logging.basicConfig(level=logging.INFO)
 
+
 def mapPixelSpaceToLetterSpace(v):
     return v / FONTSIZE;
 
 
 class SaccadeType(object):
-    def __init__(self, saccade_distance_range, saccade_type_name, reading_detector_score, skimming_detector_score, is_left_half_interval=True):
+    def __init__(self, saccade_distance_range, saccade_type_name, reading_detector_score, skimming_detector_score,
+                 is_left_half_interval=True):
         """
         @param is_left_half_interval: if true, e.g [10, 20) else e.g (10, 20]
         """
@@ -31,10 +33,12 @@ class SaccadeType(object):
         self._is_left_half_interval = is_left_half_interval
 
     def is_this_type(self, saccade_distance):
-        if(self._is_left_half_interval):
-            return self._saccade_distance_range[0] <= saccade_distance and saccade_distance < self._saccade_distance_range[1]
+        if (self._is_left_half_interval):
+            return self._saccade_distance_range[0] <= saccade_distance and saccade_distance < \
+                   self._saccade_distance_range[1]
         else:
-            return self._saccade_distance_range[0] < saccade_distance and saccade_distance <= self._saccade_distance_range[1]
+            return self._saccade_distance_range[0] < saccade_distance and saccade_distance <= \
+                   self._saccade_distance_range[1]
 
     @property
     def reading_detector_score(self):
@@ -50,6 +54,7 @@ class SaccadeType(object):
 
     def is_reset_jump(self):
         return self.saccade_type == 'Reset Jump'
+
 
 class UnrelatedSaccadeType(SaccadeType):
     def __init__(self):
@@ -72,7 +77,7 @@ class SaccadeClassifier(object):
         self._saccadeTypePools.append(SaccadeType((21, 30), 'Long Skim forward', -5, 8, False))
         self._saccadeTypePools.append(SaccadeType((-6, 0), 'Short Regression', -8, -8))
         self._saccadeTypePools.append(SaccadeType((-16, -6), 'Long Regression', -8, -8))
-        #TODO:with current letter space threshold in the visit-based slice, could not find saccade that matches 'short regression' or 'long regression', need fine-tuning
+        # TODO:with current letter space threshold in the visit-based slice, could not find saccade that matches 'short regression' or 'long regression', need fine-tuning
         self._saccadeTypePools.append(ResetJumpSaccadeType(-16))
 
     def classify(self, saccade_distance):
@@ -87,7 +92,7 @@ class SaccadeSequence(object):
         self._saccades = list()
         self._reading_score = 0
         self._skimming_score = 0
-        self._reading_state = None # Readimg Or Skimming
+        self._reading_state = None  # Readimg Or Skimming
 
     def append_saccade(self, saccade):
         self._reading_score += saccade.saccade_type.reading_detector_score
@@ -131,6 +136,7 @@ class SaccadeSequence(object):
             a_saccade.update_reading_state_for_fixation(self.reading_state)
             a_saccade.reading_state = str(self.reading_state)
 
+
 # Todo rename sequences to slices or whatever
 # in the visit-based method, name'saccade_sequences' should be modified into name'visit_slice' afterwards
 def SeparateSaccadesToSequences(saccades):
@@ -143,6 +149,7 @@ def SeparateSaccadesToSequences(saccades):
             a_new_sequence = SaccadeSequence()
             saccade_sequences.append(a_new_sequence)
     return saccade_sequences
+
 
 def GroupFixationByParagraphID(fixations):
     results = dict()
@@ -164,15 +171,13 @@ class ReadingModelBasedFeatureExtractor(FeatureExtractor):
         }]
 
 
-
-
 def extract_features(p_visits):
     features = dict()
     saccades_in_p = list()
     fixations_in_p = list()
     for v in p_visits:
-        saccades,fixations = extract_reading_model(v.data)
-        saccades_in_p  += saccades
+        saccades, fixations = extract_reading_model(v.data)
+        saccades_in_p += saccades
         fixations_in_p += fixations
     features.update(AverageFixationDuration().extract(fixations_in_p))
     features.update(AverageForwardSaccadesLength().extract(saccades_in_p))
@@ -186,7 +191,7 @@ def extract_reading_model(visit_df):
     fixations = FixationEventWithReadingState.from_dataframe(visit_df)
     saccades = SaccadeEventWithReadingState.from_fixations(fixations)
     saccades = reading_model_detection(saccades)
-    return saccades,fixations
+    return saccades, fixations
 
 
 class AverageFixationDuration(object):
@@ -197,7 +202,7 @@ class AverageFixationDuration(object):
         if len(fixations) != 0:
             for f in fixations:
                 sum_of_fixation_duration += f.duration
-            average_fixation_duration = sum_of_fixation_duration/ len(fixations)
+            average_fixation_duration = sum_of_fixation_duration / len(fixations)
 
         return {"average_fixation_duration": average_fixation_duration}
 
@@ -218,7 +223,7 @@ class AverageForwardSaccadesLength(SaccadesFeatureExtractor):
                     counts += 1
                     length += a_saccades.amplitude_h
             average = length / counts if counts != 0 else 0
-        return { "average_forward_saccades_length": average}
+        return {"average_forward_saccades_length": average}
 
 
 class RegressionRatio(SaccadesFeatureExtractor):
@@ -259,12 +264,12 @@ class CoherentlyReadTextLength(SaccadesFeatureExtractor):
                 if a_saccade.reading_state == 'Reading':
                     is_reading_continue = True
                     length += a_saccade.amplitude_h
-                else :
+                else:
                     if is_reading_continue:
                         lengths.append(length)
                     is_reading_continue = False
                     length = 0
-            length = max(lengths) if len(lengths) !=0 else 0
+            length = max(lengths) if len(lengths) != 0 else 0
         return {"coherently_read_text_length": length}
 
 
@@ -339,7 +344,6 @@ class ReadingModelDataset:
                 self._data_dict[f_key] = []
             self._data_dict[f_key].append(v[0])
 
-
     def save(self, target_dir):
         filename = "{}_{}_{}.csv".format(self._corpus, self._method, datetime.datetime.now().strftime("%Y%m%d-%H%M"))
         filepath = os.path.join(target_dir, filename)
@@ -347,7 +351,6 @@ class ReadingModelDataset:
 
 
 def extract_training_data(study_data: dict, feature_extractor: ReadingModelBasedFeatureExtractor, target_dir=None):
-
     if target_dir is not None:
         assert os.path.exists(target_dir) and os.path.isdir(target_dir), \
             f"invalid path for storing training data: {target_dir}"
@@ -391,6 +394,7 @@ def extract_training_data(study_data: dict, feature_extractor: ReadingModelBased
 
     return dataset
 
+
 if __name__ == '__main__':
     logger.info("# ML Data Generation for SciBot")
     min_fixations = 0
@@ -401,7 +405,7 @@ if __name__ == '__main__':
     feature_extractor = ReadingModelBasedFeatureExtractor()
     logger.info(f"loading SciBot dataset (reading task) from {data_dir}")
     dataloader = SciBotDataLoader(data_dir=data_dir, exclude_users=["A02", "A05"], gaze_data=True, reading_task=True,
-                                   rating_task=False, training_data=False)
+                                  rating_task=False, training_data=False)
 
     logger.info(f"loaded data from {dataloader.num_participants} participants:")
 
@@ -410,19 +414,3 @@ if __name__ == '__main__':
 
     d_nq = extract_training_data(study_data=dataloader.google_nq_reading, target_dir=target_dir,
                                  feature_extractor=feature_extractor)
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

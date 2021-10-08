@@ -48,6 +48,7 @@ class SaccadeEvent:
 
         return saccades
 
+
 class SaccadeEventWithReadingState(SaccadeEvent):
     def __init__(self, event_id: int, start_fixation: FixationEvent, end_fixation: FixationEvent):
         super(SaccadeEventWithReadingState, self).__init__(event_id, start_fixation, end_fixation)

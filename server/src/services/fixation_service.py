@@ -1,6 +1,5 @@
 
-from models import DocumentModel, ParagraphModel, LabelModel
-from models.bounding_box import AxisOrigin
+from models import DocumentModel, ParagraphModel, LabelModel, AxisOrigin
 from features import HorizontalFixationArea
 
 

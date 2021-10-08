@@ -87,7 +87,7 @@
     flex-direction: column;
 
     .relevance-container {
-        width: 80%;
+        width: 90%;
         //border: 1px solid $grey-border;
         box-shadow: 0 1px 6px rgba(0, 0, 0, 0.2);
 
@@ -110,7 +110,7 @@
 .badge {
     border-radius: 30px;
     padding: 0.1vh 0.6vw;
-    margin: 0.6vh 0.7vw;
+    margin: 0.6vh 0.2vw;
     text-align: center;
     vertical-align: baseline;
 }
@@ -123,6 +123,11 @@
 .irrelevant-badge {
     background-color: $red-error-background;
     color: $red-error-text;
+}
+
+.probability-badge {
+    background-color: #f8f9cb;
+    color: #999708;
 }
 
 *::-webkit-scrollbar,

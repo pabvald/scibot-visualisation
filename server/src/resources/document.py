@@ -4,8 +4,9 @@ from flask_restful import Resource, reqparse
 
 from .user import USER_IDS
 from flask import current_app as app
-from services import FixationService
 from models import DocumentModel, DocumentSchema
+from services import FixationService, RelevanceService
+
 
 DOC_IDS = ["g-rel_q075-1_i",
            "g-rel_q076-1_r",
@@ -19,7 +20,6 @@ DOC_IDS = ["g-rel_q075-1_i",
            "g-rel_q122-2_i",
            "g-rel_q134-3_t",
            "g-rel_q088-1_t",
-           "g-rel_q088-1_t",
            "nq_5p_a0_LTcw",
            "nq_5p_a0_LTIz",
            "nq_5p_a2_MTgz",
@@ -31,7 +31,6 @@ DOC_IDS = ["g-rel_q075-1_i",
            "nq_6p_a5_LTkw",
            "nq_7p_a1_Mzgy",
            "nq_7p_a2_LTYz",
-           "nq_7p_a5_NTE0",
            "nq_7p_a5_NTE0"]
 
 parser = reqparse.RequestParser()
@@ -43,6 +42,7 @@ class DocumentResource(Resource):
     """ Document resource """
 
     _fixation_service = FixationService()
+    _relevance_service = RelevanceService()
 
     def get(self, user_id, doc_id):
         """
@@ -75,7 +75,7 @@ class DocumentResource(Resource):
             # gaze data
             gaze = app.dataloader.grel_reading[user_id][doc_id[:-2]]['dataframe']
             # paragraph features
-            par_features = app.featuresloader.grel_par_features[user_id].get(doc_id[:-2], None)
+            pars_features = app.featuresloader.grel_par_features[user_id].get(doc_id[:-2], {})
             # relevance
             system_relevance = app.dataloader.grel_reading[user_id][doc_id[:-2]]['system_relevance']
             perceived_relevance = app.dataloader.grel_reading[user_id][doc_id[:-2]]['perceived_relevance']
@@ -89,7 +89,7 @@ class DocumentResource(Resource):
             # gaze data
             gaze = app.dataloader.google_nq_reading[user_id][doc_id]['dataframe']
             # paragraph features
-            par_features = app.featuresloader.google_nq_par_features[user_id].get(doc_id, None)
+            pars_features = app.featuresloader.google_nq_par_features[user_id].get(doc_id, {})
             # relevance
             system_relevance = app.dataloader.google_nq_reading[user_id][doc_id]['system_relevance']
             perceived_relevance = app.dataloader.google_nq_reading[user_id][doc_id]['perceived_relevance']
@@ -97,11 +97,15 @@ class DocumentResource(Resource):
             pars_mapping = app.mappingloader.google_nq_paragraphs[doc_id]
             labels_mapping = app.mappingloader.google_nq_labels[doc_id]
 
+        # predict relevance
+        pred_relevance = self._relevance_service.predict_relevance(pars_features)
+
         # create document representation
-        document = DocumentModel.from_data(user_id=user_id, article=article, system_relevance=system_relevance,
-                                           perceived_relevance=perceived_relevance, gaze_data=gaze,
-                                           pars_mapping=pars_mapping, labels_mapping=labels_mapping,
-                                           par_features=par_features)
+        document = DocumentModel.from_data(user_id=user_id, article=article, gaze_data=gaze, pars_mapping=pars_mapping,
+                                           labels_mapping=labels_mapping, system_relevance=system_relevance,
+                                           perceived_relevance=perceived_relevance, pred_relevance=pred_relevance,
+                                           pars_features=pars_features)
+
         # compute fixations on the document's labels
         self._fixation_service.compute_horizontal_hits(document, hit_left_margin, hit_right_margin)
         # serialize document

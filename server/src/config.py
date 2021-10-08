@@ -21,10 +21,6 @@ class Config(object):
     ARTICLE_DIR = pjoin(DATA_DIR, 'articles')
     MAPPING_DIR = pjoin(DATA_DIR, 'mapping', MAPPING_VERSION)
     PAR_FEATURES_DIR = pjoin(DATA_DIR, 'paragraph_features')
-    
-    # Study's screen dimensions
-    SCREEN_WIDTH = 2560
-    SCREEN_HEIGHT = 1440
 
 
 class ProductionConfig(Config):

@@ -34,7 +34,8 @@ export class GlobalHttpInterceptorService implements HttpInterceptor {
             console.log(`error status : ${error.status} ${error.statusText}`);
             switch (error.status) {
               case 0:
-                this.notificationsService.showError("The connection to server cannot be established.");
+                handled = true;
+                this.notificationsService.showError("The connection to the server cannot be established.");
                 break;
               case 404: 
                 this.notificationsService.showError("The solicited data is not currently available.");

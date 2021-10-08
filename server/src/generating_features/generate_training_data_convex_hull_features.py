@@ -1,12 +1,11 @@
+import os
 import logging
-from server.src.data_loading import SciBotDataLoader, extract_paragraph_visits_vectorized
-from server.src.features import extract_features
-
+import datetime
 import pandas as pd
 import numpy as np
-import os
-import datetime
 
+from server.src.data_loading import SciBotDataLoader, extract_paragraph_visits_vectorized
+from server.src.features import extract_features
 
 logger = logging.getLogger(__name__)
 logging.basicConfig(level=logging.INFO)

@@ -30,7 +30,7 @@
     class="paragraph-id"
     [ngStyle]="{
         'top.%': (100 * paragraph.y1),
-        'left.%': (100 * (paragraph.x1 - paragraph.width * WIDTH_REDUCTION) - 2),
+        'left.%': (100 * (paragraph.x1 - paragraph.width * WIDTH_REDUCTION) - MARGIN),
         'width.%': (100 * paragraph.width * WIDTH_REDUCTION),
         'max-width.%': (100 * paragraph.width * WIDTH_REDUCTION),
         'height.%': ID_HEIGHT,
@@ -44,7 +44,7 @@
     class="paragraph-features"
     [ngStyle]="{
         'top.%': (100 * paragraph.y1 + ID_HEIGHT),
-        'left.%': (100 * (paragraph.x1 - paragraph.width * WIDTH_REDUCTION) - 2),
+        'left.%': (100 * (paragraph.x1 - paragraph.width * WIDTH_REDUCTION) - MARGIN),
         'width.%': (100 * paragraph.width * WIDTH_REDUCTION),
         'max-width.%': (100 * paragraph.width * WIDTH_REDUCTION),
         'height.%': (100 * paragraph.height * HEIGHT_REDUCTION - ID_HEIGHT),
@@ -63,7 +63,7 @@
                 - {{feature.name}} ({{feature.units}}):
             </span> -->
             <span class="feature-value">
-                {{paragraph.getFeatureById(feature.id) | number : '0.1-2'}}
+                {{paragraph.getFeatureById(feature.id) * feature.transform | number : '0.1-2'}}
             </span>
         </div> 
     </div>    
@@ -75,7 +75,7 @@
     class="paragraph-relevance"
     [ngStyle]="{
         'top.%': (100 * paragraph.y1),
-        'left.%': (100 * (paragraph.x2) + 2),
+        'left.%': (100 * (paragraph.x2) + MARGIN),
         'width.%': (100 * paragraph.width * WIDTH_REDUCTION),
         'max-width.%': (100 * paragraph.width * WIDTH_REDUCTION),
         'height.%': (100 * paragraph.height * HEIGHT_REDUCTION - ID_HEIGHT),
@@ -92,9 +92,28 @@
         <div class="relevance">
             <span class="relevance-name">Percieved relevance:</span>
             <span *ngIf="paragraph.perceivedRelevance"
-                class="badge relevant-badge">&#10003;</span>
+                class="badge relevant-badge">
+                &#10003;
+            </span>
             <span *ngIf="!paragraph.perceivedRelevance"
-                class="badge irrelevant-badge">&#10005;</span>
+                class="badge irrelevant-badge">
+                &#10005;
+            </span>
+        </div>
+        <div *ngIf="paragraph.predictedRelevance[0] >= 0"
+            class="relevance">
+            <span class="relevance-name">Predicted relevance:</span>
+            <span class="badge probability-badge">
+                {{paragraph.predictedRelevance[0] | number : '1.1-2' }}
+            </span>
+            <span *ngIf="paragraph.predictedRelevance[1]"
+                class="badge relevant-badge">
+                &#10003;
+            </span>
+            <span *ngIf="!paragraph.predictedRelevance[1]"
+                class="badge irrelevant-badge">
+                &#10005;
+            </span>
         </div>
     </div>    
 </div>

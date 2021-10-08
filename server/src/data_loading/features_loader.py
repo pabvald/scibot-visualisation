@@ -1,8 +1,8 @@
-import os
-import glob
 import pandas as pd
 
 from os.path import join as pjoin
+from typing import Dict
+from pandas.core.frame import DataFrame
 
 
 class ScibotParagraphFeaturesLoader:
@@ -12,25 +12,24 @@ class ScibotParagraphFeaturesLoader:
     _INCLUDE_USER_LIST = []  # if emtpy every user besides excluded will be analysed, "A01", "B01"
     _INCLUDE_DATA_SOURCE = []  # "g_rel", "GoogleNQ"
     _STUDY_TYPE = ["main"]  # "main", "train"
-    _COLUMN_SELECTION = ['paragraph',
-                         "f_total_time",
-                         "f_fixn_n",
-                         "f_fixn_dur_sum",
-                         "f_fixn_dur_avg",
-                         "f_fixn_dur_sd",
-                         "f_scan_distance_h",
-                         "f_scan_distance_v",
-                         "f_scan_distance_euclid",
-                         "f_scan_hv_ratio",
-                         "f_avg_sacc_length",
-                         "f_scan_speed_h",
-                         "f_scan_speed_v",
-                         "f_scan_speed",
-                         "f_box_area",
-                         "f_box_area_per_time",
-                         "f_fixns_per_box_area",
-                         "f_hull_area_per_time",
-                         "f_fixns_per_hull_area"]
+    _FEATURE_SELECTION = ["f_total_time",
+                          "f_fixn_n",
+                          "f_fixn_dur_sum",
+                          "f_fixn_dur_avg",
+                          "f_fixn_dur_sd",
+                          "f_scan_distance_h",
+                          "f_scan_distance_v",
+                          "f_scan_distance_euclid",
+                          "f_scan_hv_ratio",
+                          "f_avg_sacc_length",
+                          "f_scan_speed_h",
+                          "f_scan_speed_v",
+                          "f_scan_speed",
+                          "f_box_area",
+                          "f_box_area_per_time",
+                          "f_fixns_per_box_area",
+                          "f_hull_area_per_time",
+                          "f_fixns_per_hull_area"]
 
     grel_par_features = {}
     google_nq_par_features = {}
@@ -68,30 +67,45 @@ class ScibotParagraphFeaturesLoader:
             self._load_google_nq()
 
     def _load_grel(self):
-        """ Loads the mappings of the g-REL files """
+        """ Loads the features of the g-REL files """
         paths = [pjoin(self.data_dir, "g-REL", study_type) for study_type in self._STUDY_TYPE]
 
         for path in paths:
             data = self._load_mapping(pjoin(path, 'g-rel' + self._GREL_FILE_EXT))
-            for user in data.user.unique():
-                if self._is_valid_user(user):
-                    self.grel_par_features[user] = {}
-                    for doc_id in data.loc[data['user'] == user, 'document']:
-                        self.grel_par_features[user][doc_id] = data.loc[
-                            (data['user'] == user) & (data['document'] == doc_id),  self._COLUMN_SELECTION]
+            self.grel_par_features = self._extract_features(data)
 
     def _load_google_nq(self):
-        """ Loads the mappings of the GoggleNQ files """
+        """ Loads the features of the GoggleNQ files """
         paths = [pjoin(self.data_dir, "GoogleNQ", study_type) for study_type in self._STUDY_TYPE]
 
         for path in paths:
             data = self._load_mapping(pjoin(path, 'nq' + self._NQ_FILE_EXT))
-            for user in data.user.unique():
-                if self._is_valid_user(user):
-                    self.google_nq_par_features[user] = {}
-                    for doc_id in data.loc[data['user'] == user, 'document']:
-                        self.google_nq_par_features[user][doc_id] = data.loc[
-                            (data['user'] == user) & (data['document'] == doc_id), self._COLUMN_SELECTION]
+            self.google_nq_par_features = self._extract_features(data)
+
+    def _extract_features(self, data: DataFrame) -> Dict[str, Dict[str, Dict[int, Dict[str, float]]]]:
+        """
+        Extracts the features of every paragrpah
+
+        Args:
+            data: dataframe containing the features of a document.
+        """
+        data_dict = {}
+        # every user
+        for user_id in data.user.unique():
+            data_dict[user_id] = {}
+            # every document
+            for doc_id in data.loc[data['user'] == user_id].document.unique():
+                data_dict[user_id][doc_id] = {}
+                # every paragraph
+                for par_id in data.loc[(data['user'] == user_id) & (data['document'] == doc_id)].paragraph.unique():
+                    data_dict[user_id][doc_id][par_id] = {}
+                    features = data.loc[(data['user'] == user_id) &
+                                        (data['document'] == doc_id) &
+                                        (data['paragraph'] == par_id),
+                                        self._FEATURE_SELECTION]
+                    if features is not None and not features.empty:
+                        data_dict[user_id][doc_id][par_id] = features.to_dict('records')[0]
+        return data_dict
 
     def _is_valid_user(self, user: str) -> bool:
         """

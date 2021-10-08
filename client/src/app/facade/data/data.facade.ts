@@ -47,7 +47,10 @@ export class DataFacade {
             userId = userIds[0];
             this.loadDocument(userId, docId);
           },
-        (error) => { console.log(error); }
+        (error) => { 
+          console.log(error); 
+          this.dataState.setUpdating(false);
+        }
       )
   }  
 

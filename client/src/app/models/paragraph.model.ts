@@ -9,6 +9,7 @@ export interface IParagraph  extends IBoundingBox {
     id: number;
     systemRelevance: boolean;
     perceivedRelevance: boolean;
+    predictedRelevance: [number, boolean];
     labels: ILabel[];
     isTitle: boolean;
     hasLabels: boolean;
@@ -27,6 +28,7 @@ export class Paragraph implements IParagraph {
     public y2: number;
     public systemRelevance: boolean;
     public perceivedRelevance: boolean;
+    public predictedRelevance: [number, boolean];
     public labels: ILabel[];
     public features: any;
 
@@ -41,6 +43,7 @@ export class Paragraph implements IParagraph {
         this.y2 = paragraphObject.y2; 
         this.systemRelevance = paragraphObject.systemRelevance;
         this.perceivedRelevance = paragraphObject.perceivedRelevance;
+        this.predictedRelevance = paragraphObject.predictedRelevance;
         this.labels = paragraphObject.labels.map((lbl: any) => new Label(lbl));
         this.features = paragraphObject.features;
     }
@@ -82,6 +85,7 @@ export class Paragraph implements IParagraph {
  export interface IParagraphFeatureConf {
     id: string;     
     name: string;
+    transform: number;
     units: string;
     enabled: boolean; 
 }

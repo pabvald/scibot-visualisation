@@ -3,26 +3,26 @@ import { IParagraphFeatureConf } from 'src/app/models/paragraph.model';
 import { BehaviorSubject, Observable } from 'rxjs';
 
 
- const featuresConf: IParagraphFeatureConf[] = [
-  //{ id: "f_total_time",           name: "Total time",             units: "u", enabled: true },
-  //{ id: "f_fixn_n",               name: "No. fixations",          units: "u", enabled: true },
-  //{ id: "f_fixn_dur_sum",         name: "Sum fixation duration",  units: "u", enabled: true },
-  //{ id: "f_fixn_dur_avg",         name: "Avg. fixation duration", units: "u", enabled: true  },
-  //{ id: "f_fixn_dur_sd",          name: "Sd. fixation duration",  units: "u", enabled: false },
-  { id: "f_scan_distance_h",      name: "Scan distance horizontal", units: "u", enabled: true  },
-  { id: "f_scan_distance_v",      name: "Scan distance vertical",   units: "u", enabled: true  },
-  { id: "f_scan_distance_euclid", name: "Scan distance euclidean",  units: "u", enabled: true  },
-  { id: "f_scan_hv_ratio",        name: "Scan hv ratio",            units: "u", enabled: false },
-  { id: "f_avg_sacc_length",      name: "Avg. saccade length",      units: "u", enabled: true  },
-  { id: "f_scan_speed_h",         name: "Scan speed horizontal",    units: "u", enabled: false },
-  { id: "f_scan_speed_v",         name: "Scan speed vertical",      units: "u", enabled: false },
-  { id: "f_scan_speed",           name: "Scan speed",               units: "u", enabled: false },
-  { id: "f_box_area",             name: "Box area",                 units: "u", enabled: false },
-  { id: "f_box_area_per_time",    name: "Box area per time",        units: "u", enabled: false },
-  { id: "f_fixns_per_box_area",   name: "Fixations per box area",   units: "u", enabled: false },
-  { id: "f_hull_area_per_time",   name: "Hull area per time",       units: "u", enabled: false },
-  { id: "f_fixns_per_hull_area",  name: "Fixations per hull area",  units: "u", enabled: false }
- ]; 
+const featuresConf: IParagraphFeatureConf[] = [
+  { id: "f_total_time",           name: "Total time (s)",               transform: 1.0, units: "u", enabled: false  },
+  { id: "f_fixn_n",               name: "No. fixations",                transform: 1.0, units: "u", enabled: false  },
+  { id: "f_fixn_dur_sum",         name: "Sum fixation duration (s)",    transform: 1.0, units: "u", enabled: false  },
+  { id: "f_fixn_dur_avg",         name: "Avg. fixation duration (ms)",  transform: 1000.0, units: "u", enabled: true  },
+  { id: "f_fixn_dur_sd",          name: "Sd. fixation duration (ms)",   transform: 1000.0, units: "u", enabled: false },
+  { id: "f_scan_distance_h",      name: "Scan distance horizontal",     transform: 1.0, units: "u", enabled: false  },
+  { id: "f_scan_distance_v",      name: "Scan distance vertical",       transform: 1.0, units: "u", enabled: false  },
+  { id: "f_scan_distance_euclid", name: "Scan distance euclidean",      transform: 1.0, units: "u", enabled: true  },
+  { id: "f_scan_hv_ratio",        name: "Scan hv ratio",                transform: 1.0, units: "u", enabled: false },
+  { id: "f_avg_sacc_length",      name: "Avg. saccade length",          transform: 1.0, units: "u", enabled: false  },
+  { id: "f_scan_speed_h",         name: "Scan speed horizontal",        transform: 1.0, units: "u", enabled: false },
+  { id: "f_scan_speed_v",         name: "Scan speed vertical",          transform: 1.0, units: "u", enabled: false },
+  { id: "f_scan_speed",           name: "Scan speed",                   transform: 1.0, units: "u", enabled: true },
+  { id: "f_box_area",             name: "Box area",                     transform: 1.0, units: "u", enabled: true },
+  { id: "f_box_area_per_time",    name: "Box area per time",            transform: 1.0, units: "u", enabled: false },
+  { id: "f_fixns_per_box_area",   name: "Fixations per box area",       transform: 1.0, units: "u", enabled: false },
+  { id: "f_hull_area_per_time",   name: "Hull area per time",           transform: 1.0, units: "u", enabled: false },
+  { id: "f_fixns_per_hull_area",  name: "Fixations per hull area",      transform: 1.0, units: "u", enabled: false }
+]; 
 
 @Injectable({
   providedIn: 'root'
