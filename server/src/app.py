@@ -2,8 +2,8 @@ from flask import Flask, render_template
 from flask_cors import CORS
 from flask_restful import Api
 from resources.user import UserListResource
-from data_loading import (SciBotDataLoader, ScibotMappingLoader, 
-                         ScibotParagraphFeaturesLoader)
+from data_loading import (SciBotDataLoader, ScibotMappingLoader,
+                          ScibotParagraphFeaturesLoader)
 from resources.document import DocumentResource, DocumentListResource
 
 app = Flask(__name__)
@@ -15,14 +15,17 @@ app.featuresloader = ScibotParagraphFeaturesLoader(data_dir=app.config['PAR_FEAT
 api = Api(app)
 CORS(app)  # allow CORS
 
-@app.route('/', methods=['GET'])
-def root():
-    return render_template('index.html') # Return index.html
-
 # --- API calls ---
 api.add_resource(UserListResource, '/api/user/ids')
 api.add_resource(DocumentListResource, '/api/document/ids')
 api.add_resource(DocumentResource, '/api/document/<string:user_id>/<string:doc_id>')
+
+
+# --- Serve index.html ---
+@app.route('/', methods=['GET'])
+def root():
+    return render_template('index.html')
+
 
 if __name__ == '__main__':
     app.run(port=5002)

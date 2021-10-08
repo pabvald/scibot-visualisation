@@ -47,4 +47,3 @@ class FixationService(object):
                     label.axis_origin = AxisOrigin.TL
 
                     i += 1
-

@@ -84,7 +84,7 @@ class ScibotParagraphFeaturesLoader:
 
     def _extract_features(self, data: DataFrame) -> Dict[str, Dict[str, Dict[int, Dict[str, float]]]]:
         """
-        Extracts the features of every paragrpah
+        Extracts the features of every paragraph
 
         Args:
             data: dataframe containing the features of a document.

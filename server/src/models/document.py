@@ -47,11 +47,11 @@ class DocumentModel(object):
         par_ids = pars_mapping['paragraph_id'].to_numpy()
         for par_id in par_ids:
             par_sys_rel = False
-            par_percieved_rel = False
+            par_perceived_rel = False
 
             if par_id >= 0:
                 par_sys_rel = system_relevance[par_id]
-                par_percieved_rel = perceived_relevance[par_id]
+                par_perceived_rel = perceived_relevance[par_id]
 
             par_pred_rel = pred_relevance.get(par_id, tuple([-1.0, False]))
             par_features = pars_features.get(par_id, {})
@@ -63,7 +63,7 @@ class DocumentModel(object):
                 ParagraphModel.from_data(article_id=article_id,
                                          gaze_data=par_gaze,
                                          par_mapping=par_mapping, labels_mapping=labels_selection,
-                                         system_relevance=par_sys_rel, perceived_relevance=par_percieved_rel,
+                                         system_relevance=par_sys_rel, perceived_relevance=par_perceived_rel,
                                          pred_relevance=par_pred_rel,
                                          features=par_features)
             )
@@ -72,31 +72,38 @@ class DocumentModel(object):
 
     @property
     def id(self) -> str:
+        """ Document id or filename """
         return self._id
 
     @property
     def user_id(self) -> str:
+        """ User id"""
         return self._user_id
 
     @property
     def query(self) -> str:
+        """ Query that the user had to look an answer for """
         return self._query
 
     @property
     def corpus(self) -> str:
+        """ Corpus to which the document belongs """
         return self._corpus.value
 
     @property
     def paragraphs(self) -> List[ParagraphModel]:
+        """ Paragraphs of the document """
         return self._paragraphs
 
     @property
     def fixations(self) -> List[FixationEvent]:
+        """ All fixation events of the document """
         pars_fixations = [par.fixations for par in self._paragraphs]
         return sum(pars_fixations, [])
 
     @property
     def saccades(self) -> List[SaccadeEvent]:
+        """ All saccade events of the document """
         pars_saccades = [par.saccades for par in self._paragraphs]
         return sum(pars_saccades, [])
 

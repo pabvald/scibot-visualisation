@@ -9,16 +9,17 @@ class LabelModel(BoundingBox):
     Representation of a label.
     """
 
-    def __init__(self, article_id: str, par_id: int, label_id: int, x1: float, y1: float, x2: float, y2: float, text: str):
+    def __init__(self, article_id: str, par_id: int, label_id: int, x1: float, y1: float, x2: float, y2: float,
+                 text: str):
         """
         Args:
             article_id: article's id
             par_id: paragraph's id
             label_id: label's id within the paragraph
-            x1: first x coordinate
-            y1: first y coordinate
-            x2: second x coordinate
-            y2: second y coordinate
+            x1: first x normalized coordinate
+            y1: first y normalized coordinate
+            x2: second x normalized coordinate
+            y2: second y normalized coordinate
             text: text contained in the label
         """
         super().__init__(article_id, label_id, x1, y1, x2, y2)
@@ -39,18 +40,22 @@ class LabelModel(BoundingBox):
 
     @property
     def par_id(self) -> int:
+        """ Paragraph id. """
         return self._par_id
 
     @property
     def text(self) -> str:
+        """ Text contained in the label """
         return self._text.strip()
 
     @property
     def num_fixations(self) -> int:
+        """ Number of fixations on the label """
         return len(self._fixation_durations)
 
     @property
     def fixation_duration(self) -> float:
+        """ Total fixation duration on the label """
         return sum(self._fixation_durations) #/ self.num_fixations
 
     def add_fixation(self, fixation: FixationEvent):

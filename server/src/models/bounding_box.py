@@ -39,30 +39,31 @@ class BoundingBox(object):
     _SCREEN_WIDTH = 2560
     _SCREEN_HEIGHT = 1440
 
-    def __init__(self, filename: str, id: int, x1: float, y1: float, x2: float, y2: float):
+    def __init__(self, filename: str, bb_id: int, x1: float, y1: float, x2: float, y2: float):
         """
 
         Args:
             filename: name of the file
-            id: identifier
+            bb_id: identifier
             x1: first normalized x coordinate
             y1: first normalized y coordinate
             x2: second normalized x coordinate
             y2: second normalized y coordinate
-
         """
         self._vp_w = VIEWPORT_DIMS[filename]['viewport_width']
         self._vp_h = VIEWPORT_DIMS[filename]['viewport_height']
-        self._id = id
+        self._axis_origin = AxisOrigin.TL
+        self._normalized_coord = True
+        self._id = bb_id
+        # normalized coordinates
         self._x1 = x1
         self._y1 = y1
         self._x2 = x2
         self._y2 = y2
-        self._axis_origin = AxisOrigin.TL
-        self._normalized_coord = True
 
     @property
     def normalized_coord(self) -> bool:
+        """ The coordinates are return normalized or not. """
         return self._normalized_coord
 
     @normalized_coord.setter
@@ -71,6 +72,7 @@ class BoundingBox(object):
 
     @property
     def axis_origin(self) -> AxisOrigin:
+        """ Axis origin used to compute the coordinates. """
         return self._axis_origin
 
     @axis_origin.setter
@@ -79,28 +81,42 @@ class BoundingBox(object):
 
     @property
     def id(self) -> int:
+        """ Identifier """
         return self._id
+
     @property
     def x1(self) -> float:
+        """ First x coordinate """
         return min(self._transform_x(self._x1), self._transform_x(self._x2))
 
     @property
     def y1(self) -> float:
+        """ First y coordinate """
         return min(self._transform_y(self._y1), self._transform_y(self._y2))
 
     @property
     def x2(self) -> float:
+        """ Second x coordinate """
         return max(self._transform_x(self._x1), self._transform_x(self._x2))
 
     @property
     def y2(self) -> float:
+        """ Second y coordinate """
         return max(self._transform_y(self._y1), self._transform_y(self._y2))
 
     @property
     def coordinates(self):
+        """ All coordinates """
         return self.x1, self.y1, self.x2, self.y2
 
     def _transform_x(self, x: float) -> float:
+        """
+        Transforms an x coordinate considering the established axis origin and screen width.
+        Args:
+            x: original coordinate
+        Returns:
+            transform coordinate
+        """
         # transform origin
         x_t = x * self._SCREEN_WIDTH
         width_t = max(self._vp_w, self._SCREEN_WIDTH)
@@ -113,6 +129,13 @@ class BoundingBox(object):
         return x_t
 
     def _transform_y(self, y: float) -> float:
+        """
+        Transforms an y coordinate considering the established axis origin and screen width.
+        Args:
+            y: original coordinate
+        Returns:
+            transform coordinate
+        """
         # transform origin
         y_t = y * self._SCREEN_HEIGHT
         height_t = max(self._vp_h, self._SCREEN_HEIGHT)

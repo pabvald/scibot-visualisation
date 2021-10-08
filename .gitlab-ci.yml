@@ -1,5 +1,7 @@
 stages:
   - dependencies
+  - lint 
+  - build
 
 angular_dependencies:
   image: node:12-alpine
@@ -15,12 +17,45 @@ angular_dependencies:
         - package-lock.json
     paths:
       - node_modules
+angular_lint:
+  image: node:12-alpine
+  stage: test
+  script:
+    - cd client
+    - npm link @angular/cli@12.2.2
+    - ng lint
+  cache:
+    key:
+      files:
+        - package-lock.json
+    paths:
+      - node_modules
+    policy: pull
+
+angular_build:
+  image: node:12-alpine
+  stage: build
+  script:
+    - cd client
+    - npm link @angular/cli@11.2.6
+    - npm run build
+  artifacts:
+    paths:
+      - $CI_PROJECT_DIR/dist
+  cache:
+    key:
+      files:
+        - package-lock.json
+    paths:
+      - node_modules
+    policy: pull
 
 flask_dependencies:
   stage: dependencies
   script: 
     - cd server 
-    - apt-get update -qy
-    - apt-get install -y python-dev python-pip
     - pip install -r requirements.txt
-    - python src/app.py
+    - cd src
+    - python app.py
+  only:
+    - main

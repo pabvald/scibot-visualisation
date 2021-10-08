@@ -38,8 +38,9 @@ class ParagraphModel(BoundingBox):
         self._features = features
 
     @classmethod
-    def from_data(cls, article_id: str, system_relevance: bool, perceived_relevance: bool, pred_relevance: Tuple[bool, float],
-                  gaze_data: DataFrame, par_mapping: DataFrame, labels_mapping: DataFrame, features: Dict):
+    def from_data(cls, article_id: str, system_relevance: bool, perceived_relevance: bool,
+                  pred_relevance: Tuple[bool, float], gaze_data: DataFrame, par_mapping: DataFrame,
+                  labels_mapping: DataFrame, features: Dict):
         """
         Create a paragraph from
         Args:
@@ -65,22 +66,27 @@ class ParagraphModel(BoundingBox):
 
     @property
     def system_relevance(self) -> bool:
+        """ The paragraph is labeled as 'relevant' """
         return self._system_relevance
 
     @property
     def perceived_relevance(self) -> bool:
+        """ The paragraph is perceived as 'relevant' by the user """
         return self._perceived_relevance
 
     @property
     def pred_relevance(self) -> Tuple[float, bool]:
+        """ Predicted relevance based on the paragraph's features """
         return self._pred_relevance
 
     @property
     def labels(self) -> List[LabelModel]:
+        """ Labels contained in the paragraph """
         return self._labels
 
     @property
     def gaze_data(self) -> DataFrame:
+        """ Gaze data """
         return self._gaze_data
 
     @property
@@ -95,6 +101,7 @@ class ParagraphModel(BoundingBox):
 
     @property
     def features(self) -> Dict:
+        """ Precomputed features """
         return self._features
 
 
