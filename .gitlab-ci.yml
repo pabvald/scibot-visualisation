@@ -14,6 +14,7 @@ angular_dependencies:
   cache:
     key:
       files:
+        - package.json
         - package-lock.json
     paths:
       - node_modules
@@ -33,6 +34,7 @@ angular_build:
   cache:
     key:
       files:
+        - package.json
         - package-lock.json
     paths:
       - node_modules
