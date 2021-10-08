@@ -1,6 +1,6 @@
 stages:
   - dependencies
-  - lint 
+  - test 
   - build
 
 angular_dependencies:
@@ -17,6 +17,7 @@ angular_dependencies:
         - package-lock.json
     paths:
       - node_modules
+
 angular_lint:
   image: node:12-alpine
   stage: test
@@ -24,6 +25,8 @@ angular_lint:
     - cd client
     - npm link @angular/cli@12.2.2
     - ng lint
+  only:
+    - main
   cache:
     key:
       files:
@@ -39,6 +42,8 @@ angular_build:
     - cd client
     - npm link @angular/cli@11.2.6
     - npm run build
+  only:
+    - main
   artifacts:
     paths:
       - $CI_PROJECT_DIR/dist
