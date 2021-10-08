@@ -54,13 +54,3 @@ angular_build:
     paths:
       - node_modules
     policy: pull
-
-flask_dependencies:
-  stage: dependencies
-  script: 
-    - cd server 
-    - pip install -r requirements.txt
-    - cd src
-    - python app.py
-  only:
-    - main
