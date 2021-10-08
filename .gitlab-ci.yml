@@ -8,6 +8,7 @@ angular_dependencies:
   stage: dependencies
   script:
     - cd client
+    - npm install --save-dev @angular-devkit/build-angular
     - npm install -g @angular/cli@12.2.2
   only:
     - main
