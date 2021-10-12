@@ -4,7 +4,7 @@ from flask_restful import Resource, reqparse
 
 from .user import USER_IDS
 from flask import current_app as app
-from models import DocumentModel, DocumentSchema
+from models import DocumentModel, DocumentSchema, Corpus
 from services import FixationService, RelevanceService
 
 
@@ -67,9 +67,9 @@ class DocumentResource(Resource):
         if hit_right_margin < 0:
             return {'message': "The hit right margin cannot be negative"}, 400
 
-        corpus = "g-REL" if doc_id.startswith("g-rel") else "GoogleNQ"
+        corpus = Corpus.grel if doc_id.startswith("g-rel") else Corpus.nq
 
-        if corpus == "g-REL":
+        if corpus == Corpus.grel:
             # HTML parsed article
             article = app.dataloader.grel_articles[doc_id]
             # gaze data
@@ -98,7 +98,7 @@ class DocumentResource(Resource):
             labels_mapping = app.mappingloader.google_nq_labels[doc_id]
 
         # predict relevance
-        pred_relevance = self._relevance_service.predict_relevance(pars_features)
+        pred_relevance = self._relevance_service.predict_relevance(pars_features, corpus)
 
         # create document representation
         document = DocumentModel.from_data(user_id=user_id, article=article, gaze_data=gaze, pars_mapping=pars_mapping,

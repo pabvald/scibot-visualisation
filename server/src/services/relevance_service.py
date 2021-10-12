@@ -1,20 +1,21 @@
 import random
 import pickle
-from joblib import load
 import pathlib
 import pandas as pd
 
+from joblib import load
+from models import Corpus
 from typing import List, Dict, Tuple
 
 
 def load_demo_models():
     base_dir = pathlib.Path(__file__).parent.resolve()
 
-    grel_model = load(base_dir.joinpath("grel_demo_model.joblib"))
+    grel_model = load(base_dir.joinpath("ml_models/grel_demo_model.joblib"))
     # with open(file=base_dir.joinpath("grel_demo_model.pkl"), mode="rb") as fp:
     #     grel_model = pickle.load(file=fp)
 
-    nq_model = load(base_dir.joinpath("nq_demo_model.joblib"))
+    nq_model = load(base_dir.joinpath("ml_models/nq_demo_model.joblib"))
     # with open(file="nq_demo_model.pkl", mode="rb") as fp:
     #     nq_model = pickle.load(file=fp)
 
@@ -30,26 +31,25 @@ class RelevanceService(object):
         pass
 
     @staticmethod
-    def predict_relevance(features: Dict[int, Dict[str, float]], corpus="grel") -> Dict[int, Tuple[bool, float]]:
+    def predict_relevance(features: Dict[int, Dict[str, float]], corpus: Corpus) -> Dict[int, Tuple[bool, float]]:
         """
 
         Args:
             features: features of paragraphs
-            corpus: Determines whether the document comes from the g-REL or Google NQ corpus
+            corpus: determines whether the document comes from the g-REL or Google NQ corpus
 
         Returns:
             predicted relevance (probability, class) for each paragraph that has features.
         """
         pred_relevance = dict()
-        if corpus == "grel":
+        if corpus == Corpus.grel:
             model = GREL_MODEL
-        elif corpus == "nq":
+        elif corpus == Corpus.nq:
             model = NQ_MODEL
         else:
             raise NotImplementedError("corpus must be 'grel' or 'nq'.")
 
         for par_id, par_features in features.items():
-
             model_input = pd.DataFrame.from_dict(data=par_features, orient="index").T.drop(columns="f_total_time")
             predicted_relevance = model.predict(model_input).flatten()[0]
             probability = model.predict_proba(model_input)[:, 1][0]

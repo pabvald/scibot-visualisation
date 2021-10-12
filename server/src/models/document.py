@@ -1,7 +1,7 @@
 import os
 
-from enum import Enum
 from typing import Any, List, Dict
+from .corpus import  Corpus
 from marshmallow import Schema, fields
 from pandas.core.frame import DataFrame
 
@@ -10,9 +10,7 @@ from features import FixationEvent, SaccadeEvent
 from .paragraph import ParagraphModel, ParagraphSchema
 
 
-class Corpus(Enum):
-    grel = "g-REL"
-    nq = "GoogleNQ"
+
 
 
 class DocumentModel(object):
