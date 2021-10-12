@@ -8,6 +8,10 @@ angular_dependencies:
   stage: dependencies
   script:
     - cd client
+    - npm rm -rf node_modules
+    - rm -fr package-lock.json
+    - npm cache clean --force
+    - npm install --save-dev @angular-devkit/build-angular
     - npm install -g @angular/cli@12.2.2
   only:
     - main
@@ -18,7 +22,7 @@ angular_build:
   script:
     - cd client
     - npm link @angular/cli@12.2.2
-    - npm run build
+    - ng build
   only:
     - main
   artifacts:
