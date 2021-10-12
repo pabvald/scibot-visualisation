@@ -1,6 +1,26 @@
 import random
+import pickle
+from joblib import load
+import pathlib
 
 from typing import List, Dict, Tuple
+
+
+def load_demo_models():
+    base_dir = pathlib.Path(__file__).parent.resolve()
+
+    grel_model = load(base_dir.joinpath("grel_demo_model.pkl"))
+    # with open(file=base_dir.joinpath("grel_demo_model.pkl"), mode="rb") as fp:
+    #     grel_model = pickle.load(file=fp)
+
+    nq_model = load(base_dir.joinpath("nq_demo_model.pkl"))
+    # with open(file="nq_demo_model.pkl", mode="rb") as fp:
+    #     nq_model = pickle.load(file=fp)
+
+    return grel_model, nq_model
+
+
+GREL_MODEL, NQ_MODEL = load_demo_models()
 
 
 class RelevanceService(object):
