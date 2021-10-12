@@ -17,8 +17,8 @@ export class LabelTabComponent implements OnInit {
   isDataUpdating: boolean = false;
 
   // Fixation duration settings
-  sliderStep = 50;
-  thumbLabel = false;
+  sliderStep = 5;
+  thumbLabel = true;
   minFixation: number = 0;
   maxFixation: number = 0; 
   minFixationInterval: number[] = [0, 400];

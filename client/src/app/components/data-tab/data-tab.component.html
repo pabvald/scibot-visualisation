@@ -3,7 +3,9 @@
     <div>  
         <label>User:</label>      
         <mat-form-field appearance="fill">         
-            <mat-select [(value)]="selUserId">
+            <mat-select 
+                [(value)]="selUserId"
+                (selectionChange)="dataSelectionChange()">
                 <mat-option *ngFor="let uid of userIds" [value]="uid">
                     {{uid}}
                 </mat-option>
@@ -15,7 +17,9 @@
     <div>
         <label>Document:</label>
         <mat-form-field appearance="fill">
-            <mat-select [(value)]="selDocumentId">
+            <mat-select 
+                [(value)]="selDocumentId"
+                (selectionChange)="dataSelectionChange()">
                 <mat-option *ngFor="let docid of documentIds" [value]="docid">
                     {{docid}}
                 </mat-option>
@@ -30,7 +34,7 @@
         color="primary" 
         (click)="loadData()" 
         [disabled]="isLoadDisabled">
-        Load
+        {{isLoaded ? 'Reload' : 'Load' }}
     </button>
 
 </section>

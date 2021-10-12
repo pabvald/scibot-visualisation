@@ -1,7 +1,7 @@
 <section id="fixation-duration-settings">
-  <span class="section-title">
+  <div class="section-title">
     Fixation duration:
-  </span>
+  </div>
 
   <div class="slider-container">
     <label class="name-label">Fixation Min</label>
@@ -40,41 +40,38 @@
 
 
 <section id="fixation-area-settings">
-  <div>
-    <span class="section-title">
-      Horizontal fixation area: 
-    </span>
-    
-    <div class="input-field">
-      <label>Left margin:</label>
-      <mat-form-field appearance="fill">
-        <!-- <mat-label>Left margin</mat-label> -->
-        <input matInput 
-              type="number" 
-              min="0"
-              [formControl]="leftMarginCtrl"
-              required>
-        <span matSuffix>letters</span>
-        <mat-error *ngIf="leftMarginCtrl.invalid">Min margin: 0 letters</mat-error>
-      </mat-form-field>
-    </div>
-    
-  
-    <div>
-      <label>Right margin:</label>
-      <mat-form-field appearance="fill" color="primary">
-        <!-- <mat-label>Right margin</mat-label> -->
-        <input matInput 
-              type="number"
-              min="0" 
-              [formControl]="rightMarginCtrl"
-              required>
-        <span matSuffix>letters</span>
-        <mat-error *ngIf="rightMarginCtrl.invalid">Min margin: 0 letters</mat-error>
-      </mat-form-field> 
-    </div>
+  <div class="section-title">
+    Horizontal fixation area: 
   </div>
   
+  <div class="input-field">
+    <label>Left margin:</label>
+    <mat-form-field appearance="fill">
+      <!-- <mat-label>Left margin</mat-label> -->
+      <input matInput 
+            type="number" 
+            min="0"
+            [formControl]="leftMarginCtrl"
+            required>
+      <span matSuffix>letters</span>
+      <mat-error *ngIf="leftMarginCtrl.invalid">Min margin: 0 letters</mat-error>
+    </mat-form-field>
+  </div>
+  
+
+  <div class="input-field">
+    <label>Right margin:</label>
+    <mat-form-field appearance="fill" color="primary">
+      <!-- <mat-label>Right margin</mat-label> -->
+      <input matInput 
+            type="number"
+            min="0" 
+            [formControl]="rightMarginCtrl"
+            required>
+      <span matSuffix>letters</span>
+      <mat-error *ngIf="rightMarginCtrl.invalid">Min margin: 0 letters</mat-error>
+    </mat-form-field> 
+  </div>  
 
   <div id="button-container">
     <!-- Reload button -->

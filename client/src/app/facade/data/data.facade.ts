@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
-import { Observable, combineLatest} from 'rxjs';
-import { first, shareReplay, take} from 'rxjs/operators';
+import { Observable, combineLatest, of} from 'rxjs';
+import { first, shareReplay, take, map} from 'rxjs/operators';
 import { IFixationArea } from 'src/app/models/fixation-area.model';
 import { NotificationsService } from 'src/app/services/notifications/notifications.service';
 import { DocumentApi } from '../../api/document/document.api';

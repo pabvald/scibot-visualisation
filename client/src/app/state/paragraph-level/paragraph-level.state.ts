@@ -5,7 +5,7 @@ import { BehaviorSubject, Observable } from 'rxjs';
 
 const featuresConf: IParagraphFeatureConf[] = [
   { id: "f_total_time",           name: "Total time",               transform: 1.0, units: "", enabled: false  },
-  { id: "f_fixn_n",               name: "No. fixations",            transform: 1.0, units: "", enabled: false  },
+  { id: "f_fixn_n",               name: "Number of fixations",            transform: 1.0, units: "", enabled: false  },
   { id: "f_fixn_dur_sum",         name: "Sum fixation duration",    transform: 1.0, units: "(s)", enabled: false  },
   { id: "f_fixn_dur_avg",         name: "Avg. fixation duration",   transform: 1000.0, units: "(ms)", enabled: true  },
   { id: "f_fixn_dur_sd",          name: "Sd. fixation duration",    transform: 1000.0, units: "(ms)", enabled: false },
