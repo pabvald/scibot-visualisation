@@ -9,11 +9,11 @@ from typing import List, Dict, Tuple
 def load_demo_models():
     base_dir = pathlib.Path(__file__).parent.resolve()
 
-    grel_model = load(base_dir.joinpath("grel_demo_model.pkl"))
+    grel_model = load(base_dir.joinpath("grel_demo_model.joblib"))
     # with open(file=base_dir.joinpath("grel_demo_model.pkl"), mode="rb") as fp:
     #     grel_model = pickle.load(file=fp)
 
-    nq_model = load(base_dir.joinpath("nq_demo_model.pkl"))
+    nq_model = load(base_dir.joinpath("nq_demo_model.joblib"))
     # with open(file="nq_demo_model.pkl", mode="rb") as fp:
     #     nq_model = pickle.load(file=fp)
 
