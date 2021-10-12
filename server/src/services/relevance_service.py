@@ -2,6 +2,7 @@ import random
 import pickle
 from joblib import load
 import pathlib
+import pandas as pd
 
 from typing import List, Dict, Tuple
 
@@ -29,23 +30,30 @@ class RelevanceService(object):
         pass
 
     @staticmethod
-    def predict_relevance(features: Dict[int, Dict[str, float]]) -> Dict[int, Tuple[bool, float]]:
+    def predict_relevance(features: Dict[int, Dict[str, float]], corpus="grel") -> Dict[int, Tuple[bool, float]]:
         """
 
         Args:
             features: features of paragraphs
+            corpus: Determines whether the document comes from the g-REL or Google NQ corpus
 
         Returns:
             predicted relevance (probability, class) for each paragraph that has features.
         """
         pred_relevance = dict()
+        if corpus == "grel":
+            model = GREL_MODEL
+        elif corpus == "nq":
+            model = NQ_MODEL
+        else:
+            raise NotImplementedError("corpus must be 'grel' or 'nq'.")
 
         for par_id, par_features in features.items():
-            prob = random.uniform(0, 1)
-            relevance = True if prob > 0.5 else False
 
-            #relevance, prob = michaels_model(par_features)
+            model_input = pd.DataFrame.from_dict(data=par_features, orient="index").T.drop(columns="f_total_time")
+            predicted_relevance = model.predict(model_input).flatten()[0]
+            probability = model.predict_proba(model_input)[:, 1][0]
 
-            pred_relevance[par_id] = (prob, relevance)
+            pred_relevance[par_id] = (probability, predicted_relevance)
 
         return pred_relevance
