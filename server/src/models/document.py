@@ -1,16 +1,13 @@
 import os
 
-from typing import Any, List, Dict
-from .corpus import  Corpus
+from typing import List, Dict
 from marshmallow import Schema, fields
 from pandas.core.frame import DataFrame
 
+from .corpus import Corpus
 from data_loading.article_parser import Article
 from features import FixationEvent, SaccadeEvent
 from .paragraph import ParagraphModel, ParagraphSchema
-
-
-
 
 
 class DocumentModel(object):

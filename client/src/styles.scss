@@ -9,11 +9,21 @@ html, body {
     margin: 0;
     overflow: hidden;
 }
+
 body { 
     margin: 0; 
     font-family: Roboto, "Helvetica Neue", sans-serif; 
 }
 
+html {
+    font-size: 13px;
+}
+
+@media screen and (min-width: 1800px) {
+    html {
+      font-size: calc(13px + 6 * ((100vw - 1800px) / 400));
+    }
+}
 
 
 /******* COLOR PALETTE ************/
@@ -108,4 +118,12 @@ $gradient-radial: radial-gradient(#dfdef7ff, #c8d5f2ff, #b1ccedff, #a1d6c6ff, #9
     .mat-button-wrapper {
         color: white;
     }
+}
+
+/*********** BUTTONS *****************/
+.mat-stroked-button {
+    width: 4vw!important;
+    height: 4vh!important;
+    min-width:fit-content;
+    font-size: 1em;
 }

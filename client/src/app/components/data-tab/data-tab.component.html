@@ -32,6 +32,7 @@
     <!-- Load button -->    
     <button  *ngIf="!isUpdating" mat-stroked-button 
         color="primary" 
+        class="my-button"
         (click)="loadData()" 
         [disabled]="isLoadDisabled">
         {{isLoaded ? 'Reload' : 'Load' }}

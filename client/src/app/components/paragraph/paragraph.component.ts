@@ -18,7 +18,8 @@ export class ParagraphComponent implements OnInit {
   readonly MARGIN: number = 4; // in %
   readonly COLORBAR_WIDTH: number = 1.1; // in %
   readonly HEIGHT_REDUCTION: number = 0.95; 
-  readonly WIDTH_REDUCTION: number = 0.5; 
+  readonly WIDTH_REDUCTION_F: number = 0.5; 
+  readonly WIDTH_REDUCTION_R: number = 0.6;
 
 
   color: string = "lightgrey";
