@@ -103,7 +103,7 @@
             class="relevance">
             <span class="relevance-name">Predicted relevance:</span>
             <span
-                [ngStyle]="{'opacity.%': (40 + 120 * MATH.abs(paragraph.predictedRelevance[0] - 0.5))}" 
+                [ngStyle]="{'opacity.%': predictedRelevanceOpacity }" 
                 class="badge probability-badge">
                 {{paragraph.predictedRelevance[0] | number : '1.1-2' }}
             </span>
