@@ -1,5 +1,7 @@
 # Scibot visualization
 
+<img src="demo.png">
+
 ## Set up for development 
 
 ### Flask Server
