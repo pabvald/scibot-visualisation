@@ -25,6 +25,13 @@ html {
     }
 }
 
+@media screen and (min-width: 2000px) {
+    .mat-slide-toggle, .mat-checkbox-inner-container {
+        transform: scale(1.4);
+    }    
+}
+
+
 
 /******* COLOR PALETTE ************/
 $primary: rgb(63 81 181);
