@@ -38,11 +38,15 @@ export class GlobalHttpInterceptorService implements HttpInterceptor {
                 this.notificationsService.showError("The connection to the server cannot be established.");
                 break;
               case 404: 
+                handled = true;
                 this.notificationsService.showError("The solicited data is not currently available.");
                 break;
               case 500:
+                handled = true;
                 this.notificationsService.showError("An internal server error has ocurred. Try again later.");
                 break
+              default:
+                this.notificationsService.showError("An identified error has ocurred");
             }
           }
         }

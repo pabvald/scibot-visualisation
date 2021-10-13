@@ -25,13 +25,6 @@ html {
     }
 }
 
-@media screen and (min-width: 2000px) {
-    .mat-slide-toggle, .mat-checkbox-inner-container {
-        transform: scale(1.4);
-    }    
-}
-
-
 
 /******* COLOR PALETTE ************/
 $primary: rgb(63 81 181);
@@ -128,9 +121,38 @@ $gradient-radial: radial-gradient(#dfdef7ff, #c8d5f2ff, #b1ccedff, #a1d6c6ff, #9
 }
 
 /*********** BUTTONS *****************/
-.mat-stroked-button {
-    width: 4vw!important;
-    height: 4vh!important;
-    min-width:fit-content;
-    font-size: 1em;
+::ng-deep {
+    .mat-stroked-button {
+        width: 4vw!important;
+        height: 4vh!important;
+        min-width:fit-content;
+        font-size: 1em;
+    }
+}
+
+/********** TOGLES *************/
+@media screen and (min-width: 2000px) {
+    .mat-slide-toggle {
+        transform: scale(1.4);
+    }    
+}
+
+/********* SLIDERS ****************/
+::ng-deep {
+    .mat-slider-horizontal {
+        min-width: 8vw;
+    }
+}
+
+/********* CHECKBOX ************/
+@media screen and (min-width: 2000px) {
+    .mat-checkbox-inner-container {
+        transform: scale(1.4);
+    }    
+}
+
+@media screen and (min-width: 2000px) {
+    .mat-snack-bar-container {
+        transform: scale(1.4)!important;
+    }    
 }
