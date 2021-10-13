@@ -59,9 +59,6 @@
             <span class="feature-name">
                 {{feature.units ? feature.name + " (" + feature.units + ")" : feature.name}}:
             </span>
-            <!-- <span class="feature-name">
-                - {{feature.name}} ({{feature.units}}):
-            </span> -->
             <span class="feature-value">
                 {{paragraph.getFeatureById(feature.id) * feature.transform | number : '0.1-2'}}
             </span>
@@ -90,7 +87,7 @@
         </div>
         <div class="relevance">
             <span class="relevance-name">Perceived relevance:</span>
-            <span class="badge">{{paragraph.perceivedRelevance ? 'True' : 'False'}}</span>
+            <span class="badge">{{paragraph.perceivedRelevance ? 'True ' : 'False'}}</span>         
             <span *ngIf="paragraph.systemRelevance == paragraph.perceivedRelevance; else perceivedUnmatch" 
                     class="badge circular-badge match-badge">
                 &#10003;
@@ -105,7 +102,9 @@
         <div *ngIf="paragraph.predictedRelevance[0] >= 0"
             class="relevance">
             <span class="relevance-name">Predicted relevance:</span>
-            <span class="badge probability-badge">
+            <span
+                [ngStyle]="{'opacity.%': (40 + 120 * MATH.abs(paragraph.predictedRelevance[0] - 0.5))}" 
+                class="badge probability-badge">
                 {{paragraph.predictedRelevance[0] | number : '1.1-2' }}
             </span>
             <span class="badge">{{paragraph.predictedRelevance[1] ? 'True' : 'False'}}</span>

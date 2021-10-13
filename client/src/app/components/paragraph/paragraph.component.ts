@@ -20,6 +20,7 @@ export class ParagraphComponent implements OnInit {
   readonly HEIGHT_REDUCTION: number = 0.95; 
   readonly WIDTH_REDUCTION_F: number = 0.5; 
   readonly WIDTH_REDUCTION_R: number = 0.6;
+  readonly MATH: any = Math; // Math library
 
 
   color: string = "lightgrey";
