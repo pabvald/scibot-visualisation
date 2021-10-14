@@ -1,12 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { MatSlideToggleChange } from '@angular/material/slide-toggle';
 import { ParagraphLevelFacade } from 'src/app/facade/paragraph-level/paragraph-level.facade';
 import { IParagraphFeatureConf } from 'src/app/models/paragraph.model';
 
-export interface Feature {
-  name: string; 
-  
-}
 
 @Component({
   selector: 'app-paragraph-tab',

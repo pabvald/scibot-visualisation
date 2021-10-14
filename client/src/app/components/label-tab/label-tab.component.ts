@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { LabelLevelFacade } from 'src/app/facade/label-level/label-level.facade';
-import { FixationArea, IFixationArea } from 'src/app/models/fixation-area.model';
+import { FixationArea} from 'src/app/models/fixation-area.model';
 import { FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import { DataFacade } from 'src/app/facade/data/data.facade';
+
 
 @Component({
   selector: 'app-label-tab',

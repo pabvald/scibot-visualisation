@@ -102,20 +102,26 @@
 }
 
 .badge {
+    display: flex;
+    justify-content: center;
+    align-items: center;
     border-radius: 35px;
     padding: 0 0.6vw;
     margin: 0.6vh 0.2vw;
-    text-align: center;
-    vertical-align: baseline;
     background-color: $grey-background;
     color: black;
+    font-size: 0.95em;
     //border: 1px solid $grey-border;
+}
+
+.tf-badge {
+    width: 12%;
+    max-width: 12%;
 }
 
 .probability-badge {
     background-color: #cbe2f9;
     color: #0b5cad;
-    //font-size: 0.9em;
 }
 
 .circular-badge {
@@ -123,8 +129,7 @@
     height: 1.1vw;
     border-radius: 50%;
     padding: 0;
-    display: inline-block;
-    font-size: 0.8em;
+    font-size: 0.6em;
 }
 
 .match-badge {

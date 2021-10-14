@@ -156,3 +156,10 @@ $gradient-radial: radial-gradient(#dfdef7ff, #c8d5f2ff, #b1ccedff, #a1d6c6ff, #9
         transform: scale(1.4)!important;
     }    
 }
+
+/*********** INPUT FIELDS *************/
+::ng-deep {
+    .mat-form-field-infix {
+        border-top: 0.4375em solid transparent;
+    }
+}

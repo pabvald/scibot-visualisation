@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { DataFacade } from 'src/app/facade/data/data.facade';
 import { IDocument } from 'src/app/models/document.model';
 
+
 @Component({
   selector: 'app-data-tab',
   templateUrl: './data-tab.component.html',
@@ -27,19 +28,12 @@ export class DataTabComponent implements OnInit {
       this.selUserId = document.userId;
       this.isLoaded = true;
     })
-
-    
-
   }
 
   /** Load button is disabled */
   get isLoadDisabled(): boolean {
     return (this.selUserId === undefined) || (this.selDocumentId === undefined);
   }
-
-  /**
-   * Methods
-   */
   
   ngOnInit() {
   }
@@ -51,8 +45,13 @@ export class DataTabComponent implements OnInit {
     }   
   }
 
+  /**
+   * Checks whether the selected combination of user id + document id corresponds to the loaded document
+   * and updates the corresponding variable if necessary.
+   */
   dataSelectionChange() : void {
-    if (this.document)
+    if (this.document) {
       this.isLoaded = (this.document.id == this.selDocumentId) && (this.document.userId == this.selUserId);
+    }      
   }
 }

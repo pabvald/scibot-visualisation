@@ -2,6 +2,7 @@ import { Component, Input, OnInit } from '@angular/core';
 import { LabelLevelFacade } from 'src/app/facade/label-level/label-level.facade';
 import { ILabel } from 'src/app/models/label.model';
 
+
 @Component({
   selector: 'app-label',
   templateUrl: './label.component.html',

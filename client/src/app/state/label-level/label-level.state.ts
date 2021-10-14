@@ -11,9 +11,6 @@ export class LabelLevelState {
   private minFixation$ = new BehaviorSubject<number>(50);
   private maxFixation$ = new BehaviorSubject<number>(600);
 
-
-  constructor() { }
-
   /**
    * @returns the label-level state is being updated (`true`) or not (`false`)
    */

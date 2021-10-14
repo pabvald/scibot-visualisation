@@ -1,5 +1,4 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { LabelLevelFacade } from 'src/app/facade/label-level/label-level.facade';
 import { ParagraphLevelFacade } from 'src/app/facade/paragraph-level/paragraph-level.facade';
 import { IParagraph, IParagraphFeatureConf } from 'src/app/models/paragraph.model';
 
@@ -26,8 +25,7 @@ export class ParagraphComponent implements OnInit {
   isParLevelEnabled: boolean = true;
   featuresConf: IParagraphFeatureConf[] = [];
 
-  constructor(private parLevelFacade: ParagraphLevelFacade,
-              private labelLevelFacade: LabelLevelFacade) { 
+  constructor(private parLevelFacade: ParagraphLevelFacade) { 
 
     // Subscriptions
     this.parLevelFacade.isEnabled$()
@@ -37,8 +35,6 @@ export class ParagraphComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    // this.labelLevelFacade.getColor$(this.paragraph?.getFeatureById('f_fixn_dur_avg') * 1000, 1.0)
-    //                     .subscribe((value) => { this.color = value; });
   }
 
   /**

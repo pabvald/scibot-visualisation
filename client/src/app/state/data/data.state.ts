@@ -12,9 +12,6 @@ export class DataState {
   private document$ = new ReplaySubject<IDocument>();
   private fixationArea$ = new BehaviorSubject<IFixationArea>(new FixationArea(0, 0));
 
-
-  constructor() { }
-
   /**
    * @returns the app state is being updated (`true`) or not (`false`)
    */

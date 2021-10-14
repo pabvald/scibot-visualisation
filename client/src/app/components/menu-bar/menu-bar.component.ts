@@ -7,9 +7,6 @@ import { Component, Input, OnInit } from '@angular/core';
 })
 export class MenuBarComponent implements OnInit {
 
-  userIds: string[] = [];
-  documentIds: string[] = [];
-
   constructor() { 
   }
 

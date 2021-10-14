@@ -13,12 +13,11 @@ export class DocumentDetailsComponent implements OnInit {
   query: string = ""; 
 
   constructor(private dataFacade: DataFacade) { 
-    this.dataFacade.getDocument$()
-                  .subscribe((document) => {
-                    this.userId = document.userId;
-                    this.docId = document.id;
-                    this.query = document.query;
-                  })
+    this.dataFacade.getDocument$().subscribe((document) => {
+                                        this.userId = document.userId;
+                                        this.docId = document.id;
+                                        this.query = document.query;
+                                      })
   }
 
   ngOnInit(): void {

@@ -81,13 +81,13 @@
     <div class="relevance-container">
         <div class="relevance">
             <span class="relevance-name">System relevance:</span>
-            <span class="badge">{{paragraph.systemRelevance ? 'True' : 'False'}}</span>
+            <span class="badge tf-badge">{{paragraph.systemRelevance ? 'True' : 'False'}}</span>
             <span class="badge circular-badge invisible-badge">
             </span>
         </div>
         <div class="relevance">
             <span class="relevance-name">Perceived relevance:</span>
-            <span class="badge">{{paragraph.perceivedRelevance ? 'True ' : 'False'}}</span>         
+            <span class="badge tf-badge">{{paragraph.perceivedRelevance ? 'True ' : 'False'}}</span>         
             <span *ngIf="paragraph.systemRelevance == paragraph.perceivedRelevance; else perceivedUnmatch" 
                     class="badge circular-badge match-badge">
                 &#10003;
@@ -107,7 +107,7 @@
                 class="badge probability-badge">
                 {{paragraph.predictedRelevance[0] | number : '1.1-2' }}
             </span>
-            <span class="badge">{{paragraph.predictedRelevance[1] ? 'True' : 'False'}}</span>
+            <span class="badge tf-badge">{{paragraph.predictedRelevance[1] ? 'True' : 'False'}}</span>
             <span *ngIf="paragraph.systemRelevance == paragraph.predictedRelevance[1]; else predictedUnmatch" 
                     class="badge circular-badge match-badge">
                 &#10003;
