@@ -26,7 +26,7 @@
 </div> -->
 
 <!-- Paragraph details: id header -->
-<div *ngIf="isParLevelEnabled && paragraph && !paragraph.isTitle && paragraph.hasLabels "
+<div *ngIf="isParLevelEnabled && paragraph && !paragraph.isTitle && paragraph.hasLabels"
     class="paragraph-id"
     [ngStyle]="{
         'top.%': (100 * paragraph.y1),
@@ -39,8 +39,22 @@
     <span>Paragraph {{paragraph.id}}</span>   
 </div>
 
+<!-- <div *ngIf="isParLevelEnabled && paragraph && !paragraph.isTitle && paragraph.hasLabels && !paragraph.hasFeatures"
+    class="paragraph-id"
+    [ngStyle]="{
+        'top.%': (100 * (paragraph.y1 + (paragraph.height) / 2 )) - ID_HEIGHT,
+        'left.%': (100 * (paragraph.x1 - paragraph.width * WIDTH_REDUCTION_F) - MARGIN),
+        'width.%': (100 * paragraph.width * WIDTH_REDUCTION_F),
+        'max-width.%': (100 * paragraph.width * WIDTH_REDUCTION_F),
+        'height.%': ID_HEIGHT,
+        'max-height.%': ID_HEIGHT
+    }">
+    <span>Paragraph {{paragraph.id}}</span>   
+</div> -->
+
+
 <!-- Paragraph details: features -->
-<div *ngIf="isParLevelEnabled && paragraph && !paragraph.isTitle && paragraph.hasLabels "
+<div *ngIf="isParLevelEnabled && paragraph && !paragraph.isTitle && paragraph.hasLabels"
     class="paragraph-features"
     [ngStyle]="{
         'top.%': (100 * paragraph.y1 + ID_HEIGHT),
@@ -52,10 +66,8 @@
     }">
 
     <div *ngFor="let feature of featuresConf">
-        <div *ngIf="feature.enabled && 
-                    paragraph.getFeatureById(feature.id) != null"
+        <div *ngIf="feature.enabled && paragraph.getFeatureById(feature.id) != null"
             class="feature">
-            <span class="feature-bullet">-</span>
             <span class="feature-name">
                 {{feature.units ? feature.name + " (" + feature.units + ")" : feature.name}}:
             </span>
@@ -82,24 +94,28 @@
         <div class="relevance">
             <span class="relevance-name">System relevance:</span>
             <span class="badge tf-badge">{{paragraph.systemRelevance ? 'True' : 'False'}}</span>
-            <span class="badge circular-badge invisible-badge">
-            </span>
+            <span class="badge-placeholder"></span>
         </div>
         <div class="relevance">
             <span class="relevance-name">Perceived relevance:</span>
-            <span class="badge tf-badge">{{paragraph.perceivedRelevance ? 'True ' : 'False'}}</span>         
-            <span *ngIf="paragraph.systemRelevance == paragraph.perceivedRelevance; else perceivedUnmatch" 
+            <span class="badge tf-badge">{{paragraph.perceivedRelevance ? 'True ' : 'False'}}</span>  
+            <span class="badge-placeholder"></span>
+            <div class="circular-badge-container">
+                <span 
+                    *ngIf="paragraph.systemRelevance == paragraph.perceivedRelevance; else perceivedUnmatch" 
                     class="badge circular-badge match-badge">
-                &#10003;
-            </span>
-
-            <ng-template #perceivedUnmatch>
-                <span class="badge circular-badge unmatch-badge">
-                    &#10005;
+                    &#10003;
                 </span>
-            </ng-template>
+
+                <ng-template #perceivedUnmatch>
+                    <span class="badge circular-badge unmatch-badge">
+                        &#10005;
+                    </span>
+                </ng-template>
+            </div>       
+           
         </div>
-        <div *ngIf="paragraph.predictedRelevance[0] >= 0"
+        <div *ngIf="paragraph.hasFeatures"
             class="relevance">
             <span class="relevance-name">Predicted relevance:</span>
             <span
@@ -108,16 +124,21 @@
                 {{paragraph.predictedRelevance[0] | number : '1.1-2' }}
             </span>
             <span class="badge tf-badge">{{paragraph.predictedRelevance[1] ? 'True' : 'False'}}</span>
-            <span *ngIf="paragraph.systemRelevance == paragraph.predictedRelevance[1]; else predictedUnmatch" 
+            <span class="badge-placeholder"></span>
+            <div class="circular-badge-container">
+                <span 
+                    *ngIf="paragraph.perceivedRelevance == paragraph.predictedRelevance[1]; else predictedUnmatch" 
                     class="badge circular-badge match-badge">
-                &#10003;
-            </span>
+                    &#10003;
+                </span>
 
             <ng-template #predictedUnmatch>
                 <span class="badge circular-badge unmatch-badge">
                     &#10005;
                 </span>
             </ng-template>
+            </div>
+            
         </div>
     </div>    
 </div>

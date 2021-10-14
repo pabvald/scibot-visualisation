@@ -13,6 +13,7 @@ export interface IParagraph  extends IBoundingBox {
     labels: ILabel[];
     isTitle: boolean;
     hasLabels: boolean;
+    hasFeatures: boolean;
     getFeatureById(id: string): any;
 }
   
@@ -30,7 +31,7 @@ export class Paragraph implements IParagraph {
     public perceivedRelevance: boolean;
     public predictedRelevance: [number, boolean];
     public labels: ILabel[];
-    public features: any;
+    public features: Object;
 
     /**
      * @param paragraphObject a paragraph JSON object
@@ -53,7 +54,7 @@ export class Paragraph implements IParagraph {
     }
 
     get hasFeatures(): boolean {
-        return this.id >= 0;
+        return this.id >= 0 && Object.keys(this.features).length > 0;
     }
 
     get hasLabels(): boolean {

@@ -32,7 +32,7 @@ export class ParagraphLevelState {
 
   private featuresConf$ = new BehaviorSubject<IParagraphFeatureConf[]>(featuresConf);
   private updating$ = new BehaviorSubject<boolean>(false);
-  private enabled$ = new BehaviorSubject<boolean>(false);
+  private enabled$ = new BehaviorSubject<boolean>(true);
 
   /**
    * @returns the paragraph-level state is being updated (`true`) or not (`false`)

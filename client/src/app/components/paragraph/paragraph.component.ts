@@ -13,7 +13,7 @@ export class ParagraphComponent implements OnInit {
   @Input() paragraph: IParagraph | undefined;
 
   // Constants
-  readonly ID_HEIGHT: number = 5; // in %
+  readonly ID_HEIGHT: number = 4; // in %
   readonly MARGIN: number = 4; // in %
   readonly COLORBAR_WIDTH: number = 1.1; // in %
   readonly HEIGHT_REDUCTION: number = 0.95; 

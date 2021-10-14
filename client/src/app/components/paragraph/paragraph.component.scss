@@ -1,24 +1,12 @@
 @import '../../../styles.scss';
 
-.absolute-postion {
-    position: absolute;
-    display: inline-block;
-}
-
-.paragraph {
+.paragraph, .fixation-duration-bar, .paragraph-id, .paragraph-features, .paragraph-relevance {
     position: absolute;
     display: inline-block;
     //border: 1px red solid;
 }
 
-.fixation-duration-bar {
-    position: absolute;
-    display: inline-block;
-}
-
 .paragraph-id, .paragraph-features {
-    position: absolute;
-    display: inline-block;
     background: white;
     color: rgba(0, 0, 0, 0);
     text-shadow: 0 0 black;
@@ -48,7 +36,7 @@
     z-index: 1;
 
     .feature {        
-        margin: 0.5vh 0.1vw 0.5vh 0.5vw;
+        margin: 5px 3px;
         padding: 5px 0;
         display: flex;
         justify-content: flex-end;
@@ -74,8 +62,6 @@
   }
 
 .paragraph-relevance {
-    position: absolute;
-    display: inline-block;
     display: flex;
     justify-content: center;
     align-items: left;
@@ -101,15 +87,15 @@
     
 }
 
-.badge {
+.badge, .badge-placeholder {
     display: flex;
     justify-content: center;
     align-items: center;
     border-radius: 35px;
     padding: 0 0.6vw;
     margin: 0.6vh 0.2vw;
-    background-color: $grey-background;
-    color: black;
+    background-color: white;
+    color: white;
     font-size: 0.95em;
     //border: 1px solid $grey-border;
 }
@@ -117,6 +103,8 @@
 .tf-badge {
     width: 12%;
     max-width: 12%;
+    background-color: $grey-background;
+    color: black;
 }
 
 .probability-badge {
@@ -124,12 +112,19 @@
     color: #0b5cad;
 }
 
-.circular-badge {
-    width: 1.1vw;
-    height: 1.1vw;
-    border-radius: 50%;
-    padding: 0;
-    font-size: 0.6em;
+.circular-badge-container {
+    position: relative; 
+
+    .circular-badge {
+        position: absolute;
+        right: 0%;
+        bottom: 50%;
+        width: 1.1vw;
+        height: 1.1vw;
+        border-radius: 50%;
+        padding: 0;
+        font-size: 0.6em;
+    }
 }
 
 .match-badge {
@@ -141,13 +136,6 @@
     background-color: $red-error-background;
     color: $red-error-text;
 }
-
-.invisible-badge {
-    background-color: white;
-    color: white;
-}
-
-
 
 *::-webkit-scrollbar,
 *::-webkit-scrollbar-thumb {
