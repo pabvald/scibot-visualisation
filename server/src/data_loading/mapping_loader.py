@@ -43,7 +43,7 @@ class ScibotMappingLoader:
 
     def _load_grel(self):
         """ Loads the mappings of the g-REL files """
-        paths = [pjoin(self.data_dir, "g-rel", study_type) for study_type in self._STUDY_TYPE]
+        paths = [pjoin(self.data_dir, "g-REL", study_type) for study_type in self._STUDY_TYPE]
 
         for path in paths:
             # read labels' mapping

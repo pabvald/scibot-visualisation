@@ -132,7 +132,7 @@ class SciBotDataLoader:
         """
            load g-rel data
         """
-        paths = [os.path.join(user_data.path, "g-rel", study_type) for study_type in self._STUDY_TYPE]
+        paths = [os.path.join(user_data.path, "g-REL", study_type) for study_type in self._STUDY_TYPE]
         self.grel_reading[user_data.name] = {}
         self.grel_rating[user_data.name] = {}
         for current_path in paths:
