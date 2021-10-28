@@ -3,14 +3,15 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { IDocument, Document } from 'src/app/models/document.model';
 import { IFixationArea } from 'src/app/models/fixation-area.model';
-import { API_BASE } from '../config';
+import { environment } from 'src/environments/environment';
+
 
 @Injectable({
   providedIn: 'root'
 })
 export class DocumentApi {
 
-  readonly api = `${API_BASE}/document`;
+  readonly api = `${environment.API_URL}/document`;
 
   constructor(private http: HttpClient) { }
 
