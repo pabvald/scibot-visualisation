@@ -8,7 +8,6 @@ from resources.document import DocumentResource, DocumentListResource
 
 app = Flask(__name__)
 app.config.from_object('config.Config')  # load configuration
-app.config["APPLICATION_ROOT"] = "/demos/rematool"
 app.dataloader = SciBotDataLoader(data_dir=app.config['GAZE_DIR'], article_dir=app.config['ARTICLE_DIR'])
 app.mappingloader = ScibotMappingLoader(data_dir=app.config['MAPPING_DIR'])
 app.featuresloader = ScibotParagraphFeaturesLoader(data_dir=app.config['PAR_FEATURES_DIR'])
