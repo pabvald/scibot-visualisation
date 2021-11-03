@@ -1,10 +1,11 @@
 from flask import Flask, render_template
 from flask_cors import CORS
 from flask_restful import Api
-from resources.user import UserListResource
+from resources.user_list import UserListResource
 from data_loading import (SciBotDataLoader, ScibotMappingLoader,
                           ScibotParagraphFeaturesLoader)
-from resources.document import DocumentResource, DocumentListResource
+from resources.document_list import DocumentListResource
+from resources.document_layout import DocumentLayoutResource
 
 app = Flask(__name__)
 app.config.from_object('config.Config')  # load configuration
@@ -18,7 +19,8 @@ CORS(app)  # allow CORS
 # --- API calls ---
 api.add_resource(UserListResource, '/api/user/ids')
 api.add_resource(DocumentListResource, '/api/document/ids')
-api.add_resource(DocumentResource, '/api/document/<string:user_id>/<string:doc_id>')
+api.add_resource(DocumentLayoutResource, '/api/document/layout/<string:user_id>/<string:doc_id>')
+#api.add_resource(DocumentLayoutResource, '/api/document/<string:user_id>/<string:doc_id>')
 
 
 # --- Serve index.html ---

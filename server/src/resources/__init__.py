@@ -1,2 +1,3 @@
-from .user import UserListResource
-from .document import DocumentListResource, DocumentResource
+from .user_list import UserListResource
+from .document_list import DocumentListResource
+

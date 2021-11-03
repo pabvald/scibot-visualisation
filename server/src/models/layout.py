@@ -35,16 +35,15 @@ class AxisOrigin(Enum):
     TR = (1, 1)
 
 
-class BoundingBox(object):
+class Layout(object):
     _SCREEN_WIDTH = 2560
     _SCREEN_HEIGHT = 1440
 
-    def __init__(self, filename: str, bb_id: int, x1: float, y1: float, x2: float, y2: float):
+    def __init__(self, filename: str, x1: float, y1: float, x2: float, y2: float, **kwargs):
         """
 
         Args:
             filename: name of the file
-            bb_id: identifier
             x1: first normalized x coordinate
             y1: first normalized y coordinate
             x2: second normalized x coordinate
@@ -54,7 +53,6 @@ class BoundingBox(object):
         self._vp_h = VIEWPORT_DIMS[filename]['viewport_height']
         self._axis_origin = AxisOrigin.TL
         self._normalized_coord = True
-        self._id = bb_id
         # normalized coordinates
         self._x1 = x1
         self._y1 = y1
@@ -78,11 +76,6 @@ class BoundingBox(object):
     @axis_origin.setter
     def axis_origin(self, ax: AxisOrigin):
         self._axis_origin = ax
-
-    @property
-    def id(self) -> int:
-        """ Identifier """
-        return self._id
 
     @property
     def x1(self) -> float:
