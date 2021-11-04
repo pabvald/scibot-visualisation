@@ -1,5 +1,4 @@
-
-from models import DocumentModel, ParagraphModel, LabelModel, AxisOrigin
+from models import DocumentFixDurationModel, ParagraphFixDurationModel, LabelFixDurationModel, AxisOrigin
 from features import HorizontalFixationArea
 
 
@@ -9,7 +8,7 @@ class FixationService(object):
         pass
 
     @staticmethod
-    def compute_horizontal_hits(document: DocumentModel, left_margin: int, right_margin: int):
+    def compute_horizontal_hits(document: DocumentFixDurationModel, left_margin: int, right_margin: int):
         """
         Computes the fixation on every label of a document considering an horizontal
         fixation area.
@@ -33,17 +32,17 @@ class FixationService(object):
                     label = paragraph.labels[i]
 
                     # modify coordinates (scale, origin) to match gaze data
-                    label.normalized_coord = False
-                    label.axis_origin = AxisOrigin.BL
+                    label.layout.normalized_coord = False
+                    label.layout.axis_origin = AxisOrigin.BL
 
-                    if fixation_area.hits(label):
-                        label.add_fixation(fixation)
+                    if fixation_area.hits(label.layout):
+                        label.add_fix_duration(fixation.duration)
                         line_hit = True
                     elif line_hit:  # no more hits are possible in the next lines
                         possible_hits = False
 
                     # reset coordinates to original state
-                    label.normalized_coord = True
-                    label.axis_origin = AxisOrigin.TL
+                    label.layout.normalized_coord = True
+                    label.layout.axis_origin = AxisOrigin.TL
 
                     i += 1

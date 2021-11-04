@@ -3,7 +3,7 @@ from abc import ABCMeta, abstractmethod
 from typing import List
 
 from .fixation_event import FixationEvent
-from models.bounding_box import BoundingBox
+from models.layout import LayoutModel
 
 
 class FixationArea(metaclass=ABCMeta):
@@ -14,11 +14,12 @@ class FixationArea(metaclass=ABCMeta):
         pass
 
     @abstractmethod
-    def hits(self, bb: BoundingBox) -> bool:
+    def hits(self, bb: LayoutModel) -> bool:
         pass
 
 
 class HorizontalFixationArea(FixationArea):
+
     _PIXELS_PER_LETTER = 20  # pixels that a letter occupies in the screen of the study
 
     def __init__(self, fixation: FixationEvent, left_margin: int = 3, right_margin: int = 14, mode: str = "intersects"):
@@ -38,6 +39,8 @@ class HorizontalFixationArea(FixationArea):
         self._left_margin = left_margin
         self._right_margin = right_margin
         self._mode = mode
+        self._x1 = self._fixation.gaze_x - (self._PIXELS_PER_LETTER * self._left_margin)
+        self._x2 = self._fixation.gaze_x + (self._PIXELS_PER_LETTER * self._right_margin)
 
     @staticmethod
     def from_fixations(self, fixations: List[FixationEvent], **kwargs):
@@ -49,11 +52,11 @@ class HorizontalFixationArea(FixationArea):
 
     @property
     def x1(self) -> float:
-        return self._fixation.gaze_x - (self._PIXELS_PER_LETTER * self._left_margin)
+        return self._x1
 
     @property
     def x2(self) -> float:
-        return self._fixation.gaze_x + (self._PIXELS_PER_LETTER * self._right_margin)
+        return self._x2
 
     @property
     def y(self) -> float:
@@ -72,14 +75,14 @@ class HorizontalFixationArea(FixationArea):
         assert m in ["intersects", "covers"], "invalid label mode"
         self._mode = m
 
-    def hits(self, bb: BoundingBox) -> bool:
+    def hits(self, layout: LayoutModel) -> bool:
         """
         Determines if a label is hit by the fixation area.
 
         Args:
-            bb: bounding box
+            layout: layout
         """
-        x1, y1, x2, y2 = bb.coordinates
+        x1, y1, x2, y2 = layout.coordinates
 
         # covers
         hits_w = self.x1 <= x1 and self.x2 >= x2

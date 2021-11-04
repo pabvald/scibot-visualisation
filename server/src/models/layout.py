@@ -1,4 +1,5 @@
 from enum import Enum
+from marshmallow import Schema, fields
 
 VIEWPORT_DIMS = {
     "nq_5p_a0_LTcw": {"viewport_width": 2560, "viewport_height": 2967},
@@ -35,7 +36,7 @@ class AxisOrigin(Enum):
     TR = (1, 1)
 
 
-class Layout(object):
+class LayoutModel(object):
     _SCREEN_WIDTH = 2560
     _SCREEN_HEIGHT = 1440
 
@@ -139,3 +140,10 @@ class Layout(object):
             y_t /= self._SCREEN_HEIGHT
 
         return y_t
+
+
+class LayoutSchema(Schema):
+    x1 = fields.Float()
+    y1 = fields.Float()
+    x2 = fields.Float()
+    y2 = fields.Float()

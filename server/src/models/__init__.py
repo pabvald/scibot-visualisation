@@ -1,5 +1,6 @@
-from .document import DocumentLayoutModel, DocumentLayoutSchema
+from .document import *
+from .paragraph import *
+from .label import *
 from .corpus import Corpus
-from .paragraph import ParagraphLayoutModel, ParagraphLayoutSchema
-from .label import LabelLayoutModel, LabelLayoutSchema
-from .layout import AxisOrigin, Layout
+from .layout import AxisOrigin, LayoutModel, LayoutSchema
+

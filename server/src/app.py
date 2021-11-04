@@ -1,11 +1,15 @@
 from flask import Flask, render_template
 from flask_cors import CORS
 from flask_restful import Api
-from resources.user_list import UserListResource
-from data_loading import (SciBotDataLoader, ScibotMappingLoader,
-                          ScibotParagraphFeaturesLoader)
-from resources.document_list import DocumentListResource
-from resources.document_layout import DocumentLayoutResource
+
+from src.resources.user.list import UserListResource
+from src.resources.document.list import DocumentListResource
+from src.resources.document.layout import DocumentLayoutResource
+from src.resources.document.features import DocumentFeaturesResource
+from src.resources.document.relevance import DocumentRelevanceResource
+from src.resources.document.fix_duration import DocumentFixDurationResource
+
+from data_loading import (SciBotDataLoader, ScibotMappingLoader, ScibotParagraphFeaturesLoader)
 
 app = Flask(__name__)
 app.config.from_object('config.Config')  # load configuration
@@ -20,8 +24,9 @@ CORS(app)  # allow CORS
 api.add_resource(UserListResource, '/api/user/ids')
 api.add_resource(DocumentListResource, '/api/document/ids')
 api.add_resource(DocumentLayoutResource, '/api/document/layout/<string:user_id>/<string:doc_id>')
-#api.add_resource(DocumentLayoutResource, '/api/document/<string:user_id>/<string:doc_id>')
-
+api.add_resource(DocumentFeaturesResource, '/api/document/features/<string:user_id>/<string:doc_id>')
+api.add_resource(DocumentRelevanceResource, '/api/document/relevance/<string:user_id>/<string:doc_id>')
+api.add_resource(DocumentFixDurationResource, '/api/document/gaze/<string:user_id>/<string:doc_id>' )
 
 # --- Serve index.html ---
 @app.route('/', methods=['GET'])
