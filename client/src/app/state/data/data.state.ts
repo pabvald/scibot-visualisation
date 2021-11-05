@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable, ReplaySubject, Subject } from 'rxjs';
 import { FixationArea, IFixationArea } from 'src/app/models/fixation-area.model';
-import { IDocument } from '../../models/document.model';
+import { Document } from '../../models/document.model';
 
 @Injectable({
   providedIn: 'root'
@@ -9,7 +9,7 @@ import { IDocument } from '../../models/document.model';
 export class DataState {
 
   private updating$ = new BehaviorSubject<boolean>(false);
-  private document$ = new ReplaySubject<IDocument>();
+  private document$ = new ReplaySubject<Document>();
   private fixationArea$ = new BehaviorSubject<IFixationArea>(new FixationArea(0, 0));
 
   /**
@@ -22,7 +22,7 @@ export class DataState {
   /**
    * @returns current document
    */
-  getDocument$(): Observable<IDocument> {
+  getDocument$(): Observable<Document> {
     return this.document$.asObservable();
   }
 
@@ -42,7 +42,7 @@ export class DataState {
    * Sets the new document.
    * @param doc new document
    */
-  setDocument(doc: IDocument) {
+  setDocument(doc: Document) {
     this.document$.next(doc);
   }
 

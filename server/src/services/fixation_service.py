@@ -1,5 +1,5 @@
-from models import DocumentFixDurationModel, ParagraphFixDurationModel, LabelFixDurationModel, AxisOrigin
 from features import HorizontalFixationArea
+from models import DocumentFixDurationModel, ParagraphFixDurationModel, LabelFixDurationModel, AxisOrigin
 
 
 class FixationService(object):

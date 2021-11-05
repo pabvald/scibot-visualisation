@@ -2,12 +2,12 @@
 <div *ngIf="paragraph && paragraph.hasLabels"
     class="paragraph" 
     [ngStyle]="{
-        'top.%': (100 * paragraph.y1),
-        'left.%': (100 * paragraph.x1),
-        'width.%': (100 * paragraph.width),
-        'max-width.%': (100 * paragraph.width),
-        'height.%': (100 * paragraph.height * HEIGHT_REDUCTION),
-        'max-height.%': (100 * paragraph.height * HEIGHT_REDUCTION)
+        'top.%': (100 * paragraph.layout.y1),
+        'left.%': (100 * paragraph.layout.x1),
+        'width.%': (100 * paragraph.layout.width),
+        'max-width.%': (100 * paragraph.layout.width),
+        'height.%': (100 * paragraph.layout.height * HEIGHT_REDUCTION),
+        'max-height.%': (100 * paragraph.layout.height * HEIGHT_REDUCTION)
     }">    
 </div> 
 
@@ -15,12 +15,12 @@
 <!-- <div *ngIf="isParLevelEnabled && paragraph && !paragraph.isTitle && paragraph.hasLabels "
     class="fixation-duration-bar"
     [ngStyle]="{
-        'top.%': (100 * paragraph.y1),
-        'left.%': (100 * (paragraph.x1 ) - 1.4),
+        'top.%': (100 * paragraph.layout.y1),
+        'left.%': (100 * (paragraph.layout.x1 ) - 1.4),
         'width.%': COLORBAR_WIDTH,
         'max-width.%': COLORBAR_WIDTH,
-        'height.%': (100 * paragraph.height * HEIGHT_REDUCTION),
-        'max-height.%': (100 * paragraph.height * HEIGHT_REDUCTION),
+        'height.%': (100 * paragraph.layout.height * HEIGHT_REDUCTION),
+        'max-height.%': (100 * paragraph.layout.height * HEIGHT_REDUCTION),
         'background': color
     }">
 </div> -->
@@ -29,10 +29,10 @@
 <div *ngIf="isParLevelEnabled && paragraph && !paragraph.isTitle && paragraph.hasLabels"
     class="paragraph-id"
     [ngStyle]="{
-        'top.%': (100 * paragraph.y1),
-        'left.%': (100 * (paragraph.x1 - paragraph.width * WIDTH_REDUCTION_F) - MARGIN),
-        'width.%': (100 * paragraph.width * WIDTH_REDUCTION_F),
-        'max-width.%': (100 * paragraph.width * WIDTH_REDUCTION_F),
+        'top.%': (100 * paragraph.layout.y1),
+        'left.%': (100 * (paragraph.layout.x1 - paragraph.layout.width * WIDTH_REDUCTION_F) - MARGIN),
+        'width.%': (100 * paragraph.layout.width * WIDTH_REDUCTION_F),
+        'max-width.%': (100 * paragraph.layout.width * WIDTH_REDUCTION_F),
         'height.%': ID_HEIGHT,
         'max-height.%': ID_HEIGHT
     }">
@@ -42,10 +42,10 @@
 <!-- <div *ngIf="isParLevelEnabled && paragraph && !paragraph.isTitle && paragraph.hasLabels && !paragraph.hasFeatures"
     class="paragraph-id"
     [ngStyle]="{
-        'top.%': (100 * (paragraph.y1 + (paragraph.height) / 2 )) - ID_HEIGHT,
-        'left.%': (100 * (paragraph.x1 - paragraph.width * WIDTH_REDUCTION_F) - MARGIN),
-        'width.%': (100 * paragraph.width * WIDTH_REDUCTION_F),
-        'max-width.%': (100 * paragraph.width * WIDTH_REDUCTION_F),
+        'top.%': (100 * (paragraph.layout.y1 + (paragraph.layout.height) / 2 )) - ID_HEIGHT,
+        'left.%': (100 * (paragraph.layout.x1 - paragraph.layout.width * WIDTH_REDUCTION_F) - MARGIN),
+        'width.%': (100 * paragraph.layout.width * WIDTH_REDUCTION_F),
+        'max-width.%': (100 * paragraph.layout.width * WIDTH_REDUCTION_F),
         'height.%': ID_HEIGHT,
         'max-height.%': ID_HEIGHT
     }">
@@ -57,16 +57,16 @@
 <div *ngIf="isParLevelEnabled && paragraph && !paragraph.isTitle && paragraph.hasLabels"
     class="paragraph-features"
     [ngStyle]="{
-        'top.%': (100 * paragraph.y1 + ID_HEIGHT),
-        'left.%': (100 * (paragraph.x1 - paragraph.width * WIDTH_REDUCTION_F) - MARGIN),
-        'width.%': (100 * paragraph.width * WIDTH_REDUCTION_F),
-        'max-width.%': (100 * paragraph.width * WIDTH_REDUCTION_F),
-        'height.%': (100 * paragraph.height * HEIGHT_REDUCTION - ID_HEIGHT),
-        'max-height.%': (100 * paragraph.height * HEIGHT_REDUCTION - ID_HEIGHT)
+        'top.%': (100 * paragraph.layout.y1 + ID_HEIGHT),
+        'left.%': (100 * (paragraph.layout.x1 - paragraph.layout.width * WIDTH_REDUCTION_F) - MARGIN),
+        'width.%': (100 * paragraph.layout.width * WIDTH_REDUCTION_F),
+        'max-width.%': (100 * paragraph.layout.width * WIDTH_REDUCTION_F),
+        'height.%': (100 * paragraph.layout.height * HEIGHT_REDUCTION - ID_HEIGHT),
+        'max-height.%': (100 * paragraph.layout.height * HEIGHT_REDUCTION - ID_HEIGHT)
     }">
 
     <div *ngFor="let feature of featuresConf">
-        <div *ngIf="feature.enabled && paragraph.getFeatureById(feature.id) != null"
+        <div *ngIf="feature.enabled && paragraph.getFeatureById(feature.id) != -1"
             class="feature">
             <span class="feature-name">
                 {{feature.units ? feature.name + " (" + feature.units + ")" : feature.name}}:
@@ -83,12 +83,12 @@
 <div *ngIf="isParLevelEnabled && paragraph && !paragraph.isTitle && paragraph.hasLabels"
     class="paragraph-relevance"
     [ngStyle]="{
-        'top.%': (100 * paragraph.y1),
-        'left.%': (100 * (paragraph.x2) + MARGIN),
-        'width.%': (100 * paragraph.width * WIDTH_REDUCTION_R),
-        'max-width.%': (100 * paragraph.width * WIDTH_REDUCTION_R),
-        'height.%': (100 * paragraph.height * HEIGHT_REDUCTION - ID_HEIGHT),
-        'max-height.%': (100 * paragraph.height * HEIGHT_REDUCTION - ID_HEIGHT)
+        'top.%': (100 * paragraph.layout.y1),
+        'left.%': (100 * (paragraph.layout.x2) + MARGIN),
+        'width.%': (100 * paragraph.layout.width * WIDTH_REDUCTION_R),
+        'max-width.%': (100 * paragraph.layout.width * WIDTH_REDUCTION_R),
+        'height.%': (100 * paragraph.layout.height * HEIGHT_REDUCTION - ID_HEIGHT),
+        'max-height.%': (100 * paragraph.layout.height * HEIGHT_REDUCTION - ID_HEIGHT)
     }">
     <div class="relevance-container">
         <div class="relevance">
@@ -145,8 +145,9 @@
 
 <!-- Labels -->
 <span *ngIf="paragraph && paragraph.hasLabels"
-    class="labels-container" >
+    class="labels-container">
     <app-label *ngFor="let lbl of paragraph.labels; index as i"
-            [label]="lbl">
+            [label]="lbl"
+            [isTitle]="paragraph.isTitle">
     </app-label>       
 </span>

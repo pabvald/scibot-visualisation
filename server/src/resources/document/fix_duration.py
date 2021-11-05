@@ -1,7 +1,9 @@
 from flask import jsonify
 from flask_restful import Resource, reqparse
 from flask import current_app as app
+from werkzeug.exceptions import NotFound, BadRequest
 
+from errors import error_messages
 from models import Corpus
 from services import FixationService
 from src.resources.user.list import USER_IDS
@@ -32,16 +34,13 @@ class DocumentFixDurationResource(Resource):
         hit_right_margin = args['rightMargin']
 
         if user_id not in USER_IDS:
-            return {'message': f"The id '{user_id}' does not correspond to any user"}, 404
+            raise NotFound(description=error_messages['UserDoesNotExist'])
 
         if doc_id not in DOC_IDS:
-            return {'message': f"The id '{doc_id}' does not correspond to any document"}, 404
+            raise NotFound(description=error_messages['DocumentDoesNotExist'])
 
-        if hit_left_margin < 0:
-            return {'message': "The hit left margin cannot be negative"}, 400
-
-        if hit_right_margin < 0:
-            return {'message': "The hit right margin cannot be negative"}, 400
+        if hit_left_margin < 0 or hit_right_margin < 0:
+            raise BadRequest(description=error_messages['NegativeFixationAreaMargin'])
 
         corpus = Corpus.grel if doc_id.startswith("g-rel") else Corpus.nq
 

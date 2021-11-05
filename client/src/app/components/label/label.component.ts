@@ -1,6 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { LabelLevelFacade } from 'src/app/facade/label-level/label-level.facade';
-import { ILabel } from 'src/app/models/label.model';
+import { Label } from 'src/app/models/label.model';
 
 
 @Component({
@@ -10,7 +10,7 @@ import { ILabel } from 'src/app/models/label.model';
 })
 export class LabelComponent implements OnInit {
   
-  @Input() label: ILabel | undefined; 
+  @Input() label: Label | undefined; 
   @Input() isTitle: boolean = false; 
   
   color : string = "";

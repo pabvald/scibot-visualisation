@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { DataFacade } from 'src/app/facade/data/data.facade';
-import { IDocument } from 'src/app/models/document.model';
+import { Document } from 'src/app/models/document.model';
 
 
 @Component({
@@ -12,7 +12,7 @@ export class DataTabComponent implements OnInit {
 
   userIds: string[] = [];
   documentIds: string[] = [];
-  document: IDocument | undefined;
+  document: Document | undefined;
   isUpdating: boolean = false;
   isLoaded: boolean = false;
   selUserId: string | undefined; // selected participant

@@ -5,7 +5,7 @@ import { IFixationArea } from 'src/app/models/fixation-area.model';
 import { NotificationsService } from 'src/app/services/notifications/notifications.service';
 import { DocumentApi } from '../../api/document/document.api';
 import { UserApi } from '../../api/user/user.api';
-import { IDocument } from '../../models/document.model';
+import { Document } from '../../models/document.model';
 import { DataState } from '../../state/data/data.state';
 
 @Injectable({
@@ -15,7 +15,7 @@ export class DataFacade {
 
   private userIds$: Observable<string[]>;
   private documentIds$: Observable<string[]>;
-  private document$: Observable<IDocument>;
+  private document$: Observable<Document>;
 
   constructor(    
     private userApi: UserApi,
@@ -76,7 +76,7 @@ export class DataFacade {
   /**
    * @returns loaded document
    */
-  getDocument$(): Observable<IDocument> {
+  getDocument$(): Observable<Document> {
     return this.document$;
   }
 
@@ -108,7 +108,7 @@ export class DataFacade {
       .subscribe(
         (document) => { this.dataState.setDocument(document); },
         (error) => { console.log(error); },
-        () => { this.notificationService.showSuccess("Data loaded"); }
+        () => {  this.notificationService.showSuccess("Data loaded"); }
       ).add(
         () => { this.dataState.setUpdating(false); }
       );

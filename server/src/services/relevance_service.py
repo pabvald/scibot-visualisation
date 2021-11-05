@@ -5,7 +5,7 @@ import pandas as pd
 
 from joblib import load
 from models import Corpus
-from typing import List, Dict, Tuple
+from typing import Dict, Tuple
 
 
 def load_demo_models():

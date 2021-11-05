@@ -34,14 +34,14 @@ class ScibotParagraphFeaturesLoader:
     grel_par_features = {}
     google_nq_par_features = {}
 
-    def __init__(self, data_dir: str, googleNQ: bool = True, gREL: bool = True,
+    def __init__(self, data_dir: str, googleNQ: bool=True, gREL:bool =True,
                  include_users=None, exclude_users=None):
         """
 
         Args:
             data_dir: directory containing the mapping files.
             googleNQ: determines if the mappings of the GoogleNQ files are included.
-            gREL: determines if the mappings of the g-REL articles are included.
+            gREL: determines if the mappings of the g-rel articles are included.
         """
         super().__init__()
 
@@ -49,7 +49,7 @@ class ScibotParagraphFeaturesLoader:
         if googleNQ:
             self._INCLUDE_DATA_SOURCE.append("GoogleNQ")
         if gREL:
-            self._INCLUDE_DATA_SOURCE.append("g-REL")
+            self._INCLUDE_DATA_SOURCE.append("g-rel")
         if include_users is not None:
             assert isinstance(include_users, list)
             self._INCLUDE_USER_LIST = include_users
@@ -61,14 +61,14 @@ class ScibotParagraphFeaturesLoader:
 
     def _load_data(self):
         """ Loads the specified data"""
-        if "g-REL" in self._INCLUDE_DATA_SOURCE:
+        if "g-rel" in self._INCLUDE_DATA_SOURCE:
             self._load_grel()
         if "GoogleNQ" in self._INCLUDE_DATA_SOURCE:
             self._load_google_nq()
 
     def _load_grel(self):
-        """ Loads the features of the g-REL files """
-        paths = [pjoin(self.data_dir, "g-REL", study_type) for study_type in self._STUDY_TYPE]
+        """ Loads the features of the g-rel files """
+        paths = [pjoin(self.data_dir, "g-rel", study_type) for study_type in self._STUDY_TYPE]
 
         for path in paths:
             data = self._load_mapping(pjoin(path, 'g-rel' + self._GREL_FILE_EXT))

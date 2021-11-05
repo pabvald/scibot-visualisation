@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { DataFacade } from 'src/app/facade/data/data.facade';
-import { IDocument, Document} from 'src/app/models/document.model';
+import { Document} from 'src/app/models/document.model';
 
 
 @Component({
@@ -10,10 +10,10 @@ import { IDocument, Document} from 'src/app/models/document.model';
 })
 export class DocumentComponent implements OnInit {
 
-  document: IDocument | undefined;
+  document: Document | undefined;
 
   constructor(private dataFacade: DataFacade) { 
-    this.dataFacade.getDocument$().subscribe((doc) => {this.document = new Document(doc)});
+    this.dataFacade.getDocument$().subscribe((doc) => {console.log(doc); this.document = doc});
   }
 
   ngOnInit(): void {

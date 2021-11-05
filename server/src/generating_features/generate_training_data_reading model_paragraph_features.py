@@ -9,15 +9,15 @@ from server.src.data_loading import SciBotDataLoader, extract_paragraph_visits_v
 from server.src.features import extract_features, FixationEventWithReadingState, SaccadeEventWithReadingState
 
 FONTSIZE = 20.5  # In Buscher's paper, their font size is 12pt, which is 16px
-READING_DETECTOR_THRESHOLD = 30;
-SKIMMING_DETECTOR_THRESHOLD = 20;
+READING_DETECTOR_THRESHOLD = 30
+SKIMMING_DETECTOR_THRESHOLD = 20
 
 logger = logging.getLogger(__name__)
 logging.basicConfig(level=logging.INFO)
 
 
 def mapPixelSpaceToLetterSpace(v):
-    return v / FONTSIZE;
+    return v / FONTSIZE
 
 
 class SaccadeType(object):
@@ -33,12 +33,10 @@ class SaccadeType(object):
         self._is_left_half_interval = is_left_half_interval
 
     def is_this_type(self, saccade_distance):
-        if (self._is_left_half_interval):
-            return self._saccade_distance_range[0] <= saccade_distance and saccade_distance < \
-                   self._saccade_distance_range[1]
+        if self._is_left_half_interval:
+            return self._saccade_distance_range[0] <= saccade_distance < self._saccade_distance_range[1]
         else:
-            return self._saccade_distance_range[0] < saccade_distance and saccade_distance <= \
-                   self._saccade_distance_range[1]
+            return self._saccade_distance_range[0] < saccade_distance <= self._saccade_distance_range[1]
 
     @property
     def reading_detector_score(self):

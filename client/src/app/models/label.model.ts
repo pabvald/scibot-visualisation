@@ -1,32 +1,48 @@
-import { IBoundingBox } from "./bounding-box.model";
+import { ILayout, Layout } from "./layout.model";
 
-export interface ILabel extends IBoundingBox {
+/**
+ * Base label interface.
+ */
+interface ILabel {
     id: number;
-    text: string;
-    fixationDuration: number;
-    inTitle: boolean;
 }
 
-export class Label implements ILabel {
+/**
+ * Text-and-layout label interface.
+ */
+export interface ILabelLayout extends ILabel{
+    text: string;
+    layout: ILayout;
+}
 
-    private parId: number;
+/**
+ * Fixation-time-per-token label interface.
+ */
+export interface ILabelFixation extends ILabel{
+    fixationDuration: number;
+}
+
+
+/**
+ * Label representation
+ */
+export class Label implements ILabelLayout, ILabelFixation {
     public id: number;
-    public x1: number;
-    public y1: number;
-    public x2: number;
-    public y2: number;
+    public layout: Layout;
     public text: string;
-    public fixationDuration: number;
+    public fixationDuration: number = 0.0;
 
-    constructor(labelObject: any) {
-        this.parId = labelObject.parId;
-        this.id = labelObject.id;
-        this.x1 = labelObject.x1; 
-        this.y1 = labelObject.y1; 
-        this.x2 = labelObject.x2; 
-        this.y2 = labelObject.y2; 
-        this.text = labelObject.text;
-        this.fixationDuration = Label.transFixDuration(labelObject.fixationDuration);
+    /**
+     * 
+     * @param labelLayout text and layout
+     * @param labelFixation fixation time
+     */
+    constructor(labelLayout: ILabelLayout, labelFixation: ILabelFixation | undefined) {
+        this.id = labelLayout.id;
+        this.layout = new Layout(labelLayout.layout);
+        this.text = labelLayout.text
+        if (labelFixation != undefined)
+            this.fixationDuration = Label.transFixDuration(labelFixation.fixationDuration);
     }
 
     /**
@@ -37,16 +53,5 @@ export class Label implements ILabel {
     private static transFixDuration(duration: number): number {
         return (duration * 1000); 
     }
-    
-    get width(): number {
-        return this.x2 - this.x1;
-    }
 
-    get height(): number {
-        return this.y2 - this.y1;
-    }
-
-    get inTitle(): boolean {
-        return this.parId == -1;
-    }
 }

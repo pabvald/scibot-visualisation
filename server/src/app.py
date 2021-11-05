@@ -21,12 +21,13 @@ api = Api(app)
 CORS(app)  # allow CORS
 
 # --- API calls ---
-api.add_resource(UserListResource, '/api/user/ids')
-api.add_resource(DocumentListResource, '/api/document/ids')
-api.add_resource(DocumentLayoutResource, '/api/document/layout/<string:user_id>/<string:doc_id>')
-api.add_resource(DocumentFeaturesResource, '/api/document/features/<string:user_id>/<string:doc_id>')
-api.add_resource(DocumentRelevanceResource, '/api/document/relevance/<string:user_id>/<string:doc_id>')
-api.add_resource(DocumentFixDurationResource, '/api/document/gaze/<string:user_id>/<string:doc_id>' )
+api.add_resource(UserListResource,            '/api/user/ids')
+api.add_resource(DocumentListResource,        '/api/document/ids')
+api.add_resource(DocumentLayoutResource,      '/api/document/layout/<string:user_id>/<string:doc_id>')
+api.add_resource(DocumentFeaturesResource,    '/api/document/features/<string:user_id>/<string:doc_id>')
+api.add_resource(DocumentRelevanceResource,   '/api/document/relevance/<string:user_id>/<string:doc_id>')
+api.add_resource(DocumentFixDurationResource, '/api/document/fixation/<string:user_id>/<string:doc_id>')
+
 
 # --- Serve index.html ---
 @app.route('/', methods=['GET'])

@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { IParagraphFeatureConf } from 'src/app/models/paragraph.model';
+import { ParagraphFeatureConf } from 'src/app/models/paragraph.model';
 import { ParagraphLevelState } from 'src/app/state/paragraph-level/paragraph-level.state';
 
 @Injectable({
@@ -29,7 +29,7 @@ export class ParagraphLevelFacade {
   /**
    * @returns the paragraph features' configuration
    */
-  getFeaturesConf$(): Observable<IParagraphFeatureConf[]> {
+  getFeaturesConf$(): Observable<ParagraphFeatureConf[]> {
     return this.paragraphLevelState.getFeaturesConf$();
   }
 
@@ -44,7 +44,7 @@ export class ParagraphLevelFacade {
    * 
    * @param features new paragraph features' configuration
    */
-  setFeaturesConf(featuresConf: IParagraphFeatureConf[]) {
+  setFeaturesConf(featuresConf: ParagraphFeatureConf[]) {
     this.paragraphLevelState.setUpdating(true);
     this.paragraphLevelState.setFeaturesConf(featuresConf);
     this.paragraphLevelState.setUpdating(false);

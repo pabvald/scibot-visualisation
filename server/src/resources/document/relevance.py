@@ -1,8 +1,10 @@
 from flask import jsonify
 from flask_restful import Resource
 from flask import current_app as app
+from werkzeug.exceptions import NotFound
 
 from models import Corpus
+from errors import error_messages
 from src.resources.user.list import USER_IDS
 from services.relevance_service import RelevanceService
 from models.document import DocumentRelevanceModel, DocumentRelevanceSchema
@@ -24,10 +26,10 @@ class DocumentRelevanceResource(Resource):
         """
 
         if user_id not in USER_IDS:
-            return {'message': f"The id '{user_id}' does not correspond to any user"}, 404
+            raise NotFound(description=error_messages['UserDoesNotExist'])
 
         if doc_id not in DOC_IDS:
-            return {'message': f"The id '{doc_id}' does not correspond to any document"}, 404
+            raise NotFound(description=error_messages['DocumentDoesNotExist'])
 
         corpus = Corpus.grel if doc_id.startswith("g-rel") else Corpus.nq
 

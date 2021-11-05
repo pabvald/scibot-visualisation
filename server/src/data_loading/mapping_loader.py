@@ -16,13 +16,13 @@ class ScibotMappingLoader:
     google_nq_labels = {}
     google_nq_paragraphs = {}
 
-    def __init__(self, data_dir: str, googleNQ: bool = True, gREL: bool = True):
+    def __init__(self, data_dir: str, googleNQ: bool=True, gREL:bool =True):
         """
 
         Args:
             data_dir: directory containing the mapping files.
             googleNQ: determines if the mappings of the GoogleNQ files are included.
-            gREL: determines if the mappings of the g-REL articles are included.
+            gREL: determines if the mappings of the g-rel articles are included.
         """
         super().__init__()
 
@@ -30,20 +30,20 @@ class ScibotMappingLoader:
         if googleNQ:
             self._INCLUDE_DATA_SOURCE.append("GoogleNQ")
         if gREL:
-            self._INCLUDE_DATA_SOURCE.append("g-REL")
+            self._INCLUDE_DATA_SOURCE.append("g-rel")
 
         self._load_data()
 
     def _load_data(self):
         """ Loads the specified data"""
-        if "g-REL" in self._INCLUDE_DATA_SOURCE:
+        if "g-rel" in self._INCLUDE_DATA_SOURCE:
             self._load_grel()
         if "GoogleNQ" in self._INCLUDE_DATA_SOURCE:
             self._load_google_nq()
 
     def _load_grel(self):
-        """ Loads the mappings of the g-REL files """
-        paths = [pjoin(self.data_dir, "g-REL", study_type) for study_type in self._STUDY_TYPE]
+        """ Loads the mappings of the g-rel files """
+        paths = [pjoin(self.data_dir, "g-rel", study_type) for study_type in self._STUDY_TYPE]
 
         for path in paths:
             # read labels' mapping

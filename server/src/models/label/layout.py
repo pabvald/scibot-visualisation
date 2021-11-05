@@ -1,4 +1,4 @@
-from marshmallow import Schema, fields
+from marshmallow import fields
 from models.layout import LayoutModel, LayoutSchema
 from .base import LabelModel, LabelSchema
 
