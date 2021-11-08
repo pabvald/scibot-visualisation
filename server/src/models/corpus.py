@@ -2,5 +2,5 @@ from enum import Enum
 
 
 class Corpus(Enum):
-    grel = "g-REL"
+    grel = "g-rel"
     nq = "GoogleNQ"

@@ -1,5 +1,5 @@
 from features import HorizontalFixationArea
-from models import DocumentFixDurationModel, ParagraphFixDurationModel, LabelFixDurationModel, AxisOrigin
+from models import DocumentFixDurationModel, AxisOrigin
 
 
 class FixationService(object):
@@ -10,7 +10,7 @@ class FixationService(object):
     @staticmethod
     def compute_horizontal_hits(document: DocumentFixDurationModel, left_margin: int, right_margin: int):
         """
-        Computes the fixation on every label of a document considering an horizontal
+        Computes the fixation time on every label of a document considering an horizontal
         fixation area.
         Args:
             document: a document.
@@ -18,10 +18,11 @@ class FixationService(object):
             right_margin: the right margin of the horizontal fixation area in number of letters.
         """
         for paragraph in document.paragraphs:
-            # consider only the gaze points assign to each paragraph
+            # consider only the gaze points assign to each paragraph !!!
             for fixation in paragraph.fixations:
                 # create fixation area from fixation
-                fixation_area = HorizontalFixationArea(fixation=fixation, left_margin=left_margin, right_margin=right_margin)
+                fixation_area = HorizontalFixationArea(fixation=fixation, left_margin=left_margin,
+                                                       right_margin=right_margin)
 
                 # check which labels in the paragraph are hit
                 i = 0
