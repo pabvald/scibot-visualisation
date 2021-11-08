@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ParagraphLevelFacade } from 'src/app/facade/paragraph-level/paragraph-level.facade';
-import { ParagraphFeatureConf } from 'src/app/models/paragraph.model';
+import { IParagraphFeatureConf } from 'src/app/models/feature-conf.model';
 
 
 @Component({
@@ -12,7 +12,7 @@ export class ParagraphTabComponent implements OnInit {
 
   isEnabled: boolean = true; 
   isParLevelStateUpdating: boolean = false;
-  features: ParagraphFeatureConf[] = [];
+  features: IParagraphFeatureConf[] = [];
   allFeaturesEnabled: boolean = false;
 
   constructor(private parLevelFacade: ParagraphLevelFacade) { 

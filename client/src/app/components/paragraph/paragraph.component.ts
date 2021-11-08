@@ -1,6 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { ParagraphLevelFacade } from 'src/app/facade/paragraph-level/paragraph-level.facade';
-import { Paragraph, ParagraphFeatureConf } from 'src/app/models/paragraph.model';
+import { Paragraph } from 'src/app/models/paragraph.model';
+import { IParagraphFeatureConf } from 'src/app/models/feature-conf.model';
 
 @Component({
   selector: 'app-paragraph',
@@ -23,7 +24,7 @@ export class ParagraphComponent implements OnInit {
 
   color: string = "lightgrey";
   isParLevelEnabled: boolean = true;
-  featuresConf: ParagraphFeatureConf[] = [];
+  featuresConf: IParagraphFeatureConf[] = [];
 
   constructor(private parLevelFacade: ParagraphLevelFacade) { 
 

@@ -107,14 +107,3 @@ export class Paragraph implements IParagraphLayout, IParagraphFeatures,
         return value;
     }
 }
-
-/** 
- * Paragraph feature interface.
- */
- export interface ParagraphFeatureConf {
-    id: string;     
-    name: string;
-    transform: number;
-    units: string;
-    enabled: boolean; 
-}

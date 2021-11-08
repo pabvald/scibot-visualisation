@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
-import { ParagraphFeatureConf } from 'src/app/models/paragraph.model';
+import { IParagraphFeatureConf } from 'src/app/models/feature-conf.model';
 import { BehaviorSubject, Observable } from 'rxjs';
 
 
-const featuresConf: ParagraphFeatureConf[] = [
+const featuresConf: IParagraphFeatureConf[] = [
   { id: "f_total_time",           name: "Total time",               transform: 1.0,    units: "",   enabled: false  },
   { id: "f_fixn_n",               name: "Number of fixations",      transform: 1.0,    units: "",   enabled: false  },
   { id: "f_fixn_dur_sum",         name: "Sum fixation duration",    transform: 1.0,    units: "s",  enabled: false  },
@@ -30,7 +30,7 @@ const featuresConf: ParagraphFeatureConf[] = [
 })
 export class ParagraphLevelState {
 
-  private featuresConf$ = new BehaviorSubject<ParagraphFeatureConf[]>(featuresConf);
+  private featuresConf$ = new BehaviorSubject<IParagraphFeatureConf[]>(featuresConf);
   private updating$ = new BehaviorSubject<boolean>(false);
   private enabled$ = new BehaviorSubject<boolean>(true);
 
@@ -51,7 +51,7 @@ export class ParagraphLevelState {
   /**
    * @returns paragraph features' configuration
    */
-  getFeaturesConf$(): Observable<ParagraphFeatureConf[]> {
+  getFeaturesConf$(): Observable<IParagraphFeatureConf[]> {
     return this.featuresConf$.asObservable();
   }
 
@@ -73,7 +73,7 @@ export class ParagraphLevelState {
   /**
    * @param featureseConf new paragraph features' configuration
    */
-  setFeaturesConf(featureseConf: ParagraphFeatureConf[]) {
+  setFeaturesConf(featureseConf: IParagraphFeatureConf[]) {
     this.featuresConf$.next(featureseConf);
   }
 }

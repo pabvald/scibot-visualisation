@@ -13,7 +13,7 @@ export class DocumentComponent implements OnInit {
   document: Document | undefined;
 
   constructor(private dataFacade: DataFacade) { 
-    this.dataFacade.getDocument$().subscribe((doc) => {console.log(doc); this.document = doc});
+    this.dataFacade.getDocument$().subscribe((doc) => { this.document = doc});
   }
 
   ngOnInit(): void {
