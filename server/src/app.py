@@ -2,12 +2,12 @@ from flask import Flask, render_template
 from flask_cors import CORS
 from flask_restful import Api
 
-from src.resources.user.list import UserListResource
-from src.resources.document.list import DocumentListResource
-from src.resources.document.layout import DocumentLayoutResource
-from src.resources.document.features import DocumentFeaturesResource
-from src.resources.document.relevance import DocumentRelevanceResource
-from src.resources.document.fix_duration import DocumentFixDurationResource
+from resources.user.list import UserListResource
+from resources.document.list import DocumentListResource
+from resources.document.layout import DocumentLayoutResource
+from resources.document.features import DocumentFeaturesResource
+from resources.document.relevance import DocumentRelevanceResource
+from resources.document.fix_duration import DocumentFixDurationResource
 
 from data_loading import (SciBotDataLoader, ScibotMappingLoader, ScibotParagraphFeaturesLoader)
 

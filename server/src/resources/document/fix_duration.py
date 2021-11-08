@@ -6,7 +6,7 @@ from werkzeug.exceptions import NotFound, BadRequest
 from errors import error_messages
 from models import Corpus
 from services import FixationService
-from src.resources.user.list import USER_IDS
+from resources.user.list import USER_IDS
 from models.document import DocumentFixDurationModel, DocumentFixDurationSchema
 
 from .list import DOC_IDS

@@ -7,7 +7,7 @@ from models import Corpus
 from errors import error_messages
 from models.document import DocumentFeaturesModel, DocumentFeaturesSchema
 
-from src.resources.user.list import USER_IDS
+from resources.user.list import USER_IDS
 from .list import DOC_IDS
 
 

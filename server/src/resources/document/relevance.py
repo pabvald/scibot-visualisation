@@ -5,7 +5,7 @@ from werkzeug.exceptions import NotFound
 
 from models import Corpus
 from errors import error_messages
-from src.resources.user.list import USER_IDS
+from resources.user.list import USER_IDS
 from services.relevance_service import RelevanceService
 from models.document import DocumentRelevanceModel, DocumentRelevanceSchema
 
