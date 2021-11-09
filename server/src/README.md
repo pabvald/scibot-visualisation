@@ -10,10 +10,10 @@ app = Flask(__name__)
 ```
 
 ## Configuration 
-The configuration of the Flask application is configured with configuration objects, which are
-defined in `config.py`. To explore all the possible ways in which a Flask application can be
-configured, you can check [this page](https://flask.palletsprojects.com/en/2.0.x/config/) of 
-the Flask documentation.
+The configuration of the Flask application is defined providing a configuration object, which is
+defined in `config.py`. You can check [this page](https://flask.palletsprojects.com/en/2.0.x/config/) of 
+the Flask documentation for more information on all the possible ways in which a Flask application can be
+configured.
 
 To load a configuration object once the application has been initialized: 
 ```python 
@@ -21,8 +21,8 @@ app.config.from_object('config.ConfigurationObject')
 ```
 
 ### Basic configuration
-There is a basic configuration object `Config` used for development that specifies 
-the versions of the dataset that should be used as well as the paths of the different datasets.
+There is a basic configuration object `Config` that is used for development and specifies the 
+versions of the dataset to be used and the paths of the different datasets.
 
 ### Production configuration
 A second production configuration object `ProductionConfig` that disables the debugging.
@@ -42,7 +42,7 @@ and the definition of the API calls are made in `app.py`. Each API call definiti
 correspondence between a URL and a *resource*, the main building block provided by
 Flask-RESTful.
 
-Example: 
+Example of an API call definition: 
 
 ```python 
 api.add_resource(UserListResource, '/api/user/ids')
@@ -50,13 +50,13 @@ api.add_resource(UserListResource, '/api/user/ids')
 Check the `README` in the `resources` package for a specification of the correspondence between 
 API calls and resources. 
 
-For more details, check the documentation of the extension on 
+For more details, check the documentation of the Flask-RESTful extension on 
 [resourceful routing](https://flask-restful.readthedocs.io/en/latest/quickstart.html#resourceful-routing).
 
 
 ## Serve static content 
-The artifacts generated with the building of the Angular client/frontend are stored in `static`, 
-with the exception of `index.html`, included in the folder `templates`.
+The artifacts generated with the building of the Angular client (frontend) are stored in `static`, 
+with the exception of `index.html`, which is included in the folder `templates`.
 
 The route 
 ```python 
@@ -64,11 +64,11 @@ The route
 def root():
     return render_template('index.html')
 ```
-in `app.py` serves the static content.
+in `app.py` serves the frontend files.
 
 ## Error definition
 
-The file `errors.py` currently contains only a few error messages. It is intended to also 
+The file `errors.py` currently contains only a few error messages. It is intended to also include
 the definition of custom errors when necessary. Check the Flask documentation on [handling application errors](https://flask.palletsprojects.com/en/2.0.x/errorhandling/)
 for more information.
 

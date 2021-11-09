@@ -14,7 +14,7 @@ The folder-structure looks like this:
             -train
                 -<condition_classifier>_Reading.csv
                 -<condition_classifier>_Rating.csv
-        -g-REL
+        -g-rel
             -main
                 -<condition_classifier>_Reading.csv
                 -<condition_classifier>_Rating.csv

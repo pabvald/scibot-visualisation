@@ -17,11 +17,12 @@ For each article, e.g. `g-rel_q075-1_i.html`, there are two `csv` files:
 | `x2` | Second normalized  x coordinate. For all articles its value will be within the interval `[0, 1]`.|
 | `y2` | Second normalized  y coordinate. For the `g-REL` articles its value will be within the interval `[0, 1]`; however, for the `Google_NQ` articles, its value can be greater than `1.0`, depending on the article's length|
 
-Version 04: the articles of the `g-REL` corpus are considered to have a single paragraph that includes the title. The coordinates of the 
+Versions:
+- `v04`: the articles of the `g-REL` corpus are considered to have a single paragraph that includes the title. The coordinates of the 
 previous division in more paragraphs are stored in the files with the `_paragraphs_split.csv` extension. The axis origin 
 that is considered to obtain the coordinates is **bottom left (BL)**.
 
-Version 05:  the articles of the `g-REL` corpus are considered to have a single paragraph that includes the title. The coordinates of the 
+- `v05`:  the articles of the `g-REL` corpus are considered to have a single paragraph that includes the title. The coordinates of the 
 previous division in more paragraphs are stored in the files with the `_paragraphs_split.csv` extension. The axis origin 
 that is considered to obtain the coordinates is **top left (TL)**.
 
@@ -36,11 +37,12 @@ that is considered to obtain the coordinates is **top left (TL)**.
 | `x2` | Second normalized  x coordinate. For all articles its value will be within the interval `[0, 1]`.|
 | `y2` | Second normalized  y coordinate. For the `g-REL` articles its value will be within the interval `[0, 1]`; however, for the `Google_NQ` articles, its value can be greater than `1.0`, depending on the article's length|
 
+Versions:
 
-Version 04: the articles of the `g-REL` corpus are considered to have a single paragraph that includes the title. The coordinates of the 
+- `v04`: the articles of the `g-REL` corpus are considered to have a single paragraph that includes the title. The coordinates of the 
 previous division in more paragraphs are stored in the files with the `_labels_split.csv` extension. The axis origin 
 that is considered to obtain the coordinates is **bottom left (BL)**.
 
-Version 05: the articles of the `g-REL` corpus are considered to have a single paragraph that includes the title. The coordinates of the 
+- `v05`: the articles of the `g-REL` corpus are considered to have a single paragraph that includes the title. The coordinates of the 
 previous division in more paragraphs are stored in the files with the `_labels_split.csv` extension. The axis origin 
 that is considered to obtain the coordinates is **top left (TL)**.

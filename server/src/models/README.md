@@ -2,7 +2,7 @@
 
 ## Serialization - Marshmallow
 
-For serialization, we use the Python library [marshmallow](https://marshmallow.readthedocs.io/en/stable/), for
+We use the Python library [marshmallow](https://marshmallow.readthedocs.io/en/stable/), for
 simplified object serialization. In short, marshmallow schemas can be used to:
 
  + Validate input data.
@@ -15,7 +15,7 @@ then rendered in JSON format.
 For each Model, a marshmallow Schema is defined. Both the Model and the corresponding Schema
 are defined in the same source file.
 
-## Models 
+## Models
 
 ### corpus.py
 Contains the class enum `Corpus` to identify the two different sets of documents.
