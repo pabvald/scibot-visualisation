@@ -4,7 +4,7 @@ We base our application architecture on the post [Angular Architecture Patterns 
 
 Our system is decomposed in three main abstraction layers:
 
-<img src="docs/abstraction_layers.png">
+![Architecture overwiew](docs/abstraction_layers.PNG)
 
 ## Presentation layer 
 The only responsibilities of this layer are to present and to delegate. In other words, it presents the UI and delegates user’s actions to the core layer, through the abstraction layer. It knows what to display and what to do, but it does not know how the user’s interactions should be handled.
