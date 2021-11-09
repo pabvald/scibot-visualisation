@@ -12,16 +12,16 @@ The only responsibilities of this layer are to present and to delegate. In other
 ### components 
 Each angular component has a subfolder containing three main different files:
 
-1. `name.component.html`: HTML 
-2. `name.component.scss`: styles 
-3. `name.component.ts`: logic 
+1. `<name>.component.html`: HTML 
+2. `<name>.component.scss`: styles 
+3. `<name>.component.ts`: logic 
 
 
 ## Abstraction layer 
 The abstraction layer decouples the presentation layer from the core layer and also has it’s very own defined responsibilities. This layer exposes the streams of state and interface for the components in the presentation layer, playing the role of the facade.
 
 ### facade 
-We distinguish the `data`, `label-level` and `paragraph-level` facades.
+We distinguish the `DataFacade`, `LabelLevelFacade` and `ParagraphLevelFacade` facades.
 
 
 

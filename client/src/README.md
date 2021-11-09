@@ -22,5 +22,5 @@ In order to import the `styles.scss` and
 get access to the variables defined in it within a particular component's style file, you can include the following import statement:
 
 ```css 
-@import './<relative_path>/styles.scss';
+@import './<relative path>/styles.scss';
 ```
