@@ -3,7 +3,7 @@ import { ILayout, Layout } from "./layout.model";
 /**
  * Base label interface.
  */
-interface ILabel {
+export interface ILabel {
     id: number;
 }
 

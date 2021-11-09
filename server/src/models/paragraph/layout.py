@@ -22,18 +22,12 @@ class ParagraphLayoutModel(ParagraphModel):
         super().__init__(par_id)
         _, x1, y1, x2, y2 = par_mapping
         self._layout = LayoutModel(doc_id, x1, y1, x2, y2)
-        self._labels = []
 
         # create  labels
         for label_id, label_mapping in labels_mapping.iterrows():
-            self._labels.append(
+            self._add_label(
                 LabelLayoutModel(label_id=label_id, doc_id=doc_id, mapping=label_mapping)
             )
-
-    @property
-    def labels(self) -> List[LabelLayoutModel]:
-        """ Labels contained in the paragraph """
-        return self._labels
 
     @property
     def layout(self) -> LayoutModel:

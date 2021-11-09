@@ -25,18 +25,12 @@ class ParagraphFixDurationModel(ParagraphModel):
         _, x1, y1, x2, y2 = par_mapping
         self._layout = LayoutModel(doc_id, x1, y1, x2, y2)
         self._gaze_data = gaze_data
-        self._labels = []
 
         # create  labels
         for label_id, label_mapping in labels_mapping.iterrows():
-            self._labels.append(
+            self._add_label(
                 LabelFixDurationModel(label_id=label_id, doc_id=doc_id, mapping=label_mapping)
             )
-
-    @property
-    def labels(self) -> List[LabelFixDurationModel]:
-        """ Labels contained in the paragraph """
-        return self._labels
 
     @property
     def layout(self) -> LayoutModel:

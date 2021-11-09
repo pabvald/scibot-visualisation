@@ -45,8 +45,6 @@ class DocumentFixDurationResource(Resource):
         corpus = Corpus.grel if doc_id.startswith("g-rel") else Corpus.nq
 
         if corpus == Corpus.grel:
-            # HTML parsed article
-            article = app.dataloader.grel_articles[doc_id]
             # mappings
             pars_mapping = app.mappingloader.grel_paragraphs[doc_id[:-2]]
             labels_mapping = app.mappingloader.grel_labels[doc_id[:-2]]
@@ -54,8 +52,6 @@ class DocumentFixDurationResource(Resource):
             gaze = app.dataloader.grel_reading[user_id][doc_id[:-2]]['dataframe']
 
         else:
-            # HTML parsed article
-            article = app.dataloader.google_nq_articles[doc_id]
             # mappings
             pars_mapping = app.mappingloader.google_nq_paragraphs[doc_id]
             labels_mapping = app.mappingloader.google_nq_labels[doc_id]
@@ -65,7 +61,7 @@ class DocumentFixDurationResource(Resource):
         # create document representation
         document = DocumentFixDurationModel(user_id=user_id,
                                             doc_id=doc_id,
-                                            query=article.query.strip(),
+                                            corpus=corpus,
                                             pars_mapping=pars_mapping,
                                             labels_mapping=labels_mapping,
                                             gaze_data=gaze)

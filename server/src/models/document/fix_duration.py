@@ -3,6 +3,7 @@ from marshmallow import fields
 from pandas.core.frame import DataFrame
 
 from features import FixationEvent, SaccadeEvent
+from models.corpus import Corpus
 from models.paragraph import ParagraphFixDurationModel, ParagraphFixDurationSchema
 
 from .base import DocumentModel, DocumentSchema
@@ -11,19 +12,18 @@ from .base import DocumentModel, DocumentSchema
 class DocumentFixDurationModel(DocumentModel):
     """ Document + Fixation duration representation """
 
-    def __init__(self, user_id: str, doc_id: str, query: str, pars_mapping: DataFrame, labels_mapping: DataFrame,
+    def __init__(self, user_id: str, doc_id: str, corpus: Corpus, pars_mapping: DataFrame, labels_mapping: DataFrame,
                  gaze_data: DataFrame):
         """
         Args:
             user_id: user's id
             doc_id: document's id (filename without the .html extension)
-            query: query of the document
+            corpus: Corpus.grel or Corpus.nq
             pars_mapping: mapping of the paragraphs
             labels_mapping: mapping of the labels
             gaze_data: gaze data of the document
         """
-        super().__init__(user_id, doc_id, query)
-        self._paragraphs = []
+        super().__init__(user_id, doc_id, corpus)
 
         # create the paragraphs
         par_ids = pars_mapping['paragraph_id'].to_numpy()
@@ -32,15 +32,10 @@ class DocumentFixDurationModel(DocumentModel):
             par_mapping = list(pars_mapping.loc[pars_mapping['paragraph_id'] == par_id].to_numpy()[0])
             labels_selection = labels_mapping.loc[labels_mapping['paragraph_id'] == par_id]
 
-            self._paragraphs.append(
+            self._add_paragraph(
                 ParagraphFixDurationModel(doc_id=doc_id, par_id=par_id, par_mapping=par_mapping,
                                           labels_mapping=labels_selection, gaze_data=par_gaze)
             )
-
-    @property
-    def paragraphs(self) -> List[ParagraphFixDurationModel]:
-        """ Paragraphs of the document """
-        return self._paragraphs
 
     @property
     def fixations(self) -> List[FixationEvent]:

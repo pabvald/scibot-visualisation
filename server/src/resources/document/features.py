@@ -30,21 +30,18 @@ class DocumentFeaturesResource(Resource):
         corpus = Corpus.grel if doc_id.startswith("g-rel") else Corpus.nq
 
         if corpus == Corpus.grel:
-            # HTML parsed article
-            article = app.dataloader.grel_articles[doc_id]
             # paragraph features
             pars_features = app.featuresloader.grel_par_features[user_id].get(doc_id[:-2], {})
 
         else:
-            # HTML parsed article
-            article = app.dataloader.google_nq_articles[doc_id]
+
             # paragraph features
             pars_features = app.featuresloader.google_nq_par_features[user_id].get(doc_id, {})
 
         # create document representation
         document = DocumentFeaturesModel(user_id=user_id,
                                          doc_id=doc_id,
-                                         query=article.query.strip(),
+                                         corpus=corpus,
                                          pars_features=pars_features)
         # serialize document
         serialized_document = DocumentFeaturesSchema().dump(document)

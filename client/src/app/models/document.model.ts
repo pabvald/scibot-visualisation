@@ -1,4 +1,4 @@
-import { IParagraphFeatures, IParagraphFixation, IParagraphLayout, IParagraphRelevance, Paragraph } from "./paragraph.model";
+import { IParagraph, IParagraphFeatures, IParagraphFixation, IParagraphLayout, IParagraphRelevance, Paragraph } from "./paragraph.model";
 
 /**
  * Base document interface.
@@ -6,13 +6,15 @@ import { IParagraphFeatures, IParagraphFixation, IParagraphLayout, IParagraphRel
 interface IDocument {
     userId: string;
     id: string;
-    query: string;
+    corpus: string;
+    paragraphs: IParagraph[];
 }
 
 /**
  * Text-and-layout document interface
  */
 export interface IDocumentLayout extends IDocument {
+    query: string;
     paragraphs: IParagraphLayout[];
 }
 
@@ -44,6 +46,7 @@ export class Document implements IDocumentLayout, IDocumentFeatures,
                                     IDocumentRelevance, IDocumentFixation {
     userId: string;
     id: string;
+    corpus: string;
     query: string;
     paragraphs: Paragraph[];
     
@@ -58,6 +61,7 @@ export class Document implements IDocumentLayout, IDocumentFeatures,
             docRelevance: IDocumentRelevance, docFixation: IDocumentFixation) {
         this.userId = docLayout.userId;
         this.id = docLayout.id;
+        this.corpus = docLayout.corpus;
         this.query = docLayout.query;
         this.paragraphs = docLayout.paragraphs.map((par_layout: any) => {
             let par_id = par_layout.id;

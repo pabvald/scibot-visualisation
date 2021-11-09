@@ -47,6 +47,7 @@ class DocumentLayoutResource(Resource):
         # create document representation
         document = DocumentLayoutModel(user_id=user_id,
                                        doc_id=doc_id,
+                                       corpus=corpus,
                                        query=article.query.strip(),
                                        pars_mapping=pars_mapping,
                                        labels_mapping=labels_mapping)

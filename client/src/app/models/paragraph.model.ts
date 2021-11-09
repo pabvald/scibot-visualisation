@@ -1,21 +1,23 @@
-import { ILabelFixation, ILabelLayout, Label } from "./label.model";
+import { LabelLevelState } from "../state/label-level/label-level.state";
+import { ILabel, ILabelFixation, ILabelLayout, Label } from "./label.model";
 import { ILayout, Layout } from "./layout.model";
 
 /**
  * Base paragraph interface
  */
-interface IParagraph {
+export interface IParagraph {
     id: number;
+    isTitle: boolean;
+    labels: ILabel[];
+    hasLabels: boolean;
 }
 
 /**
  * Text-and-layout paragraph interface.
  */
 export interface IParagraphLayout extends IParagraph {
-    isTitle: boolean;
     labels: ILabelLayout[];
-    layout: ILayout;
-    hasLabels: boolean;
+    layout: ILayout; 
 }
 
 /**
@@ -24,7 +26,7 @@ export interface IParagraphLayout extends IParagraph {
 export interface IParagraphFeatures extends IParagraph {
     features: Object;
     hasFeatures: boolean;
-    getFeatureById(id: string): any;
+    getFeatureById(id: string): number;
 }
 
 /**
@@ -97,7 +99,7 @@ export class Paragraph implements IParagraphLayout, IParagraphFeatures,
         return this.labels.length > 0;
     }
 
-    getFeatureById(id: string) {
+    getFeatureById(id: string): number {
         let value = -1;
         Object.entries(this.features).forEach(
             ([key, v]) => {
