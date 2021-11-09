@@ -47,6 +47,8 @@ Example:
 ```python 
 api.add_resource(UserListResource, '/api/user/ids')
 ```
+Check the `README` in the `resources` package for a specification of the correspondence between 
+API calls and resources. 
 
 For more details, check the documentation of the extension on 
 [resourceful routing](https://flask-restful.readthedocs.io/en/latest/quickstart.html#resourceful-routing).
