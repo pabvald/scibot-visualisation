@@ -35,17 +35,17 @@ class DocumentRelevanceResource(Resource):
 
         if corpus == Corpus.grel:
             # paragraph features
-            pars_features = app.featuresloader.grel_par_features[user_id].get(doc_id[:-2], {})
+            pars_features = app.features_loader.grel_par_features[user_id].get(doc_id[:-2], {})
             # system and perceived relevance
-            system_relevance = app.dataloader.grel_reading[user_id][doc_id[:-2]]['system_relevance']
-            perceived_relevance = app.dataloader.grel_reading[user_id][doc_id[:-2]]['perceived_relevance']
+            system_relevance = app.gaze_loader.grel[user_id][doc_id[:-2]]['system_relevance']
+            perceived_relevance = app.gaze_loader.grel[user_id][doc_id[:-2]]['perceived_relevance']
 
         else:
             # paragraph features
-            pars_features = app.featuresloader.google_nq_par_features[user_id].get(doc_id, {})
+            pars_features = app.features_loader.google_nq_par_features[user_id].get(doc_id, {})
             # system and perceived relevance
-            system_relevance = app.dataloader.google_nq_reading[user_id][doc_id]['system_relevance']
-            perceived_relevance = app.dataloader.google_nq_reading[user_id][doc_id]['perceived_relevance']
+            system_relevance = app.gaze_loader.google_nq[user_id][doc_id]['system_relevance']
+            perceived_relevance = app.gaze_loader.google_nq[user_id][doc_id]['perceived_relevance']
 
         # predicted relevance
         pred_relevance = self._relevance_service.predict_relevance(pars_features, corpus)

@@ -45,25 +45,25 @@ class DocumentFixDurationResource(Resource):
         corpus = Corpus.grel if doc_id.startswith("g-rel") else Corpus.nq
 
         if corpus == Corpus.grel:
-            # mappings
-            pars_mapping = app.mappingloader.grel_paragraphs[doc_id[:-2]]
-            labels_mapping = app.mappingloader.grel_labels[doc_id[:-2]]
+            # layouts
+            pars_layout = app.layout_loader.grel_paragraphs[doc_id[:-2]]
+            labels_layout = app.layout_loader.grel_labels[doc_id[:-2]]
             # gaze data
-            gaze = app.dataloader.grel_reading[user_id][doc_id[:-2]]['dataframe']
+            gaze = app.gaze_loader.grel[user_id][doc_id[:-2]]['dataframe']
 
         else:
-            # mappings
-            pars_mapping = app.mappingloader.google_nq_paragraphs[doc_id]
-            labels_mapping = app.mappingloader.google_nq_labels[doc_id]
+            # layouts
+            pars_layout = app.layout_loader.google_nq_paragraphs[doc_id]
+            labels_layout = app.layout_loader.google_nq_labels[doc_id]
             # gaze data
-            gaze = app.dataloader.google_nq_reading[user_id][doc_id]['dataframe']
+            gaze = app.gaze_loader.google_nq[user_id][doc_id]['dataframe']
 
         # create document representation
         document = DocumentFixDurationModel(user_id=user_id,
                                             doc_id=doc_id,
                                             corpus=corpus,
-                                            pars_mapping=pars_mapping,
-                                            labels_mapping=labels_mapping,
+                                            pars_layout=pars_layout,
+                                            labels_layout=labels_layout,
                                             gaze_data=gaze)
         # compute fixations on the document's labels
         self._fixation_service.compute_horizontal_hits(document, hit_left_margin, hit_right_margin)

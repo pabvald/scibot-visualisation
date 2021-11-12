@@ -1,21 +1,21 @@
 from marshmallow import fields
 
-from models.layout import LayoutModel, LayoutSchema
+from models.bounding_box import BoundingBox
 
 from .base import LabelModel, LabelSchema
 
 
 class LabelFixDurationModel(LabelModel):
 
-    def __init__(self, label_id: int, doc_id: str, mapping: any):
+    def __init__(self, label_id: int, doc_id: str, layout: any):
         super().__init__(label_id)
-        _, _, x1, y1, x2, y2, _ = mapping
-        self._layout = LayoutModel(doc_id, x1, y1, x2, y2)
+        _, _, x1, y1, x2, y2, _ = layout
+        self._bounding_box = BoundingBox(doc_id, x1, y1, x2, y2)
         self._fixation_durations = []
 
     @property
-    def layout(self) -> LayoutModel:
-        return self._layout
+    def bounding_box(self) -> BoundingBox:
+        return self._bounding_box
 
     @property
     def num_fixations(self) -> int:

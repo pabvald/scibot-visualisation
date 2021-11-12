@@ -12,8 +12,8 @@ a subfolder for each version of the data. Within each version folder, there is a
 for each user who participated in the study.
 
 
-## Mapping - Text coordinates
-The folder `mapping` contains the coordinates (`x1`, `y1`, `x2`, `y2`) of every paragraph 
+## Layout - Text coordinates
+The folder `layout` contains the coordinates (`x1`, `y1`, `x2`, `y2`) of every paragraph 
 and token of every article. The coordinates are normalized. The dimensions of the monitor 
 used during the study were `2560x1440`. 
 

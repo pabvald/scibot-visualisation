@@ -89,11 +89,13 @@ export class DataFacade {
    */
   reloadDocument() {
     let userId: string = ""; 
-    let docId: string = "";
+    let docId: string = ""; 
+    
     this.dataState.getDocument$().pipe(take(1)).subscribe(document => {
       userId = document.userId;
       docId = document.id;
     });
+
     this.loadDocument(userId, docId);
   }
 
@@ -141,15 +143,17 @@ export class DataFacade {
    */
   setFixationArea(fixationArea: IFixationArea) {
     let userId: string = ""; 
-    let docId: string = "";
-    
+    let docId: string = ""; 
+      
     this.dataState.setUpdating(true);
-    this.dataState.setFixationArea(fixationArea);
     this.dataState.getDocument$().pipe(take(1)).subscribe(document => {
       userId = document.userId;
       docId = document.id;
-    });    
+    });
+    this.loadDocumentFixation(fixationArea, userId, docId);
+  }
 
+  private loadDocumentFixation(fixationArea: IFixationArea, userId: string, docId: string) {
     combineLatest([
       this.dataState.getDocLayout$(),
       this.dataState.getDocFeatures$(),
@@ -159,6 +163,7 @@ export class DataFacade {
       first()
     ).subscribe(
       (results) => {
+        this.dataState.setFixationArea(fixationArea);
         this.dataState.setDocFixation(results[3]);
         this.dataState.setDocument(new Document(results[0], results[1], results[2], results[3]));
       },

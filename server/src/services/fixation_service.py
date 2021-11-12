@@ -33,17 +33,17 @@ class FixationService(object):
                     label = paragraph.labels[i]
 
                     # modify coordinates (scale, origin) to match gaze data
-                    label.layout.normalized_coord = False
-                    label.layout.axis_origin = AxisOrigin.BL
+                    label.bounding_box.normalized_coord = False
+                    label.bounding_box.axis_origin = AxisOrigin.BL
 
-                    if fixation_area.hits(label.layout):
+                    if fixation_area.hits(label.bounding_box):
                         label.add_fix_duration(fixation.duration)
                         line_hit = True
                     elif line_hit:  # no more hits are possible in the next lines
                         possible_hits = False
 
                     # reset coordinates to original state
-                    label.layout.normalized_coord = True
-                    label.layout.axis_origin = AxisOrigin.TL
+                    label.bounding_box.normalized_coord = True
+                    label.bounding_box.axis_origin = AxisOrigin.TL
 
                     i += 1

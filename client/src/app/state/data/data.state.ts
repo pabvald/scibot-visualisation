@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable, ReplaySubject } from 'rxjs';
+import { Subject, BehaviorSubject, Observable, ReplaySubject } from 'rxjs';
 import { FixationArea, IFixationArea } from 'src/app/models/fixation-area.model';
 import { Document, IDocumentFeatures, IDocumentFixation, IDocumentLayout, IDocumentRelevance } from '../../models/document.model';
 
@@ -9,11 +9,11 @@ import { Document, IDocumentFeatures, IDocumentFixation, IDocumentLayout, IDocum
 export class DataState {
 
   private updating$ = new BehaviorSubject<boolean>(false);
-  private documentLayout$ = new ReplaySubject<IDocumentLayout>();
-  private documentFeatures$ = new ReplaySubject<IDocumentFeatures>();
-  private documentRelevance$ = new ReplaySubject<IDocumentRelevance>();
-  private documentFixation$ = new ReplaySubject<IDocumentFixation>();
-  private document$ = new ReplaySubject<Document>();
+  private documentLayout$ = new ReplaySubject<IDocumentLayout>(1);
+  private documentFeatures$ = new ReplaySubject<IDocumentFeatures>(1);
+  private documentRelevance$ = new ReplaySubject<IDocumentRelevance>(1);
+  private documentFixation$ = new ReplaySubject<IDocumentFixation>(1);
+  private document$ = new ReplaySubject<Document>(1);
   private fixationArea$ = new BehaviorSubject<IFixationArea>(new FixationArea(0, 0));
 
   /**
@@ -26,7 +26,8 @@ export class DataState {
   /**
    * @returns current document's layout
    */
-  getDocLayout$(): Observable<IDocumentLayout> {
+  getDocLayout$(): Observable<IDocumentLayout> { 
+  
     return this.documentLayout$.asObservable();
   }
 

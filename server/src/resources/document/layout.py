@@ -32,25 +32,25 @@ class DocumentLayoutResource(Resource):
 
         if corpus == Corpus.grel:
             # HTML parsed article
-            article = app.dataloader.grel_articles[doc_id]
-            # mappings
-            pars_mapping = app.mappingloader.grel_paragraphs[doc_id[:-2]]
-            labels_mapping = app.mappingloader.grel_labels[doc_id[:-2]]
+            article = app.article_loader.grel[doc_id]
+            # layouts
+            pars_layout = app.layout_loader.grel_paragraphs[doc_id[:-2]]
+            labels_layout = app.layout_loader.grel_labels[doc_id[:-2]]
 
         else:
             # HTML parsed article
-            article = app.dataloader.google_nq_articles[doc_id]
-            # mappings
-            pars_mapping = app.mappingloader.google_nq_paragraphs[doc_id]
-            labels_mapping = app.mappingloader.google_nq_labels[doc_id]
+            article = app.article_loader.google_nq[doc_id]
+            # layouts
+            pars_layout = app.layout_loader.google_nq_paragraphs[doc_id]
+            labels_layout = app.layout_loader.google_nq_labels[doc_id]
 
         # create document representation
         document = DocumentLayoutModel(user_id=user_id,
                                        doc_id=doc_id,
                                        corpus=corpus,
                                        query=article.query.strip(),
-                                       pars_mapping=pars_mapping,
-                                       labels_mapping=labels_mapping)
+                                       pars_layout=pars_layout,
+                                       labels_layout=labels_layout)
         # serialize document
         serialized_document = DocumentLayoutSchema().dump(document)
         return jsonify(serialized_document)

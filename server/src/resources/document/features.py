@@ -31,12 +31,12 @@ class DocumentFeaturesResource(Resource):
 
         if corpus == Corpus.grel:
             # paragraph features
-            pars_features = app.featuresloader.grel_par_features[user_id].get(doc_id[:-2], {})
+            pars_features = app.features_loader.grel_par_features[user_id].get(doc_id[:-2], {})
 
         else:
 
             # paragraph features
-            pars_features = app.featuresloader.google_nq_par_features[user_id].get(doc_id, {})
+            pars_features = app.features_loader.google_nq_par_features[user_id].get(doc_id, {})
 
         # create document representation
         document = DocumentFeaturesModel(user_id=user_id,

@@ -3,7 +3,7 @@ from abc import ABCMeta, abstractmethod
 from typing import List
 
 from .fixation_event import FixationEvent
-from models.layout import LayoutModel
+from models.bounding_box import BoundingBox
 
 
 class FixationArea(metaclass=ABCMeta):
@@ -14,7 +14,7 @@ class FixationArea(metaclass=ABCMeta):
         pass
 
     @abstractmethod
-    def hits(self, bb: LayoutModel) -> bool:
+    def hits(self, bb: BoundingBox) -> bool:
         pass
 
 
@@ -75,14 +75,14 @@ class HorizontalFixationArea(FixationArea):
         assert m in ["intersects", "covers"], "invalid label mode"
         self._mode = m
 
-    def hits(self, layout: LayoutModel) -> bool:
+    def hits(self, bounding_box: BoundingBox) -> bool:
         """
         Determines if a label is hit by the fixation area.
 
         Args:
-            layout: layout
+            bounding_box: bounding box
         """
-        x1, y1, x2, y2 = layout.coordinates
+        x1, y1, x2, y2 = bounding_box.coordinates
 
         # covers
         hits_w = self.x1 <= x1 and self.x2 >= x2

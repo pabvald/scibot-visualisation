@@ -1,6 +1,5 @@
-import { LabelLevelState } from "../state/label-level/label-level.state";
 import { ILabel, ILabelFixation, ILabelLayout, Label } from "./label.model";
-import { ILayout, Layout } from "./layout.model";
+import { IBoundingBox, BoundingBox } from "./bounding-box";
 
 /**
  * Base paragraph interface
@@ -17,7 +16,7 @@ export interface IParagraph {
  */
 export interface IParagraphLayout extends IParagraph {
     labels: ILabelLayout[];
-    layout: ILayout; 
+    boundingBox: IBoundingBox; 
 }
 
 /**
@@ -52,7 +51,7 @@ export interface IParagraphFixation extends IParagraph {
 export class Paragraph implements IParagraphLayout, IParagraphFeatures, 
                         IParagraphRelevance, IParagraphFixation {
     public id: number;
-    public layout: ILayout;
+    public boundingBox: IBoundingBox;
     public systemRelevance: boolean = false;
     public perceivedRelevance: boolean = false;
     public predictedRelevance: [number, boolean] = [-1, false];
@@ -69,7 +68,7 @@ export class Paragraph implements IParagraphLayout, IParagraphFeatures,
     constructor (parLayout: IParagraphLayout, parFeatures: IParagraphFeatures | undefined, 
                     parRelevance: IParagraphRelevance | undefined, parFixation: IParagraphFixation | undefined) {
         this.id = parLayout.id;
-        this.layout = new Layout(parLayout.layout);   
+        this.boundingBox = new BoundingBox(parLayout.boundingBox);   
         if (parFeatures != undefined) {
             this.features = parFeatures.features; 
         }

@@ -20,9 +20,9 @@ are defined in the same source file.
 ### corpus.py
 Contains the class enum `Corpus` to identify the two different sets of documents.
 
-### layout.py
-Contains the definition of hte class `LayoutModel`, which encapsulates attributes and behaviour 
-related to the layout (bounding box) of a token/paragraph.
+### bounding_box.py
+Contains the definition of the class `BoundingBox`, which encapsulates attributes and behaviour 
+related to the bounding box of a token/paragraph.
 
 ### document package
 

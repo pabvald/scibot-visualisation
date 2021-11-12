@@ -11,15 +11,14 @@ class Config(object):
     # DB_HOST = 'database' # a docker link
 
     # Data versions
-    GAZE_VERSION = 'v05'
-    MAPPING_VERSION = 'v04'
+    LAYOUT_VERSION = 'v04'
 
     # Paths
     DIR = os.path.dirname(__file__)
     DATA_DIR = pjoin(DIR, 'data')
-    GAZE_DIR = pjoin(DATA_DIR, 'gaze', GAZE_VERSION)
+    GAZE_DIR = pjoin(DATA_DIR, 'gaze')
     ARTICLE_DIR = pjoin(DATA_DIR, 'articles')
-    MAPPING_DIR = pjoin(DATA_DIR, 'mapping', MAPPING_VERSION)
+    LAYOUT_DIR = pjoin(DATA_DIR, 'layout', LAYOUT_VERSION)
     PAR_FEATURES_DIR = pjoin(DATA_DIR, 'paragraph_features')
 
 

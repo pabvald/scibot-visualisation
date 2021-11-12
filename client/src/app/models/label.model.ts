@@ -1,4 +1,4 @@
-import { ILayout, Layout } from "./layout.model";
+import { IBoundingBox, BoundingBox } from "./bounding-box";
 
 /**
  * Base label interface.
@@ -12,7 +12,7 @@ export interface ILabel {
  */
 export interface ILabelLayout extends ILabel{
     text: string;
-    layout: ILayout;
+    boundingBox: IBoundingBox;
 }
 
 /**
@@ -28,7 +28,7 @@ export interface ILabelFixation extends ILabel{
  */
 export class Label implements ILabelLayout, ILabelFixation {
     public id: number;
-    public layout: Layout;
+    public boundingBox: BoundingBox;
     public text: string;
     public fixationDuration: number = 0.0;
 
@@ -39,7 +39,7 @@ export class Label implements ILabelLayout, ILabelFixation {
      */
     constructor(labelLayout: ILabelLayout, labelFixation: ILabelFixation | undefined) {
         this.id = labelLayout.id;
-        this.layout = new Layout(labelLayout.layout);
+        this.boundingBox = new BoundingBox(labelLayout.boundingBox);
         this.text = labelLayout.text
         if (labelFixation != undefined)
             this.fixationDuration = Label.transFixDuration(labelFixation.fixationDuration);

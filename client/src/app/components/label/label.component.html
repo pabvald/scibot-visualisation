@@ -2,12 +2,12 @@
     *ngIf="label"
     [ngStyle]="{ 
         'background-color': color,
-        'top.%': (100 * label.layout.y1),
-        'left.%': (100 * label.layout.x1),
-        'width.%': (100 * label.layout.width),
-        'max-width.%': (100 * label.layout.width),
-        'height.%': (100 * label.layout.height),
-        'max-height.%': (100 * label.layout.height)
+        'top.%': (100 * label.boundingBox.y1),
+        'left.%': (100 * label.boundingBox.x1),
+        'width.%': (100 * label.boundingBox.width),
+        'max-width.%': (100 * label.boundingBox.width),
+        'height.%': (100 * label.boundingBox.height),
+        'max-height.%': (100 * label.boundingBox.height)
     }">
     <span [ngClass]="{'title': isTitle}">{{label.text}}</span> 
 </div>

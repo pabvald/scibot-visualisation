@@ -1,8 +1,8 @@
 # app 
 
-We base our application architecture on the post [Angular Architecture Patterns and Best Practices (that help to scale)](https://dev-academy.com/angular-architecture-best-practices/) from Bartosz Pietrucha. 
+The application's architecture is based on the post [Angular Architecture Patterns and Best Practices (that help to scale)](https://dev-academy.com/angular-architecture-best-practices/) from Bartosz Pietrucha. 
 
-Our system is decomposed in three main abstraction layers:
+The system is decomposed in three main abstraction layers:
 
 ![Architecture overwiew](docs/abstraction_layers.PNG)
 
@@ -24,7 +24,6 @@ The abstraction layer decouples the presentation layer from the core layer and a
 We distinguish the `DataFacade`, `LabelLevelFacade` and `ParagraphLevelFacade` facades.
 
 
-
 ## Core layer 
 Here is where core application logic is implemented. All data manipulation and outside world communication happen here. 
 
@@ -42,26 +41,39 @@ Data representations of
 
 - Document
 - Label 
-- Layout
+- BoundingBox
 - Paragraph 
 
 and useful interfaces
 
 - Feature configuration 
-- Fixation area
+- Fixation area (configuration)
 
 used through the different layers of the application.
 
 
-### (general) services 
-Encapsulate business logic that is not strictly related to data management or api calls.
+### services 
+Encapsulate business logic that is not strictly related to data management or api calls. 
+
+- `GlobalHttpInterceptorService`: intercepts and processes every HTTP error.
+- `GlobalErrorHandlerService`: handles every error that is not handled by the previous one.
+- `NotificationService`: shows a success (green) or error (red) message using a *slack bar*.
+
 
 ### state
 
-Encapsulates the state management. To manage our state we simply use BehaviourSubjects or ReplaySubjects. Having this kind abstraction gives us a lot of flexibility and allows to change the way we manage state not even touching the presentation layer.
+Encapsulates the state management. To manage our state we simply use BehaviourSubjects or ReplaySubjects. Having this kind of abstraction gives us a lot of flexibility and allows to change the way we manage state without even touching the presentation layer.
 
 There are three different states:
 
-1. `DataState`:
-2. `LabelLevelState`:
-3. `ParagraphLevelState`:
+-  `DataState`: stores the different document data (layout, features, relevance, fixation duration).
+- `LabelLevelState`: stores the the data exclusively related to the label level (fixation duration configuration, enabled).
+- `ParagraphLevelState`: stores the data exclusively related to the paragraph level (features configuration, enabled).
+
+
+## Others 
+
+- `app-routing.module.ts`:  allows to add navigation to the app in the case that it is necessary.
+- `app.module.ts`: imports all the necessary modules.
+
+

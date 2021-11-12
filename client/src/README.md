@@ -1,9 +1,7 @@
 # Overview
 
 ## app
-Contains thte Typescript, HTML and SCSS code that constitutes the Angular application. Check the inner `README` for more details.
-
-## assets
+Contains the Typescript, HTML and SCSS code that constitutes the Angular application. Check the inner `README` for more details.
 
 
 ## environments 
@@ -19,7 +17,7 @@ Corresponds to DFKI's logo.
 The global styles as well as sytle-related constants (e.g. color palette) should be defined in this file. 
 
 In order to import the `styles.scss` and 
-get access to the variables defined in it within a particular component's style file, you can include the following import statement:
+get access to the variables defined in it from a particular component's style file, you can include the following import statement:
 
 ```css 
 @import './<relative path>/styles.scss';
