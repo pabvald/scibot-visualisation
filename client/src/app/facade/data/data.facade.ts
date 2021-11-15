@@ -153,6 +153,12 @@ export class DataFacade {
     this.loadDocumentFixation(fixationArea, userId, docId);
   }
 
+  /**
+   * Loads the new document's per-token fixation times.
+   * @param fixationArea fixation area configuration
+   * @param userId user's id
+   * @param docId document's id
+   */
   private loadDocumentFixation(fixationArea: IFixationArea, userId: string, docId: string) {
     combineLatest([
       this.dataState.getDocLayout$(),

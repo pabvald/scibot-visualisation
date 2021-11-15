@@ -13,7 +13,7 @@ class ParagraphModel(object):
             par_id: paragraph's id
         """
         self._id = par_id
-        self._labels =[]
+        self._labels = []
 
     @property
     def id(self):

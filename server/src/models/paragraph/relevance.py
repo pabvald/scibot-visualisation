@@ -6,8 +6,7 @@ from .base import ParagraphModel, ParagraphSchema
 
 class ParagraphRelevanceModel(ParagraphModel):
 
-    def __init__(self, par_id: int, system_rel: float, perceived_rel: float,
-                 pred_rel: Tuple[float, bool]):
+    def __init__(self, par_id: int, system_rel: float, perceived_rel: float, pred_rel: Tuple[float, bool]):
         super().__init__(par_id)
         self._system_relevance = system_rel
         self._perceived_relevance = perceived_rel
