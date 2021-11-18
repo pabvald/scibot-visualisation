@@ -5,7 +5,7 @@ from werkzeug.exceptions import NotFound
 
 from models import Corpus
 from errors import error_messages
-from models.document import DocumentFeaturesModel, DocumentFeaturesSchema
+from models.document import Document, DocumentFeaturesSchema
 
 from resources.user.list import USER_IDS
 from .list import DOC_IDS
@@ -39,10 +39,10 @@ class DocumentFeaturesResource(Resource):
             pars_features = app.features_loader.google_nq_par_features[user_id].get(doc_id, {})
 
         # create document representation
-        document = DocumentFeaturesModel(user_id=user_id,
-                                         doc_id=doc_id,
-                                         corpus=corpus,
-                                         pars_features=pars_features)
+        document = Document.from_features(user_id=user_id,
+                                          doc_id=doc_id,
+                                          corpus=corpus,
+                                          pars_features=pars_features)
         # serialize document
         serialized_document = DocumentFeaturesSchema().dump(document)
         return jsonify(serialized_document)

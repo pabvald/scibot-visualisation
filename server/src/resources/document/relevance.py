@@ -7,7 +7,7 @@ from models import Corpus
 from errors import error_messages
 from resources.user.list import USER_IDS
 from services.relevance_service import RelevanceService
-from models.document import DocumentRelevanceModel, DocumentRelevanceSchema
+from models.document import Document, DocumentRelevanceSchema
 
 from .list import DOC_IDS
 
@@ -51,12 +51,12 @@ class DocumentRelevanceResource(Resource):
         pred_relevance = self._relevance_service.predict_relevance(pars_features, corpus)
 
         # create document representation
-        document = DocumentRelevanceModel(user_id=user_id,
-                                          doc_id=doc_id,
-                                          corpus=corpus,
-                                          system_relevance=system_relevance,
-                                          perceived_relevance=perceived_relevance,
-                                          predicted_relevance=pred_relevance)
+        document = Document.from_relevance(user_id=user_id,
+                                           doc_id=doc_id,
+                                           corpus=corpus,
+                                           system_relevance=system_relevance,
+                                           perceived_relevance=perceived_relevance,
+                                           predicted_relevance=pred_relevance)
         # serialize document
         serialized_document = DocumentRelevanceSchema().dump(document)
         return jsonify(serialized_document)

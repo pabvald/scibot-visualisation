@@ -7,7 +7,7 @@ from errors import error_messages
 from models import Corpus
 from services import FixationService
 from resources.user.list import USER_IDS
-from models.document import DocumentFixDurationModel, DocumentFixDurationSchema
+from models.document import Document, DocumentFixDurationSchema
 
 from .list import DOC_IDS
 
@@ -59,12 +59,12 @@ class DocumentFixDurationResource(Resource):
             gaze = app.gaze_loader.google_nq[user_id][doc_id]['dataframe']
 
         # create document representation
-        document = DocumentFixDurationModel(user_id=user_id,
-                                            doc_id=doc_id,
-                                            corpus=corpus,
-                                            pars_layout=pars_layout,
-                                            labels_layout=labels_layout,
-                                            gaze_data=gaze)
+        document = Document.from_layout_gaze(user_id=user_id,
+                                             doc_id=doc_id,
+                                             corpus=corpus,
+                                             pars_layout=pars_layout,
+                                             labels_layout=labels_layout,
+                                             gaze_data=gaze)
         # compute fixations on the document's labels
         self._fixation_service.compute_horizontal_hits(document, hit_left_margin, hit_right_margin)
 
