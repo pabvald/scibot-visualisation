@@ -1,4 +1,4 @@
-import { IBoundingBox, BoundingBox } from "./bounding-box";
+import { IBoundingBox } from "./bounding-box";
 
 /**
  * Base label interface.
@@ -10,9 +10,8 @@ export interface ILabel {
 /**
  * Text-and-layout label interface.
  */
-export interface ILabelLayout extends ILabel{
+export interface ILabelLayout extends ILabel, IBoundingBox{
     text: string;
-    boundingBox: IBoundingBox;
 }
 
 /**
@@ -28,7 +27,10 @@ export interface ILabelFixation extends ILabel{
  */
 export class Label implements ILabelLayout, ILabelFixation {
     public id: number;
-    public boundingBox: BoundingBox;
+    public x1: number;
+    public y1: number;
+    public x2: number;
+    public y2: number;
     public text: string;
     public fixationDuration: number = 0.0;
 
@@ -39,7 +41,10 @@ export class Label implements ILabelLayout, ILabelFixation {
      */
     constructor(labelLayout: ILabelLayout, labelFixation: ILabelFixation | undefined) {
         this.id = labelLayout.id;
-        this.boundingBox = new BoundingBox(labelLayout.boundingBox);
+        this.x1 = labelLayout.x1;
+        this.y1 = labelLayout.y1;
+        this.x2 = labelLayout.x2;
+        this.y2 = labelLayout.y2;
         this.text = labelLayout.text
         if (labelFixation != undefined)
             this.fixationDuration = Label.transFixDuration(labelFixation.fixationDuration);
@@ -52,6 +57,14 @@ export class Label implements ILabelLayout, ILabelFixation {
      */
     private static transFixDuration(duration: number): number {
         return (duration * 1000); 
+    }
+
+    get width(): number {
+        return this.x2 - this.x1;
+    }
+
+    get height(): number {
+        return this.y2 - this.y1;
     }
 
 }

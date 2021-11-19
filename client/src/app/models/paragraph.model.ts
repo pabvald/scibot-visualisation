@@ -1,5 +1,5 @@
 import { ILabel, ILabelFixation, ILabelLayout, Label } from "./label.model";
-import { IBoundingBox, BoundingBox } from "./bounding-box";
+import { IBoundingBox } from "./bounding-box";
 
 /**
  * Base paragraph interface
@@ -14,9 +14,8 @@ export interface IParagraph {
 /**
  * Text-and-layout paragraph interface.
  */
-export interface IParagraphLayout extends IParagraph {
+export interface IParagraphLayout extends IParagraph, IBoundingBox {
     labels: ILabelLayout[];
-    boundingBox: IBoundingBox; 
 }
 
 /**
@@ -51,7 +50,10 @@ export interface IParagraphFixation extends IParagraph {
 export class Paragraph implements IParagraphLayout, IParagraphFeatures, 
                         IParagraphRelevance, IParagraphFixation {
     public id: number;
-    public boundingBox: IBoundingBox;
+    public x1: number;
+    public y1: number;
+    public x2: number;
+    public y2: number;
     public systemRelevance: boolean = false;
     public perceivedRelevance: boolean = false;
     public predictedRelevance: [number, boolean] = [-1, false];
@@ -68,7 +70,10 @@ export class Paragraph implements IParagraphLayout, IParagraphFeatures,
     constructor (parLayout: IParagraphLayout, parFeatures: IParagraphFeatures | undefined, 
                     parRelevance: IParagraphRelevance | undefined, parFixation: IParagraphFixation | undefined) {
         this.id = parLayout.id;
-        this.boundingBox = new BoundingBox(parLayout.boundingBox);   
+        this.x1 = parLayout.x1;
+        this.y1 = parLayout.y1;
+        this.x2 = parLayout.x2;
+        this.y2 = parLayout.y2;
         if (parFeatures != undefined) {
             this.features = parFeatures.features; 
         }
@@ -106,5 +111,13 @@ export class Paragraph implements IParagraphLayout, IParagraphFeatures,
             }
           );
         return value;
+    }
+
+    get width(): number {
+        return this.x2 - this.x1;
+    }
+
+    get height(): number {
+        return this.y2 - this.y1;
     }
 }
