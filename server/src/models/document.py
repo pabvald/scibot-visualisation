@@ -27,7 +27,17 @@ class Document(object):
     @staticmethod
     def from_layout(user_id: str, doc_id: str, corpus: Corpus, query: str, pars_layout: DataFrame,
                     labels_layout: DataFrame):
-
+        """
+        Args:
+            user_id: the user's id
+            doc_id: the document's id (filename without the .html extension)
+            corpus: Corpus.grel or Corpus.nq
+            query: query of the document
+            pars_layout: paragraphs' layout
+            labels_layout: labels' layout
+        Returns:
+            a document
+        """
         document = Document(user_id=user_id, doc_id=doc_id, corpus=corpus, query=query)
 
         # add paragraphs
@@ -45,7 +55,17 @@ class Document(object):
     @staticmethod
     def from_layout_gaze(user_id: str, doc_id: str, corpus: Corpus, pars_layout: DataFrame, labels_layout: DataFrame,
                          gaze_data: DataFrame):
-
+        """
+        Args:
+            user_id: the user's id
+            doc_id: the document's id (filename without the .html extension)
+            corpus: Corpus.grel or Corpus.nq
+            pars_layout: paragraphs' layout
+            labels_layout: labels' layout
+            gaze_data: gaze data of the user-document pair
+        Returns:
+            a document
+        """
         document = Document(user_id=user_id, doc_id=doc_id, corpus=corpus)
 
         # add paragraphs
@@ -63,7 +83,15 @@ class Document(object):
 
     @staticmethod
     def from_features(user_id: str, doc_id: str, corpus: Corpus, pars_features: Dict):
-
+        """
+        Args:
+            user_id: the user's id
+            doc_id: the document's id (filename without the .html extension)
+            corpus: Corpus.grel or Corpus.nq
+            pars_features: paragraphs' features
+        Returns:
+            a document
+        """
         document = Document(user_id=user_id, doc_id=doc_id, corpus=corpus)
 
         for par_id, features in pars_features.items():
@@ -75,7 +103,17 @@ class Document(object):
     @staticmethod
     def from_relevance(user_id: str, doc_id: str, corpus: Corpus, system_relevance: List[bool],
                        perceived_relevance: List[bool], predicted_relevance: Dict):
-
+        """
+        Args:
+            user_id: the user's id
+            doc_id: the document's id (filename without the .html extension)
+            corpus: Corpus.grel or Corpus.nq
+            system_relevance: paragraphs' system relevance
+            perceived_relevance: paragraphs' perceived relevance
+            predicted_relevance: paragraphs' predicted relevance
+        Returns:
+            a document
+        """
         document = Document(user_id=user_id, doc_id=doc_id, corpus=corpus)
 
         for par_id in range(len(system_relevance)):
@@ -126,6 +164,7 @@ class Document(object):
 """
 Marshmallow Schemas
 """
+
 
 class DocumentBaseSchema(Schema):
     user_id = fields.Str(data_key="userId")

@@ -21,12 +21,16 @@ are defined in the same source file.
 Contains the class enum `Corpus` to identify the two different sets of documents.
 
 ### bounding_box.py
-Contains the definition of the class `BoundingBox`, which encapsulates attributes and behaviour 
+Contains the definition of the *mixin* `BoundingBox`, which encapsulates attributes and behaviour 
 related to the bounding box of a token/paragraph.
 
-### document package
+### document 
+Contains the class `Document`.
 
-### label package 
+### paragraph 
+Contains the class `Paragraph`, which includes the mixin `BoundingBox`.
 
-### paragraph package
+### label 
+Contains the class `Label`, which includes the mixin `BoundingBox`.
+
 

@@ -37,6 +37,15 @@ class Paragraph(BoundingBox):
 
     @staticmethod
     def from_layout(par_id: int, doc_id: str, par_layout: DataFrame, labels_layout: DataFrame):
+        """
+        Args:
+            par_id: paragraph's id
+            doc_id: document's id
+            par_layout: paragraph's layout
+            labels_layout: labels' layout
+        Returns:
+             a paragraph
+        """
         _, x1, y1, x2, y2 = par_layout
         paragraph = Paragraph(par_id=par_id, doc_id=doc_id, x1=x1, y1=y1, x2=x2, y2=y2)
 
@@ -50,6 +59,16 @@ class Paragraph(BoundingBox):
     @staticmethod
     def from_layout_gaze(par_id: int, doc_id: str, par_layout: DataFrame, labels_layout: DataFrame,
                          gaze_data: DataFrame):
+        """
+        Args:
+            par_id: paragraph's id
+            doc_id: document's id
+            par_layout: paragraph's layout
+            labels_layout: labels' layout
+            gaze_data: paragraph's gaze data
+        Returns:
+             a paragraph
+        """
         _, x1, y1, x2, y2 = par_layout
         paragraph = Paragraph(par_id=par_id, doc_id=doc_id, x1=x1, y1=y1, x2=x2, y2=y2,
                               gaze_data=gaze_data)
@@ -64,6 +83,16 @@ class Paragraph(BoundingBox):
     @staticmethod
     def from_relevance(par_id: int, doc_id: str, system_rel: float, perceived_rel: float,
                        pred_rel: Tuple[float, bool]):
+        """
+        Args:
+            par_id: paragraph's id
+            doc_id: document's id
+            system_rel: paragraph's system relevance
+            perceived_rel: paragraph's perceived relevance
+            pred_rel: paragraph's predicted relevance
+        Returns:
+             a paragraph
+        """
         paragraph = Paragraph(par_id=par_id, doc_id=doc_id, system_rel=system_rel, perceived_rel=perceived_rel,
                               pred_rel=pred_rel)
 
@@ -71,6 +100,14 @@ class Paragraph(BoundingBox):
 
     @staticmethod
     def from_features(par_id: int, doc_id: str, features: Dict):
+        """
+        Args:
+            par_id: paragraph's id
+            doc_id: document's id
+            features: paragraph's features
+        Returns:
+             a paragraph
+        """
         paragraph = Paragraph(par_id=par_id, doc_id=doc_id, features=features)
 
         return paragraph
@@ -132,6 +169,11 @@ class Paragraph(BoundingBox):
             label: new label
         """
         self._labels.append(label)
+
+
+"""
+Marshmallow Schemas
+"""
 
 
 class ParagraphLayoutSchema(Schema):
