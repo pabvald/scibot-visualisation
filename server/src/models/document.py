@@ -24,8 +24,8 @@ class Document(object):
         self._query = query
         self._paragraphs = []
 
-    @staticmethod
-    def from_layout(user_id: str, doc_id: str, corpus: Corpus, query: str, pars_layout: DataFrame,
+    @classmethod
+    def from_layout(cls, user_id: str, doc_id: str, corpus: Corpus, query: str, pars_layout: DataFrame,
                     labels_layout: DataFrame):
         """
         Args:
@@ -52,8 +52,8 @@ class Document(object):
 
         return document
 
-    @staticmethod
-    def from_layout_gaze(user_id: str, doc_id: str, corpus: Corpus, pars_layout: DataFrame, labels_layout: DataFrame,
+    @classmethod
+    def from_layout_gaze(cls, user_id: str, doc_id: str, corpus: Corpus, pars_layout: DataFrame, labels_layout: DataFrame,
                          gaze_data: DataFrame):
         """
         Args:
@@ -81,8 +81,8 @@ class Document(object):
 
         return document
 
-    @staticmethod
-    def from_features(user_id: str, doc_id: str, corpus: Corpus, pars_features: Dict):
+    @classmethod
+    def from_features(cls, user_id: str, doc_id: str, corpus: Corpus, pars_features: Dict):
         """
         Args:
             user_id: the user's id
@@ -100,8 +100,8 @@ class Document(object):
 
         return document
 
-    @staticmethod
-    def from_relevance(user_id: str, doc_id: str, corpus: Corpus, system_relevance: List[bool],
+    @classmethod
+    def from_relevance(cls, user_id: str, doc_id: str, corpus: Corpus, system_relevance: List[bool],
                        perceived_relevance: List[bool], predicted_relevance: Dict):
         """
         Args:

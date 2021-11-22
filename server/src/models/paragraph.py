@@ -35,8 +35,8 @@ class Paragraph(BoundingBox):
         self._gaze_data = gaze_data
         self._labels = []
 
-    @staticmethod
-    def from_layout(par_id: int, doc_id: str, par_layout: DataFrame, labels_layout: DataFrame):
+    @classmethod
+    def from_layout(cls, par_id: int, doc_id: str, par_layout: DataFrame, labels_layout: DataFrame):
         """
         Args:
             par_id: paragraph's id
@@ -56,8 +56,8 @@ class Paragraph(BoundingBox):
 
         return paragraph
 
-    @staticmethod
-    def from_layout_gaze(par_id: int, doc_id: str, par_layout: DataFrame, labels_layout: DataFrame,
+    @classmethod
+    def from_layout_gaze(cls, par_id: int, doc_id: str, par_layout: DataFrame, labels_layout: DataFrame,
                          gaze_data: DataFrame):
         """
         Args:
@@ -80,8 +80,8 @@ class Paragraph(BoundingBox):
 
         return paragraph
 
-    @staticmethod
-    def from_relevance(par_id: int, doc_id: str, system_rel: float, perceived_rel: float,
+    @classmethod
+    def from_relevance(cls, par_id: int, doc_id: str, system_rel: float, perceived_rel: float,
                        pred_rel: Tuple[float, bool]):
         """
         Args:
@@ -98,8 +98,8 @@ class Paragraph(BoundingBox):
 
         return paragraph
 
-    @staticmethod
-    def from_features(par_id: int, doc_id: str, features: Dict):
+    @classmethod
+    def from_features(cls, par_id: int, doc_id: str, features: Dict):
         """
         Args:
             par_id: paragraph's id

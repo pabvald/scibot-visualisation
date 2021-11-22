@@ -27,8 +27,8 @@ class Label(BoundingBox):
         self._text = text
         self._fixation_durations = []
 
-    @staticmethod
-    def from_layout(label_id: int, doc_id: str, layout: DataFrame):
+    @classmethod
+    def from_layout(cls, label_id: int, doc_id: str, layout: DataFrame):
         """
         Args:
             label_id: label's id
