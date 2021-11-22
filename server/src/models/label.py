@@ -1,10 +1,10 @@
 from marshmallow import Schema, fields
 from pandas.core.frame import DataFrame
 
-from models.bounding_box import BoundingBox
+from models.bounding_box import BoundingBoxMixin
 
 
-class Label(BoundingBox):
+class Label(BoundingBoxMixin):
 
     def __init__(self, label_id: int, doc_id: str, x1: float = 0, y1: float = 0, x2: float = 0, y2: float = 0,
                  text: str = ""):

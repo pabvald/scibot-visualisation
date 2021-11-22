@@ -3,11 +3,11 @@ from marshmallow import Schema, fields
 from pandas.core.frame import DataFrame
 
 from features import FixationEvent, SaccadeEvent
-from .bounding_box import BoundingBox
+from .bounding_box import BoundingBoxMixin
 from .label import Label, LabelLayoutSchema, LabelFixDurationSchema
 
 
-class Paragraph(BoundingBox):
+class Paragraph(BoundingBoxMixin):
     """ Paragraph  representation """
 
     def __init__(self, par_id: int, doc_id: str, x1: float = 0, y1: float = 0, x2: float = 0, y2: float = 0,
@@ -31,7 +31,10 @@ class Paragraph(BoundingBox):
         self._system_relevance = system_rel
         self._perceived_relevance = perceived_rel
         self._pred_relevance = pred_rel
-        self._features = features
+        if features is None:
+            self._features = {}
+        else:
+            self._features = features
         self._gaze_data = gaze_data
         self._labels = []
 

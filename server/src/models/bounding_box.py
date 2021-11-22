@@ -8,7 +8,7 @@ class AxisOrigin(Enum):
     TR = (1, 1)
 
 
-class BoundingBox(object):
+class BoundingBoxMixin(object):
     """ Bounding Box Mixin"""
 
     _SCREEN_WIDTH = 2560
