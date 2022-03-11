@@ -4,6 +4,7 @@
   display: flex;
   overflow: hidden;
   padding: 0px 10px;
+  font-size: min(1vw, 4vh);
 }
 
 .section {
@@ -26,14 +27,9 @@
 .section#fixation-area-settings {
 
   ::ng-deep {
-    .mat-form-field-infix {
-      width: 5% !important;
+    .mat-form-field {
+      max-width: 11vw;
     }
-
-    .mat-input-element {
-      max-width: 100px !important;
-    }
-
   }
 }
 
@@ -41,6 +37,12 @@
   flex-grow: 1;
   align-items: center;
   justify-content: center;
+
+  ::ng-deep {
+    button {
+      max-width: 4vw;
+    }
+  }
 }
 
 .section#enabling-settings {
