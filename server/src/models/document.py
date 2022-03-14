@@ -1,69 +1,131 @@
-import os
-
 from typing import List, Dict
-from marshmallow import Schema, fields
 from pandas.core.frame import DataFrame
+from marshmallow import Schema, fields
 
 from .corpus import Corpus
-from data_loading.article_parser import Article
-from features import FixationEvent, SaccadeEvent
-from .paragraph import ParagraphModel, ParagraphSchema
+from .paragraph import (Paragraph, ParagraphLayoutSchema, ParagraphFixDurationSchema, ParagraphRelevanceSchema,
+                        ParagraphFeaturesSchema)
 
 
-class DocumentModel(object):
-    """Document Representation"""
+class Document(object):
+    """ Document Representation """
 
-    def __init__(self, user_id: str, article_id: str, corpus: Corpus, query: str, paragraphs: List[ParagraphModel]):
+    def __init__(self, user_id: str, doc_id: str, corpus: Corpus, query: str = ""):
         """
         Args:
             user_id: the user's id
-            article_id: the article's id (filename without the .html extension)
-            corpus: 'g-REL' or 'GoogleNQ'
-            query: query of the corresponding document.
-            paragraphs: list of paragraphs
+            doc_id: the document's id (filename without the .html extension)
+            corpus: Corpus.grel or Corpus.nq
+            query: query of the document
         """
+        self._id = doc_id
         self._user_id = user_id
-        self._id = article_id
         self._corpus = corpus
         self._query = query
-        self._paragraphs = paragraphs
+        self._paragraphs = []
 
     @classmethod
-    def from_data(cls, user_id: str, article: Article, gaze_data: DataFrame, pars_mapping: DataFrame,
-                  labels_mapping: DataFrame, system_relevance: List[bool], perceived_relevance: List[bool],
-                  pred_relevance: Dict, pars_features: Dict):
-        paragraphs = []
-        _, article_id = os.path.split(article.article_id)
+    def from_layout(cls, user_id: str, doc_id: str, corpus: Corpus, query: str, pars_layout: DataFrame,
+                    labels_layout: DataFrame):
+        """
+        Args:
+            user_id: the user's id
+            doc_id: the document's id (filename without the .html extension)
+            corpus: Corpus.grel or Corpus.nq
+            query: query of the document
+            pars_layout: paragraphs' layout
+            labels_layout: labels' layout
+        Returns:
+            a document
+        """
+        document = Document(user_id=user_id, doc_id=doc_id, corpus=corpus, query=query)
 
-        # determine corpus
-        corpus = Corpus.grel if article_id.startswith('g-rel') else Corpus.nq
-
-        # combine the HTML, gaze and mapping data to create the paragraphs
-        par_ids = pars_mapping['paragraph_id'].to_numpy()
+        # add paragraphs
+        par_ids = pars_layout['paragraph_id'].to_numpy()
         for par_id in par_ids:
-            par_sys_rel = False
-            par_perceived_rel = False
+            par_layout = list(pars_layout.loc[pars_layout['paragraph_id'] == par_id].to_numpy()[0])
+            labels_selection = labels_layout.loc[labels_layout['paragraph_id'] == par_id]
 
-            if par_id >= 0:
-                par_sys_rel = system_relevance[par_id]
-                par_perceived_rel = perceived_relevance[par_id]
+            paragraph = Paragraph.from_layout(par_id=par_id, doc_id=doc_id, par_layout=par_layout,
+                                              labels_layout=labels_selection)
+            document.add_paragraph(paragraph)
 
-            par_pred_rel = pred_relevance.get(par_id, tuple([-1.0, False]))
-            par_features = pars_features.get(par_id, {})
+        return document
+
+    @classmethod
+    def from_layout_gaze(cls, user_id: str, doc_id: str, corpus: Corpus, pars_layout: DataFrame, labels_layout: DataFrame,
+                         gaze_data: DataFrame):
+        """
+        Args:
+            user_id: the user's id
+            doc_id: the document's id (filename without the .html extension)
+            corpus: Corpus.grel or Corpus.nq
+            pars_layout: paragraphs' layout
+            labels_layout: labels' layout
+            gaze_data: gaze data of the user-document pair
+        Returns:
+            a document
+        """
+        document = Document(user_id=user_id, doc_id=doc_id, corpus=corpus)
+
+        # add paragraphs
+        par_ids = pars_layout['paragraph_id'].to_numpy()
+        for par_id in par_ids:
             par_gaze = gaze_data.loc[gaze_data['paragraph_id'] == par_id]
-            par_mapping = list(pars_mapping.loc[pars_mapping['paragraph_id'] == par_id].to_numpy()[0])
-            labels_selection = labels_mapping.loc[labels_mapping['paragraph_id'] == par_id]
+            par_layout = list(pars_layout.loc[pars_layout['paragraph_id'] == par_id].to_numpy()[0])
+            labels_selection = labels_layout.loc[labels_layout['paragraph_id'] == par_id]
 
-            paragraphs.append(
-                ParagraphModel.from_data(article_id=article_id,
-                                         gaze_data=par_gaze,
-                                         par_mapping=par_mapping, labels_mapping=labels_selection,
-                                         system_relevance=par_sys_rel, perceived_relevance=par_perceived_rel,
-                                         pred_relevance=par_pred_rel,
-                                         features=par_features)
-            )
+            paragraph = Paragraph.from_layout_gaze(par_id=par_id, doc_id=doc_id, par_layout=par_layout,
+                                                   labels_layout=labels_selection, gaze_data=par_gaze)
+            document.add_paragraph(paragraph)
 
-        return cls(user_id, article_id, corpus, article.query.strip(), paragraphs)
+        return document
+
+    @classmethod
+    def from_features(cls, user_id: str, doc_id: str, corpus: Corpus, pars_features: Dict):
+        """
+        Args:
+            user_id: the user's id
+            doc_id: the document's id (filename without the .html extension)
+            corpus: Corpus.grel or Corpus.nq
+            pars_features: paragraphs' features
+        Returns:
+            a document
+        """
+        document = Document(user_id=user_id, doc_id=doc_id, corpus=corpus)
+
+        for par_id, features in pars_features.items():
+            paragraph = Paragraph.from_features(par_id=par_id, doc_id=doc_id, features=features)
+            document.add_paragraph(paragraph)
+
+        return document
+
+    @classmethod
+    def from_relevance(cls, user_id: str, doc_id: str, corpus: Corpus, system_relevance: List[bool],
+                       perceived_relevance: List[bool], predicted_relevance: Dict):
+        """
+        Args:
+            user_id: the user's id
+            doc_id: the document's id (filename without the .html extension)
+            corpus: Corpus.grel or Corpus.nq
+            system_relevance: paragraphs' system relevance
+            perceived_relevance: paragraphs' perceived relevance
+            predicted_relevance: paragraphs' predicted relevance
+        Returns:
+            a document
+        """
+        document = Document(user_id=user_id, doc_id=doc_id, corpus=corpus)
+
+        for par_id in range(len(system_relevance)):
+            sys_rel = system_relevance[par_id]
+            percv_rel = perceived_relevance[par_id]
+            pred_rel = predicted_relevance.get(par_id, tuple([-1.0, False]))
+
+            paragraph = Paragraph.from_relevance(par_id=par_id, doc_id=doc_id, system_rel=sys_rel,
+                                                 perceived_rel=percv_rel, pred_rel=pred_rel)
+            document.add_paragraph(paragraph)
+
+        return document
 
     @property
     def id(self) -> str:
@@ -76,36 +138,52 @@ class DocumentModel(object):
         return self._user_id
 
     @property
+    def corpus(self) -> str:
+        """ Corpus """
+        return self._corpus.value
+
+    @property
     def query(self) -> str:
         """ Query that the user had to look an answer for """
         return self._query
 
     @property
-    def corpus(self) -> str:
-        """ Corpus to which the document belongs """
-        return self._corpus.value
-
-    @property
-    def paragraphs(self) -> List[ParagraphModel]:
+    def paragraphs(self) -> List[Paragraph]:
         """ Paragraphs of the document """
         return self._paragraphs
 
-    @property
-    def fixations(self) -> List[FixationEvent]:
-        """ All fixation events of the document """
-        pars_fixations = [par.fixations for par in self._paragraphs]
-        return sum(pars_fixations, [])
-
-    @property
-    def saccades(self) -> List[SaccadeEvent]:
-        """ All saccade events of the document """
-        pars_saccades = [par.saccades for par in self._paragraphs]
-        return sum(pars_saccades, [])
+    def add_paragraph(self, paragraph: Paragraph):
+        """
+        Adds a new paragraph to the document.
+        Args:
+            paragraph: new paragraph
+        """
+        self._paragraphs.append(paragraph)
 
 
-class DocumentSchema(Schema):
+"""
+Marshmallow Schemas
+"""
+
+
+class DocumentBaseSchema(Schema):
     user_id = fields.Str(data_key="userId")
     id = fields.Str()
     corpus = fields.Str()
+
+
+class DocumentLayoutSchema(DocumentBaseSchema):
     query = fields.Str()
-    paragraphs = fields.List(fields.Nested(ParagraphSchema))
+    paragraphs = fields.List(fields.Nested(ParagraphLayoutSchema))
+
+
+class DocumentFeaturesSchema(DocumentBaseSchema):
+    paragraphs = fields.List(fields.Nested(ParagraphFeaturesSchema))
+
+
+class DocumentFixDurationSchema(DocumentBaseSchema):
+    paragraphs = fields.List(fields.Nested(ParagraphFixDurationSchema))
+
+
+class DocumentRelevanceSchema(DocumentBaseSchema):
+    paragraphs = fields.List(fields.Nested(ParagraphRelevanceSchema))

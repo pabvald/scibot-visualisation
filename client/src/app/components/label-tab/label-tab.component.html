@@ -1,92 +1,100 @@
-<section id="fixation-duration-settings">
+<div class="section" id="fixation-duration-settings">
   <div class="section-title">
-    Fixation duration:
+    <span>Fixation duration</span>
   </div>
 
-  <div class="slider-container">
-    <label class="name-label">Fixation Min</label>
-    <mat-slider
-      color="primary"
-      class="margin"
-      [disabled]="!isEnabled"
-      [min]="minFixationInterval[0]"
-      [max]="minFixationInterval[1]"        
-      [step]="sliderStep"
-      [thumbLabel]="thumbLabel"
-      [(ngModel)]="minFixation"
-      (ngModelChange)="updateMinFixation()"
-      aria-labelledby="name-label">
-    </mat-slider>
-    <label class="value-label">{{minFixation}}</label>
-  </div>
-  
-  <div class="slider-container">
-    <label class="name-label">Fixation Max</label>
-    <mat-slider
-          color="primary"
-          class="margin"
-          [disabled]="!isEnabled"
-          [min]="maxFixationInterval[0]"
-          [max]="maxFixationInterval[1]"   
-          [step]="sliderStep"
-          [thumbLabel]="thumbLabel"
-          [(ngModel)]="maxFixation"
-          (ngModelChange)="updateMaxFixation()"
-          aria-labelledby="name-label">
+  <div class="flex-row">
+    <div class="slider-container">
+      <label class="name-label">Fixation Min</label>
+      <mat-slider
+        color="primary"
+        class="margin"
+        [disabled]="!isEnabled"
+        [min]="minFixationInterval[0]"
+        [max]="minFixationInterval[1]"        
+        [step]="sliderStep"
+        [thumbLabel]="thumbLabel"
+        [(ngModel)]="minFixation"
+        (ngModelChange)="updateMinFixation()"
+        aria-labelledby="name-label">
       </mat-slider>
-    <label class="value-label">{{maxFixation}}</label>
+      <label class="value-label">{{minFixation}}</label>
+    </div>
+    
+    <div class="slider-container">
+      <label class="name-label">Fixation Max</label>
+      <mat-slider
+            color="primary"
+            class="margin"
+            [disabled]="!isEnabled"
+            [min]="maxFixationInterval[0]"
+            [max]="maxFixationInterval[1]"   
+            [step]="sliderStep"
+            [thumbLabel]="thumbLabel"
+            [(ngModel)]="maxFixation"
+            (ngModelChange)="updateMaxFixation()"
+            aria-labelledby="name-label">
+        </mat-slider>
+      <label class="value-label">{{maxFixation}}</label>
+    </div>
   </div>
-</section>
+  
+</div>
 
 
-<section id="fixation-area-settings">
+<div class="section" id="fixation-area-settings">
   <div class="section-title">
-    Horizontal fixation area: 
+    <span>Horizontal fixation area</span>
   </div>
   
-  <div class="input-field">
-    <label>Left margin:</label>
-    <mat-form-field appearance="fill">
-      <!-- <mat-label>Left margin</mat-label> -->
-      <input matInput 
-            type="number" 
-            min="0"
-            [formControl]="leftMarginCtrl"
-            required>
-      <span matSuffix>letters</span>
-      <mat-error *ngIf="leftMarginCtrl.invalid">Min margin: 0 letters</mat-error>
-    </mat-form-field>
-  </div>
+  <div class="flex-row">
+    <div class="input-field">
+      <label>Left margin</label>
+      <mat-form-field appearance="fill">
+        <!-- <mat-label>Left margin</mat-label> -->
+        <input matInput 
+              type="number" 
+              min="0"
+              [formControl]="leftMarginCtrl"
+              required>
+        <span matSuffix>letters</span>
+        <mat-error *ngIf="leftMarginCtrl.invalid">Min margin: 0 letters</mat-error>
+      </mat-form-field>
+    </div>
+    
   
+    <div class="input-field">
+      <label>Right margin</label>
+      <mat-form-field appearance="fill" color="primary">
+        <!-- <mat-label>Right margin</mat-label> -->
+        <input matInput 
+              type="number"
+              min="0" 
+              [formControl]="rightMarginCtrl"
+              required>
+        <span matSuffix>letters</span>
+        <mat-error *ngIf="rightMarginCtrl.invalid">Min margin: 0 letters</mat-error>
+      </mat-form-field> 
+    </div>    
+  </div>
+ 
+</div>
 
-  <div class="input-field">
-    <label>Right margin:</label>
-    <mat-form-field appearance="fill" color="primary">
-      <!-- <mat-label>Right margin</mat-label> -->
-      <input matInput 
-            type="number"
-            min="0" 
-            [formControl]="rightMarginCtrl"
-            required>
-      <span matSuffix>letters</span>
-      <mat-error *ngIf="rightMarginCtrl.invalid">Min margin: 0 letters</mat-error>
-    </mat-form-field> 
-  </div>  
-
+<div class="section" id="apply-button">
   <div id="button-container">
     <!-- Reload button -->
     <button  *ngIf="!isUpdating"
-        mat-stroked-button 
+        mat-flat-button
         color="primary" 
         [disabled]="isApplyDisabled"
         (click)="updateFixationArea()">
     Apply
     </button>
   </div>
-  
-</section>
+</div>
 
-<section id="enabling-settings">
+
+<div class="section" id="enabling-settings">
   <div id="toggle-container">
     <label>Off</label>
     <mat-slide-toggle
@@ -96,7 +104,7 @@
     </mat-slide-toggle>
     <label>On</label>
   </div>
-</section>
+</div>
 
 
 

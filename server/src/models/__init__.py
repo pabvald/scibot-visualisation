@@ -1,5 +1,6 @@
-from .document import DocumentModel, DocumentSchema
+from .document import *
+from .paragraph import *
+from .label import *
 from .corpus import Corpus
-from .paragraph import ParagraphModel, ParagraphSchema
-from .label import LabelModel, LabelSchema
-from .bounding_box import AxisOrigin, BoundingBox
+from .bounding_box import AxisOrigin, BoundingBoxMixin
+

@@ -1,5 +1,5 @@
 <section id="feature-pool">
-    <span>Feature pool:</span>
+    <!-- <span>Feature pool:</span> -->
     <div id="features-container">
       <mat-checkbox *ngFor="let feature of features"
                     class="example-margin"
@@ -31,7 +31,7 @@
                 [disabled]="!isEnabled"            
                 [indeterminate]="someFeaturesEnabled"
                 (change)="setAllFeatures($event.checked)">
-        All selected
+        All features
         </mat-checkbox>
     </div>    
 </section>

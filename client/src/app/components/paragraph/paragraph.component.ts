@@ -1,6 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { ParagraphLevelFacade } from 'src/app/facade/paragraph-level/paragraph-level.facade';
-import { IParagraph, IParagraphFeatureConf } from 'src/app/models/paragraph.model';
+import { Paragraph } from 'src/app/models/paragraph.model';
+import { IParagraphFeatureConf } from 'src/app/models/feature-conf.model';
 
 @Component({
   selector: 'app-paragraph',
@@ -10,7 +11,7 @@ import { IParagraph, IParagraphFeatureConf } from 'src/app/models/paragraph.mode
 export class ParagraphComponent implements OnInit {
 
   // Inputs
-  @Input() paragraph: IParagraph | undefined;
+  @Input() paragraph: Paragraph | undefined;
 
   // Constants
   readonly ID_HEIGHT: number = 4; // in %

@@ -5,10 +5,11 @@ import pandas as pd
 
 from joblib import load
 from models import Corpus
-from typing import List, Dict, Tuple
+from typing import Dict, Tuple
 
 
 def load_demo_models():
+    """ Loads the Ml model for each set of articles """
     base_dir = pathlib.Path(__file__).parent.resolve()
 
     grel_model = load(base_dir.joinpath("ml_models/grel_demo_model.joblib"))
@@ -33,7 +34,6 @@ class RelevanceService(object):
     @staticmethod
     def predict_relevance(features: Dict[int, Dict[str, float]], corpus: Corpus) -> Dict[int, Tuple[bool, float]]:
         """
-
         Args:
             features: features of paragraphs
             corpus: determines whether the document comes from the g-REL or Google NQ corpus

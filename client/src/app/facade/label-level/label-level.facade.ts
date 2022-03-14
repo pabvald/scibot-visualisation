@@ -1,8 +1,7 @@
 import { Injectable } from '@angular/core';
-import { combineLatest, Observable, of, throwError } from 'rxjs';
-import { first, shareReplay, take, map} from 'rxjs/operators';
+import { combineLatest, Observable} from 'rxjs';
+import { map } from 'rxjs/operators';
 import { IFixationArea } from 'src/app/models/fixation-area.model';
-import { DataState } from 'src/app/state/data/data.state';
 import { LabelLevelState } from 'src/app/state/label-level/label-level.state';
 import { DataFacade } from '../data/data.facade';
 
@@ -14,8 +13,7 @@ export class LabelLevelFacade {
   private colorGradient: CanvasRenderingContext2D | null;
   private isLabelLevelEnabled$: Observable<boolean>;
   private minFixation$: Observable<number>;
-  private maxFixation$: Observable<number>;
-  private fixationArea$: Observable<IFixationArea>;  
+  private maxFixation$: Observable<number>; 
   private colors: string[] = ["#dfdef7ff",
                               "#c8d5f2ff",
                               "#b1ccedff",
@@ -29,13 +27,11 @@ export class LabelLevelFacade {
 
   constructor(
     private dataFacade: DataFacade,
-    private labelState: LabelLevelState,
-    private dataState: DataState) { 
+    private labelState: LabelLevelState) { 
 
       this.isLabelLevelEnabled$ = this.labelState.isEnabled$();
       this.minFixation$ = this.labelState.getMinFixation$();
       this.maxFixation$ = this.labelState.getMaxFixation$();
-      this.fixationArea$ = this.dataState.getFixationArea$();     
       this.colorGradient = this.initColorGradient();
   }
 
@@ -106,7 +102,7 @@ export class LabelLevelFacade {
   
   /** Some state is being updated */
   isUpdating$(): Observable<boolean> {
-    return (this.dataState.isUpdating$() || this.labelState.isUpdating$());
+    return (this.dataFacade.isUpdating$() || this.labelState.isUpdating$());
   }
 
   /** The label-level is enabled */
@@ -132,7 +128,7 @@ export class LabelLevelFacade {
    * @returns 
    */
   getFixationArea$(): Observable<IFixationArea> {
-    return this.fixationArea$;
+    return this.dataFacade.getFixationArea$();
   }
 
   /**
@@ -171,8 +167,6 @@ export class LabelLevelFacade {
    * @param fixationArea fixation area
    */
   setFixationArea(fixationArea: IFixationArea) {
-    this.dataState.setUpdating(true);
-    this.dataState.setFixationArea(fixationArea);
-    this.dataFacade.reloadDocument();
+    this.dataFacade.setFixationArea(fixationArea);
   }
 }

@@ -26,7 +26,7 @@ export class GlobalHttpInterceptorService implements HttpInterceptor {
       catchError((error) => {
  
         let handled: boolean = false;
-        console.error(error);
+        
         if (error instanceof HttpErrorResponse) {
           if (error.error instanceof ErrorEvent) {
             console.error("Error Event");
@@ -46,7 +46,7 @@ export class GlobalHttpInterceptorService implements HttpInterceptor {
                 this.notificationsService.showError("An internal server error has ocurred. Try again later.");
                 break
               default:
-                this.notificationsService.showError("An identified error has ocurred");
+                this.notificationsService.showError("An unidentified error has ocurred");
             }
           }
         }

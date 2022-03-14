@@ -1,9 +1,16 @@
 # Eye Movement Features
-We implement a set of features which are solely based on eye movements, i.e., on the gaze signal and not on the viewed content. The features were previously used in the literature on gaze-based relevance estimation of read texts. We cluster the features into three subsets: features are based on fixation-events, saccade-events, and area-based. **The features are extracted from a single dataframe that satisfy the recording format (see main readme).**
+We implement a set of features which are solely based on eye movements, i.e., 
+on the gaze signal and not on the viewed content. The features were previously 
+used in the literature on gaze-based relevance estimation of read texts. We 
+cluster the features into three subsets: features are based on fixation-events, 
+saccade-events, and area-based. 
 
-Some features a time-normalized by the total time covered by the provided gaze data. We compute `total_time` as the difference between the last and the first timestamp in the recording.
+Some features a time-normalized by the total time covered by the provided gaze data. 
+We compute `total_time` as the difference between the last and the first timestamp in 
+the recording.
 
-An example that shows how features are extracted from the SciBot dataset can be found in `ml.generate_trainin_data.py`.
+An example that shows how features are extracted from the SciBot dataset can be found 
+in the [scibot-study-analysis repository](https://iml-gitlab.sb.dfki.de/scibot/scibot-study-analysis/-/blob/master/ml/generate_training_data.py).
 
 ### Fixation-based
 

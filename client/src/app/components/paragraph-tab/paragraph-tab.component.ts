@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ParagraphLevelFacade } from 'src/app/facade/paragraph-level/paragraph-level.facade';
-import { IParagraphFeatureConf } from 'src/app/models/paragraph.model';
+import { IParagraphFeatureConf } from 'src/app/models/feature-conf.model';
 
 
 @Component({

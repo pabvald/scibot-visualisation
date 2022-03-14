@@ -1,6 +1,5 @@
 /* You can add global styles to this file, and also import other style files */
 
-
 html, body { 
     height: 100%; 
     width: 100%;
@@ -27,6 +26,7 @@ html {
 
 
 /******* COLOR PALETTE ************/
+
 $primary: rgb(63 81 181);
 $green-correct-text: rgba(30, 155, 53);
 $green-correct-background: rgb(128, 240, 179);
@@ -82,7 +82,9 @@ $gradient-top-left: linear-gradient(225deg, #dfdef7ff, #c8d5f2ff, #b1ccedff, #a1
 $gradient-bottom-left: linear-gradient(315deg, #dfdef7ff, #c8d5f2ff, #b1ccedff, #a1d6c6ff, #90e09fff, #d6cd5fff, #d8ab56ff, #e1813fff, #e95727ff, #ff401fff);
 $gradient-radial: radial-gradient(#dfdef7ff, #c8d5f2ff, #b1ccedff, #a1d6c6ff, #90e09fff, #d6cd5fff, #d8ab56ff, #e1813fff, #e95727ff, #ff401fff);
 
+
 /******* SCROLLBAR **********/
+
 *::-webkit-scrollbar,
 *::-webkit-scrollbar-thumb {
   width: 15px;
@@ -120,7 +122,9 @@ $gradient-radial: radial-gradient(#dfdef7ff, #c8d5f2ff, #b1ccedff, #a1d6c6ff, #9
     }
 }
 
+
 /*********** BUTTONS *****************/
+
 ::ng-deep {
     .mat-stroked-button {
         width: 4vw!important;
@@ -130,21 +134,27 @@ $gradient-radial: radial-gradient(#dfdef7ff, #c8d5f2ff, #b1ccedff, #a1d6c6ff, #9
     }
 }
 
+
 /********** TOGLES *************/
+
 @media screen and (min-width: 2000px) {
     .mat-slide-toggle {
         transform: scale(1.4);
     }    
 }
 
+
 /********* SLIDERS ****************/
+
 ::ng-deep {
     .mat-slider-horizontal {
         min-width: 8vw;
     }
 }
 
+
 /********* CHECKBOX ************/
+
 @media screen and (min-width: 2000px) {
     .mat-checkbox-inner-container {
         transform: scale(1.4);
@@ -157,7 +167,9 @@ $gradient-radial: radial-gradient(#dfdef7ff, #c8d5f2ff, #b1ccedff, #a1d6c6ff, #9
     }    
 }
 
+
 /*********** INPUT FIELDS *************/
+
 ::ng-deep {
     .mat-form-field-infix {
         border-top: 0.4375em solid transparent;

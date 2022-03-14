@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { IParagraphFeatureConf } from 'src/app/models/paragraph.model';
+import { IParagraphFeatureConf } from 'src/app/models/feature-conf.model';
 import { BehaviorSubject, Observable } from 'rxjs';
 
 

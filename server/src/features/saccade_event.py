@@ -13,35 +13,35 @@ class SaccadeEvent:
         self._id = event_id
 
     @property
-    def duration(self):
+    def duration(self) -> float:
         return self._duration
 
     @property
-    def amplitude_h(self):
+    def amplitude_h(self) -> float:
         return self._amplitude_h
 
     @property
-    def amplitude_v(self):
+    def amplitude_v(self) -> float:
         return self._amplitude_v
 
     # @property
-    # def amplitude(self):
+    # def amplitude(self) -> float:
     #     return math.sqrt(self.amplitude_h**2 + self.amplitude_v**2)
 
     @property
-    def velocity_h(self):
+    def velocity_h(self) -> float:
         return self.amplitude_h / self.duration
 
     @property
-    def velocity_v(self):
+    def velocity_v(self) -> float:
         return self.amplitude_v / self.duration
 
     # @property
-    # def velocity(self):
+    # def velocity(self) -> float:
     #     return self.amplitude / self.duration
 
     @staticmethod
-    def from_fixations(fixations: List[FixationEvent]):
+    def from_fixations(fixations: List[FixationEvent]) -> List['SaccadeEvent']:
         saccades = []
         for i in range(len(fixations)-1):
             saccades.append(SaccadeEvent(event_id=i, start_fixation=fixations[i], end_fixation=fixations[i+1]))
