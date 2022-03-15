@@ -2,8 +2,7 @@ from flask import Flask, render_template
 from flask_cors import CORS
 from flask_restful import Api
 
-from data_loading import (ScibotGazeLoader, ScibotArticleLoader,
-                          ScibotLayoutLoader, ScibotParagraphFeaturesLoader)
+from data_loading import (ScibotGazeLoader, ScibotArticleLoader, ScibotLayoutLoader, ScibotParagraphFeaturesLoader)
 
 from resources.user.list import UserListResource
 from resources.document.list import DocumentListResource
@@ -17,6 +16,7 @@ from resources.document.fix_duration import DocumentFixDurationResource
 app = Flask(__name__)
 CORS(app)  # allow CORS
 app.config.from_object('config.Config')  # load configuration
+app.config["APPLICATION_ROOT"] = "/demos/rematool"
 
 # --- Data loaders ---
 app.article_loader = ScibotArticleLoader(data_dir=app.config['ARTICLE_DIR'])
