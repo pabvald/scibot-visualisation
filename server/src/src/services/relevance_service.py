@@ -4,7 +4,7 @@ import pathlib
 import pandas as pd
 
 from joblib import load
-from models import Corpus
+from src.models import Corpus
 from typing import Dict, Tuple
 
 

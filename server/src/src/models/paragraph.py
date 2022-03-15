@@ -2,7 +2,7 @@ from typing import List, Tuple, Dict
 from marshmallow import Schema, fields
 from pandas.core.frame import DataFrame
 
-from features import FixationEvent, SaccadeEvent
+from src.features import FixationEvent, SaccadeEvent
 from .bounding_box import BoundingBoxMixin
 from .label import Label, LabelLayoutSchema, LabelFixDurationSchema
 

@@ -1,7 +1,7 @@
 from marshmallow import Schema, fields
 from pandas.core.frame import DataFrame
 
-from models.bounding_box import BoundingBoxMixin
+from src.models.bounding_box import BoundingBoxMixin
 
 
 class Label(BoundingBoxMixin):

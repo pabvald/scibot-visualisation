@@ -4,8 +4,8 @@ import datetime
 import pandas as pd
 import numpy as np
 
-from server.src.data_loading import SciBotDataLoader, extract_paragraph_visits_vectorized
-from server.src.features import extract_features
+from server.src import SciBotDataLoader, extract_paragraph_visits_vectorized
+from server.src import extract_features
 
 logger = logging.getLogger(__name__)
 logging.basicConfig(level=logging.INFO)

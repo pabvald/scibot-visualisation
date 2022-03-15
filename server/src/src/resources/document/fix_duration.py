@@ -3,11 +3,11 @@ from flask_restful import Resource, reqparse
 from flask import current_app as app
 from werkzeug.exceptions import NotFound, BadRequest
 
-from errors import error_messages
-from models import Corpus
-from services import FixationService
-from resources.user.list import USER_IDS
-from models.document import Document, DocumentFixDurationSchema
+from src.errors import error_messages
+from src.models import Corpus
+from src.services import FixationService
+from src.resources.user.list import USER_IDS
+from src.models.document import Document, DocumentFixDurationSchema
 
 from .list import DOC_IDS
 

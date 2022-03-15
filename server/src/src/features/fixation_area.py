@@ -3,7 +3,7 @@ from abc import ABCMeta, abstractmethod
 from typing import List
 
 from .fixation_event import FixationEvent
-from models.bounding_box import BoundingBoxMixin
+from src.models.bounding_box import BoundingBoxMixin
 
 
 class FixationArea(metaclass=ABCMeta):

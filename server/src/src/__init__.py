@@ -1,30 +1,24 @@
-import os
-import sys
-import inspect
-
-currentdir = os.path.dirname(os.path.abspath(inspect.getfile(inspect.currentframe())))
-parentdir = os.path.dirname(currentdir)
-sys.path.insert(0, parentdir)
-
 from flask import Flask, render_template
 from flask_cors import CORS
 from flask_restful import Api
 
-from data_loading import (ScibotGazeLoader, ScibotArticleLoader, ScibotLayoutLoader, ScibotParagraphFeaturesLoader)
-
-from resources.user.list import UserListResource
-from resources.document.list import DocumentListResource
-from resources.document.layout import DocumentLayoutResource
-from resources.document.features import DocumentFeaturesResource
-from resources.document.relevance import DocumentRelevanceResource
-from resources.document.fix_duration import DocumentFixDurationResource
 
 
 # --- APP initialization ---
 app = Flask(__name__)
 CORS(app)  # allow CORS
-app.config.from_object('config.Config')  # load configuration
+app.config.from_object('src.config.Config')  # load configuration
 app.config["APPLICATION_ROOT"] = "/demos/rematool"
+
+from src.data_loading import (ScibotGazeLoader, ScibotArticleLoader, ScibotLayoutLoader, ScibotParagraphFeaturesLoader)
+
+from src.resources.user.list import UserListResource
+from src.resources.document.list import DocumentListResource
+from src.resources.document.layout import DocumentLayoutResource
+from src.resources.document.features import DocumentFeaturesResource
+from src.resources.document.relevance import DocumentRelevanceResource
+from src.resources.document.fix_duration import DocumentFixDurationResource
+
 
 # --- Data loaders ---
 app.article_loader = ScibotArticleLoader(data_dir=app.config['ARTICLE_DIR'])

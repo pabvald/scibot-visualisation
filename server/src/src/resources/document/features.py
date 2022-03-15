@@ -3,11 +3,11 @@ from flask import current_app as app
 from flask_restful import Resource
 from werkzeug.exceptions import NotFound
 
-from models import Corpus
-from errors import error_messages
-from models.document import Document, DocumentFeaturesSchema
+from src.models import Corpus
+from src.errors import error_messages
+from src.models.document import Document, DocumentFeaturesSchema
 
-from resources.user.list import USER_IDS
+from src.resources.user.list import USER_IDS
 from .list import DOC_IDS
 
 

@@ -1,5 +1,5 @@
-from features import HorizontalFixationArea
-from models import Document, AxisOrigin
+from src.features import HorizontalFixationArea
+from src.models import Document, AxisOrigin
 
 
 class FixationService(object):

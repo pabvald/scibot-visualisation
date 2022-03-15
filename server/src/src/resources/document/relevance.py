@@ -3,11 +3,11 @@ from flask_restful import Resource
 from flask import current_app as app
 from werkzeug.exceptions import NotFound
 
-from models import Corpus
-from errors import error_messages
-from resources.user.list import USER_IDS
-from services.relevance_service import RelevanceService
-from models.document import Document, DocumentRelevanceSchema
+from src.models import Corpus
+from src.errors import error_messages
+from src.resources.user.list import USER_IDS
+from src.services.relevance_service import RelevanceService
+from src.models.document import Document, DocumentRelevanceSchema
 
 from .list import DOC_IDS
 
